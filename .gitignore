@@ -7,6 +7,11 @@
 .env.local
 .env.production
 
+# Configuration files
+config/config.php
+config/config.local.php
+config/config.production.php
+
 # Logs
 *.log
 logs/
