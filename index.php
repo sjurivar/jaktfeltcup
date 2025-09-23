@@ -101,6 +101,18 @@ switch ($path) {
         }
         include __DIR__ . '/views/participant/profile.php';
         break;
+    case '/verify-email':
+    case '/jaktfeltcup/verify-email':
+        include __DIR__ . '/views/auth/verify-email.php';
+        break;
+    case '/verify-email-handler':
+    case '/jaktfeltcup/verify-email-handler':
+        include __DIR__ . '/handlers/auth/verify-email-handler.php';
+        break;
+    case '/resend-verification':
+    case '/jaktfeltcup/resend-verification':
+        include __DIR__ . '/handlers/auth/resend-verification.php';
+        break;
     case '/logout':
     case '/jaktfeltcup/logout':
         if (session_status() === PHP_SESSION_NONE) session_start();

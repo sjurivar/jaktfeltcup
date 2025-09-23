@@ -29,6 +29,14 @@ if (!$user || !password_verify($password, $user['password_hash'])) {
     exit;
 }
 
+// Check if email is verified
+if (!$user['email_verified']) {
+    $_SESSION['error'] = 'E-postadresse ikke bekreftet. Sjekk din e-post for bekreftelseskode.';
+    $_SESSION['user_id'] = $user['id']; // Set user_id for resend functionality
+    header('Location: /verify-email');
+    exit;
+}
+
 // Login successful
 $_SESSION['user_id'] = $user['id'];
 $_SESSION['user_email'] = $user['email'];

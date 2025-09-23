@@ -6,6 +6,10 @@
 // Start session
 session_start();
 
+// Include required files
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../src/Services/EmailService.php';
+
 // Get form data
 $first_name = trim($_POST['first_name'] ?? '');
 $last_name = trim($_POST['last_name'] ?? '');
@@ -64,8 +68,8 @@ $password_hash = password_hash($password, PASSWORD_DEFAULT);
 // Insert user
 try {
     $database->execute(
-        "INSERT INTO users (username, email, password_hash, first_name, last_name, phone, date_of_birth, address, role) 
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'participant')",
+        "INSERT INTO users (username, email, password_hash, first_name, last_name, phone, date_of_birth, address, role, email_verified) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'participant', FALSE)",
         [
             $username,
             $email,
@@ -78,8 +82,22 @@ try {
         ]
     );
     
-    $_SESSION['success'] = 'Registrering vellykket! Du kan nå logge inn.';
-    header('Location: /login');
+    // Get the new user ID
+    $userId = $database->lastInsertId();
+    
+    // Initialize email service
+    $emailService = new EmailService($app_config, $database);
+    
+    // Send verification email
+    $emailSent = $emailService->sendVerificationCode($userId, $email, $first_name);
+    
+    if ($emailSent) {
+        $_SESSION['success'] = 'Registrering vellykket! Sjekk din e-post for bekreftelseskode.';
+        header('Location: /verify-email');
+    } else {
+        $_SESSION['warning'] = 'Registrering vellykket, men e-post kunne ikke sendes. Kontakt administrator.';
+        header('Location: /login');
+    }
     
 } catch (Exception $e) {
     $_SESSION['error'] = 'En feil oppstod under registrering. Prøv igjen.';

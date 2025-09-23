@@ -161,6 +161,23 @@ CREATE TABLE season_point_systems (
     UNIQUE KEY unique_season_system (season_id, point_system_id)
 );
 
+-- Email verification codes
+CREATE TABLE email_verifications (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    verification_code VARCHAR(32) NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    is_used BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    used_at TIMESTAMP NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_user (user_id),
+    INDEX idx_code (verification_code),
+    INDEX idx_expires (expires_at),
+    INDEX idx_used (is_used)
+);
+
 -- Notifications table
 CREATE TABLE notifications (
     id INT PRIMARY KEY AUTO_INCREMENT,
