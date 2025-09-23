@@ -1,0 +1,124 @@
+name: Deploy Jaktfeltcup til hjellum.net
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+
+env:
+  PROD_DIR: /home/username/public_html/jaktfeltcup/
+  STAGING_DIR: /home/username/public_html/staging/jaktfeltcup/
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Sjekk ut koden
+        uses: actions/checkout@v4
+
+      - name: Forbered deployment package
+        run: |
+          # Opprett deployment directory
+          mkdir -p deploy
+          
+          # Kopier nødvendige filer
+          cp -r views deploy/
+          cp -r src deploy/
+          cp -r config deploy/
+          cp -r data deploy/
+          cp -r handlers deploy/
+          cp -r database deploy/
+          cp index.php deploy/
+          cp .htaccess deploy/
+          cp README.md deploy/
+          cp DEPLOYMENT.md deploy/
+          
+          # Bruk produksjonskonfig for main branch
+          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+            cp config/config.production.php deploy/config/config.php
+          fi
+          
+          # Opprett .htaccess for produksjon
+          cat > deploy/.htaccess << 'EOF'
+          RewriteEngine On
+          
+          # Redirect all requests to index.php
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule ^(.*)$ index.php [QSA,L]
+          
+          # Security headers
+          Header always set X-Content-Type-Options nosniff
+          Header always set X-Frame-Options DENY
+          Header always set X-XSS-Protection "1; mode=block"
+          
+          # Cache static files
+          <FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg)$">
+              ExpiresActive On
+              ExpiresDefault "access plus 1 month"
+          </FilesMatch>
+          EOF
+          
+          # Opprett deployment info
+          echo "Deployed: $(date)" > deploy/DEPLOY_INFO.txt
+          echo "Commit: ${{ github.sha }}" >> deploy/DEPLOY_INFO.txt
+          echo "Branch: ${{ github.ref_name }}" >> deploy/DEPLOY_INFO.txt
+          echo "Environment: ${{ github.ref_name == 'main' && 'Production' || 'Staging' }}" >> deploy/DEPLOY_INFO.txt
+
+      - name: Sett opp serverdir for riktig miljø
+        id: vars
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+            echo "dir=${PROD_DIR}" >> $GITHUB_OUTPUT
+            echo "env=Production" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF_NAME}" == "staging" ]]; then
+            echo "dir=${STAGING_DIR}" >> $GITHUB_OUTPUT
+            echo "env=Staging" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy til hjellum.net
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ vars.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ steps.vars.outputs.dir }}
+          protocol: ftp
+          timeout: 600
+          exclude: |
+            **/.git*
+            **/.github/**
+            **/node_modules/**
+            **/vendor/**
+            **/*.md
+            **/deploy.sh
+            **/deploy.yml
+            **/composer.*
+            **/test.php
+            **/setup_database.php
+            **/results.php
+            **/standings.php
+            **/competitions.php
+            **/login.php
+            **/register.php
+            **/index.php
+            **/public/**
+            **/routes/**
+
+      - name: Notify deployment success
+        if: success()
+        run: |
+          echo "✅ Jaktfeltcup deployment successful!"
+          echo "🌐 Environment: ${{ steps.vars.outputs.env }}"
+          echo "📁 Directory: ${{ steps.vars.outputs.dir }}"
+          echo "📅 Deployed: $(date)"
+          echo "🔗 URL: https://hjellum.net/jaktfeltcup/"
+
+      - name: Notify deployment failure
+        if: failure()
+        run: |
+          echo "❌ Jaktfeltcup deployment failed!"
+          echo "Check the logs above for details."
+          echo "Environment: ${{ steps.vars.outputs.env }}"
