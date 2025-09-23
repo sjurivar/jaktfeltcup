@@ -35,10 +35,8 @@ jobs:
           cp README.md deploy/
           cp DEPLOYMENT.md deploy/
           
-          # Bruk produksjonskonfig for main branch
-          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
-            cp config/config.production.php deploy/config/config.php
-          fi
+          # Note: Production uses its own config.php file
+          # No need to copy production config
           
           # Opprett .htaccess for produksjon
           cat > deploy/.htaccess << 'EOF'
