@@ -19,16 +19,13 @@ $form_data = $_SESSION['form_data'] ?? [];
 unset($_SESSION['success'], $_SESSION['error'], $_SESSION['errors'], $_SESSION['form_data']);
 ?>
 
-<!DOCTYPE html>
-<html lang="no">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($page_title) ?> - Jaktfeltcup</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<?php
+// Set page variables
+$current_page = 'register';
+$body_class = 'bg-light';
+?>
+
+<?php include_header(); ?>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
@@ -159,6 +156,4 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['errors'], $_SESSION['
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php include_footer(); ?>

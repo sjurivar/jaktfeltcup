@@ -1,27 +1,11 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stevner - Jaktfeltcup</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fas fa-bullseye me-2"></i>Jaktfeltcup
-            </a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="<?= base_url() ?>">Hjem</a>
-                <a class="nav-link" href="<?= base_url('results') ?>">Resultater</a>
-                <a class="nav-link" href="<?= base_url('standings') ?>">Sammenlagt</a>
-                <a class="nav-link active" href="<?= base_url('competitions') ?>">Stevner</a>
-            </div>
-        </div>
-    </nav>
+<?php
+// Set page variables
+$page_title = 'Stevner';
+$page_description = 'Se alle stevner';
+$current_page = 'competitions';
+?>
+
+<?php include_header(); ?>
 
     <div class="container mt-4">
         <h1 class="mb-4">Stevner</h1>
@@ -167,6 +151,4 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php include_footer(); ?>
