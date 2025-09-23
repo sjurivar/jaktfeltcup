@@ -7,8 +7,8 @@ on:
       - staging
 
 env:
-  PROD_DIR: /home/username/public_html/jaktfeltcup/
-  STAGING_DIR: /home/username/public_html/staging/jaktfeltcup/
+  PROD_DIR: /customers/d/9/c/csj1wp95j/webroots/r1406435/jaktfeltcup/
+  STAGING_DIR: /customers/d/9/c/csj1wp95j/webroots/r1406435/staging/jaktfeltcup/
 
 jobs:
   ftp-deploy:
@@ -82,8 +82,8 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ vars.FTP_SERVER }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          username: ${{ vars.FTP_USER }}
+          password: ${{ vars.FTP_PASSWORD }}
           server-dir: ${{ steps.vars.outputs.dir }}
           protocol: ftp
           timeout: 600
