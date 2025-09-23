@@ -9,17 +9,18 @@ $db_config = [
     'host' => 'localhost',
     'port' => 3306,
     'name' => 'jaktfeltcup',
-    'user' => 'your_db_user',
-    'password' => 'your_db_password'
+    'user' => 'jaktfeltcup',
+    'password' => 'your_secure_password_here'
 ];
 
 // Application configuration
 $app_config = [
     'name' => 'Jaktfeltcup',
-    'url' => 'https://yourdomain.com',
-    'base_url' => '', // Empty for production (root domain)
+    'url' => 'https://hjellum.net/jaktfeltcup',
+    'base_url' => '/jaktfeltcup', // Change to '' for root domain
     'debug' => false,
-    'session_lifetime' => 7200
+    'session_lifetime' => 7200,
+    'data_source' => 'database' // Use database in production
 ];
 
 // Email configuration

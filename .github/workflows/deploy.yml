@@ -1,0 +1,131 @@
+name: Deploy to hjellum.net
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: pdo, pdo_mysql, mbstring, json, curl
+        
+    - name: Create deployment package
+      run: |
+        # Create deployment directory
+        mkdir -p deploy
+        
+        # Copy necessary files
+        cp -r views deploy/
+        cp -r src deploy/
+        cp -r config deploy/
+        cp -r data deploy/
+        cp -r handlers deploy/
+        cp -r database deploy/
+        cp index.php deploy/
+        cp .htaccess deploy/
+        cp README.md deploy/
+        cp DEPLOYMENT.md deploy/
+        
+        # Create production config
+        cp config/config.production.php deploy/config/config.php
+        
+        # Remove development files
+        rm -f deploy/data/README.md
+        rm -f deploy/.github/workflows/deploy.yml
+        
+        # Create .htaccess for production
+        cat > deploy/.htaccess << 'EOF'
+        RewriteEngine On
+        
+        # Redirect all requests to index.php
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^(.*)$ index.php [QSA,L]
+        
+        # Security headers
+        Header always set X-Content-Type-Options nosniff
+        Header always set X-Frame-Options DENY
+        Header always set X-XSS-Protection "1; mode=block"
+        
+        # Cache static files
+        <FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg)$">
+            ExpiresActive On
+            ExpiresDefault "access plus 1 month"
+        </FilesMatch>
+        EOF
+        
+        # Create deployment info
+        echo "Deployed: $(date)" > deploy/DEPLOY_INFO.txt
+        echo "Commit: ${{ github.sha }}" >> deploy/DEPLOY_INFO.txt
+        echo "Branch: ${{ github.ref_name }}" >> deploy/DEPLOY_INFO.txt
+        
+    - name: Deploy to hjellum.net
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT || 22 }}
+        script: |
+          # Create backup of current deployment
+          if [ -d "/home/${{ secrets.USERNAME }}/public_html/jaktfeltcup" ]; then
+            cp -r /home/${{ secrets.USERNAME }}/public_html/jaktfeltcup /home/${{ secrets.USERNAME }}/backup/jaktfeltcup-$(date +%Y%m%d-%H%M%S)
+          fi
+          
+          # Create directories if they don't exist
+          mkdir -p /home/${{ secrets.USERNAME }}/public_html/jaktfeltcup
+          mkdir -p /home/${{ secrets.USERNAME }}/backup
+          
+    - name: Upload files
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT || 22 }}
+        source: "deploy/*"
+        target: "/home/${{ secrets.USERNAME }}/public_html/jaktfeltcup"
+        strip_components: 1
+        
+    - name: Set permissions
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT || 22 }}
+        script: |
+          # Set correct permissions
+          chmod -R 755 /home/${{ secrets.USERNAME }}/public_html/jaktfeltcup
+          chmod 644 /home/${{ secrets.USERNAME }}/public_html/jaktfeltcup/*.php
+          chmod 644 /home/${{ secrets.USERNAME }}/public_html/jaktfeltcup/.htaccess
+          
+          # Set ownership
+          chown -R ${{ secrets.USERNAME }}:${{ secrets.USERNAME }} /home/${{ secrets.USERNAME }}/public_html/jaktfeltcup
+          
+          # Test deployment
+          curl -f https://hjellum.net/jaktfeltcup/ || exit 1
+          
+    - name: Notify deployment success
+      if: success()
+      run: |
+        echo "✅ Deployment successful!"
+        echo "🌐 Site: https://hjellum.net/jaktfeltcup/"
+        echo "📅 Deployed: $(date)"
+        
+    - name: Notify deployment failure
+      if: failure()
+      run: |
+        echo "❌ Deployment failed!"
+        echo "Check the logs above for details."
