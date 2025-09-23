@@ -1,0 +1,305 @@
+{
+  "seasons": [
+    {
+      "id": 1,
+      "name": "Jaktfeltcup 2023",
+      "year": 2023,
+      "is_active": false,
+      "start_date": "2023-01-01",
+      "end_date": "2023-12-31"
+    },
+    {
+      "id": 2,
+      "name": "Jaktfeltcup 2024",
+      "year": 2024,
+      "is_active": true,
+      "start_date": "2024-01-01",
+      "end_date": "2024-12-31"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Senior",
+      "description": "Senior klasse",
+      "min_age": 18,
+      "max_age": 99,
+      "weapon_type": "Rifle",
+      "is_active": true
+    },
+    {
+      "id": 2,
+      "name": "Junior",
+      "description": "Junior klasse",
+      "min_age": 12,
+      "max_age": 17,
+      "weapon_type": "Rifle",
+      "is_active": true
+    },
+    {
+      "id": 3,
+      "name": "Veteran",
+      "description": "Veteran klasse",
+      "min_age": 50,
+      "max_age": 99,
+      "weapon_type": "Rifle",
+      "is_active": true
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@jaktfeltcup.no",
+      "first_name": "Admin",
+      "last_name": "Bruker",
+      "phone": "+47 12345678",
+      "role": "admin",
+      "is_active": true
+    },
+    {
+      "id": 2,
+      "username": "organizer1",
+      "email": "organizer@jaktfeltcup.no",
+      "first_name": "Erik",
+      "last_name": "Arrangør",
+      "phone": "+47 87654321",
+      "role": "organizer",
+      "is_active": true
+    },
+    {
+      "id": 3,
+      "username": "lars.skytter",
+      "email": "lars@example.com",
+      "first_name": "Lars",
+      "last_name": "Hansen",
+      "phone": "+47 11111111",
+      "role": "participant",
+      "is_active": true
+    },
+    {
+      "id": 4,
+      "username": "anna.berg",
+      "email": "anna@example.com",
+      "first_name": "Anna",
+      "last_name": "Berg",
+      "phone": "+47 22222222",
+      "role": "participant",
+      "is_active": true
+    },
+    {
+      "id": 5,
+      "username": "ole.nordmann",
+      "email": "ole@example.com",
+      "first_name": "Ole",
+      "last_name": "Nordmann",
+      "phone": "+47 33333333",
+      "role": "participant",
+      "is_active": true
+    },
+    {
+      "id": 6,
+      "username": "kari.larsen",
+      "email": "kari@example.com",
+      "first_name": "Kari",
+      "last_name": "Larsen",
+      "phone": "+47 44444444",
+      "role": "participant",
+      "is_active": true
+    },
+    {
+      "id": 7,
+      "username": "per.andersen",
+      "email": "per@example.com",
+      "first_name": "Per",
+      "last_name": "Andersen",
+      "phone": "+47 55555555",
+      "role": "participant",
+      "is_active": true
+    },
+    {
+      "id": 8,
+      "username": "marit.solberg",
+      "email": "marit@example.com",
+      "first_name": "Marit",
+      "last_name": "Solberg",
+      "phone": "+47 66666666",
+      "role": "participant",
+      "is_active": true
+    },
+    {
+      "id": 9,
+      "username": "bjorn.johansen",
+      "email": "bjorn@example.com",
+      "first_name": "Bjørn",
+      "last_name": "Johansen",
+      "phone": "+47 77777777",
+      "role": "participant",
+      "is_active": true
+    },
+    {
+      "id": 10,
+      "username": "siv.pedersen",
+      "email": "siv@example.com",
+      "first_name": "Siv",
+      "last_name": "Pedersen",
+      "phone": "+47 88888888",
+      "role": "participant",
+      "is_active": true
+    }
+  ],
+  "competitions": [
+    {
+      "id": 1,
+      "season_id": 1,
+      "name": "Vårstevnet 2023",
+      "description": "Årets første stevne i vår",
+      "location": "Oslo Skytebane",
+      "competition_date": "2023-04-15",
+      "registration_start": "2023-03-01",
+      "registration_end": "2023-04-10",
+      "max_participants": 30,
+      "is_published": true,
+      "is_locked": true,
+      "organizer_id": 2
+    },
+    {
+      "id": 2,
+      "season_id": 1,
+      "name": "Sommerstevnet 2023",
+      "description": "Sommerstevne med godt vær",
+      "location": "Bergen Skyteklubb",
+      "competition_date": "2023-07-22",
+      "registration_start": "2023-06-01",
+      "registration_end": "2023-07-15",
+      "max_participants": 25,
+      "is_published": true,
+      "is_locked": true,
+      "organizer_id": 2
+    },
+    {
+      "id": 3,
+      "season_id": 2,
+      "name": "Høststevnet 2024",
+      "description": "Høstens første stevne",
+      "location": "Trondheim Skytebane",
+      "competition_date": "2024-09-14",
+      "registration_start": "2024-08-01",
+      "registration_end": "2024-09-10",
+      "max_participants": 35,
+      "is_published": true,
+      "is_locked": false,
+      "organizer_id": 2
+    },
+    {
+      "id": 4,
+      "season_id": 2,
+      "name": "Vinterstevnet 2024",
+      "description": "Årets siste stevne",
+      "location": "Tromsø Skyteklubb",
+      "competition_date": "2024-12-07",
+      "registration_start": "2024-11-01",
+      "registration_end": "2024-12-01",
+      "max_participants": 20,
+      "is_published": true,
+      "is_locked": false,
+      "organizer_id": 2
+    }
+  ],
+  "competition_categories": [
+    {"competition_id": 1, "category_id": 1, "max_participants": 15},
+    {"competition_id": 1, "category_id": 2, "max_participants": 10},
+    {"competition_id": 1, "category_id": 3, "max_participants": 5},
+    {"competition_id": 2, "category_id": 1, "max_participants": 12},
+    {"competition_id": 2, "category_id": 2, "max_participants": 8},
+    {"competition_id": 2, "category_id": 3, "max_participants": 5},
+    {"competition_id": 3, "category_id": 1, "max_participants": 18},
+    {"competition_id": 3, "category_id": 2, "max_participants": 12},
+    {"competition_id": 3, "category_id": 3, "max_participants": 5},
+    {"competition_id": 4, "category_id": 1, "max_participants": 10},
+    {"competition_id": 4, "category_id": 2, "max_participants": 6},
+    {"competition_id": 4, "category_id": 3, "max_participants": 4}
+  ],
+  "registrations": [
+    {"user_id": 3, "competition_id": 1, "category_id": 1, "status": "confirmed"},
+    {"user_id": 4, "competition_id": 1, "category_id": 1, "status": "confirmed"},
+    {"user_id": 5, "competition_id": 1, "category_id": 2, "status": "confirmed"},
+    {"user_id": 6, "competition_id": 1, "category_id": 2, "status": "confirmed"},
+    {"user_id": 7, "competition_id": 1, "category_id": 3, "status": "confirmed"},
+    {"user_id": 8, "competition_id": 1, "category_id": 1, "status": "confirmed"},
+    {"user_id": 9, "competition_id": 1, "category_id": 2, "status": "confirmed"},
+    {"user_id": 10, "competition_id": 1, "category_id": 1, "status": "confirmed"},
+    {"user_id": 3, "competition_id": 2, "category_id": 1, "status": "confirmed"},
+    {"user_id": 4, "competition_id": 2, "category_id": 1, "status": "confirmed"},
+    {"user_id": 5, "competition_id": 2, "category_id": 2, "status": "confirmed"},
+    {"user_id": 6, "competition_id": 2, "category_id": 2, "status": "confirmed"},
+    {"user_id": 7, "competition_id": 2, "category_id": 3, "status": "confirmed"},
+    {"user_id": 8, "competition_id": 2, "category_id": 1, "status": "confirmed"},
+    {"user_id": 9, "competition_id": 2, "category_id": 2, "status": "confirmed"},
+    {"user_id": 10, "competition_id": 2, "category_id": 1, "status": "confirmed"},
+    {"user_id": 3, "competition_id": 3, "category_id": 1, "status": "confirmed"},
+    {"user_id": 4, "competition_id": 3, "category_id": 1, "status": "confirmed"},
+    {"user_id": 5, "competition_id": 3, "category_id": 2, "status": "confirmed"},
+    {"user_id": 6, "competition_id": 3, "category_id": 2, "status": "confirmed"},
+    {"user_id": 7, "competition_id": 3, "category_id": 3, "status": "confirmed"},
+    {"user_id": 8, "competition_id": 3, "category_id": 1, "status": "confirmed"},
+    {"user_id": 9, "competition_id": 3, "category_id": 2, "status": "confirmed"},
+    {"user_id": 10, "competition_id": 3, "category_id": 1, "status": "confirmed"},
+    {"user_id": 3, "competition_id": 4, "category_id": 1, "status": "confirmed"},
+    {"user_id": 4, "competition_id": 4, "category_id": 1, "status": "confirmed"},
+    {"user_id": 5, "competition_id": 4, "category_id": 2, "status": "confirmed"},
+    {"user_id": 6, "competition_id": 4, "category_id": 2, "status": "confirmed"},
+    {"user_id": 7, "competition_id": 4, "category_id": 3, "status": "confirmed"},
+    {"user_id": 8, "competition_id": 4, "category_id": 1, "status": "confirmed"}
+  ],
+  "results": [
+    {"competition_id": 1, "user_id": 3, "category_id": 1, "score": 95, "position": 1, "points_awarded": 100},
+    {"competition_id": 1, "user_id": 4, "category_id": 1, "score": 92, "position": 2, "points_awarded": 90},
+    {"competition_id": 1, "user_id": 5, "category_id": 2, "score": 88, "position": 1, "points_awarded": 100},
+    {"competition_id": 1, "user_id": 6, "category_id": 2, "score": 85, "position": 2, "points_awarded": 90},
+    {"competition_id": 1, "user_id": 7, "category_id": 3, "score": 90, "position": 1, "points_awarded": 100},
+    {"competition_id": 1, "user_id": 8, "category_id": 1, "score": 89, "position": 3, "points_awarded": 80},
+    {"competition_id": 1, "user_id": 9, "category_id": 2, "score": 82, "position": 3, "points_awarded": 80},
+    {"competition_id": 1, "user_id": 10, "category_id": 1, "score": 87, "position": 4, "points_awarded": 70},
+    {"competition_id": 2, "user_id": 3, "category_id": 1, "score": 93, "position": 2, "points_awarded": 90},
+    {"competition_id": 2, "user_id": 4, "category_id": 1, "score": 96, "position": 1, "points_awarded": 100},
+    {"competition_id": 2, "user_id": 5, "category_id": 2, "score": 91, "position": 1, "points_awarded": 100},
+    {"competition_id": 2, "user_id": 6, "category_id": 2, "score": 87, "position": 2, "points_awarded": 90},
+    {"competition_id": 2, "user_id": 7, "category_id": 3, "score": 88, "position": 1, "points_awarded": 100},
+    {"competition_id": 2, "user_id": 8, "category_id": 1, "score": 90, "position": 3, "points_awarded": 80},
+    {"competition_id": 2, "user_id": 9, "category_id": 2, "score": 84, "position": 3, "points_awarded": 80},
+    {"competition_id": 2, "user_id": 10, "category_id": 1, "score": 88, "position": 4, "points_awarded": 70},
+    {"competition_id": 3, "user_id": 3, "category_id": 1, "score": 94, "position": 1, "points_awarded": 100},
+    {"competition_id": 3, "user_id": 4, "category_id": 1, "score": 91, "position": 2, "points_awarded": 90},
+    {"competition_id": 3, "user_id": 5, "category_id": 2, "score": 89, "position": 1, "points_awarded": 100},
+    {"competition_id": 3, "user_id": 6, "category_id": 2, "score": 86, "position": 2, "points_awarded": 90},
+    {"competition_id": 3, "user_id": 7, "category_id": 3, "score": 92, "position": 1, "points_awarded": 100},
+    {"competition_id": 3, "user_id": 8, "category_id": 1, "score": 88, "position": 3, "points_awarded": 80},
+    {"competition_id": 3, "user_id": 9, "category_id": 2, "score": 83, "position": 3, "points_awarded": 80},
+    {"competition_id": 3, "user_id": 10, "category_id": 1, "score": 85, "position": 4, "points_awarded": 70}
+  ],
+  "point_systems": [
+    {
+      "id": 1,
+      "name": "Standard",
+      "description": "Standard poengsystem: 1.plass=100p, 2.plass=90p, osv.",
+      "is_active": true
+    }
+  ],
+  "point_rules": [
+    {"point_system_id": 1, "position": 1, "points": 100},
+    {"point_system_id": 1, "position": 2, "points": 90},
+    {"point_system_id": 1, "position": 3, "points": 80},
+    {"point_system_id": 1, "position": 4, "points": 70},
+    {"point_system_id": 1, "position": 5, "points": 60},
+    {"point_system_id": 1, "position": 6, "points": 50},
+    {"point_system_id": 1, "position": 7, "points": 40},
+    {"point_system_id": 1, "position": 8, "points": 30},
+    {"point_system_id": 1, "position": 9, "points": 20},
+    {"point_system_id": 1, "position": 10, "points": 10}
+  ],
+  "season_point_systems": [
+    {"season_id": 1, "point_system_id": 1},
+    {"season_id": 2, "point_system_id": 1}
+  ]
+}
