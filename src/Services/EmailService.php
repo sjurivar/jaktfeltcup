@@ -39,7 +39,7 @@ class EmailService {
     private function storeVerificationCode($userId, $email, $code) {
         $expiresAt = date('Y-m-d H:i:s', strtotime('+24 hours'));
         
-        $sql = "INSERT INTO email_verifications (user_id, email, verification_code, expires_at) 
+        $sql = "INSERT INTO jaktfelt_email_verifications (user_id, email, verification_code, expires_at) 
                 VALUES (?, ?, ?, ?)";
         
         $this->db->execute($sql, [$userId, $email, $code, $expiresAt]);
@@ -49,7 +49,7 @@ class EmailService {
      * Verify email code
      */
     public function verifyEmailCode($code) {
-        $sql = "SELECT * FROM email_verifications 
+        $sql = "SELECT * FROM jaktfelt_email_verifications 
                 WHERE verification_code = ? 
                 AND is_used = FALSE 
                 AND expires_at > NOW()";
@@ -73,7 +73,7 @@ class EmailService {
      * Mark verification code as used
      */
     private function markCodeAsUsed($verificationId) {
-        $sql = "UPDATE email_verifications 
+        $sql = "UPDATE jaktfelt_email_verifications 
                 SET is_used = TRUE, used_at = NOW() 
                 WHERE id = ?";
         
@@ -84,7 +84,7 @@ class EmailService {
      * Update user email verified status
      */
     private function updateUserEmailVerified($userId) {
-        $sql = "UPDATE users 
+        $sql = "UPDATE jaktfelt_users 
                 SET email_verified = TRUE 
                 WHERE id = ?";
         

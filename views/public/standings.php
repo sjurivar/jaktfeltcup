@@ -67,7 +67,7 @@ $current_page = 'standings';
                         } else {
                             // Use database
                             try {
-                                $currentSeason = $database->queryOne("SELECT * FROM seasons WHERE is_active = 1 ORDER BY year DESC LIMIT 1");
+                                $currentSeason = $database->queryOne("SELECT * FROM jaktfelt_seasons WHERE is_active = 1 ORDER BY year DESC LIMIT 1");
                                 $seasonId = $currentSeason ? $currentSeason['id'] : 1;
                                 
                                 $standings = $database->query(
@@ -75,10 +75,10 @@ $current_page = 'standings';
                                             SUM(r.points_awarded) as total_points,
                                             COUNT(r.id) as competitions_entered,
                                             AVG(r.score) as avg_score
-                                     FROM users u
-                                     LEFT JOIN results r ON u.id = r.user_id
-                                     LEFT JOIN competitions c ON r.competition_id = c.id
-                                     LEFT JOIN seasons s ON c.season_id = s.id
+                                     FROM jaktfelt_users u
+                                     LEFT JOIN jaktfelt_results r ON u.id = r.user_id
+                                     LEFT JOIN jaktfelt_competitions c ON r.competition_id = c.id
+                                     LEFT JOIN jaktfelt_seasons s ON c.season_id = s.id
                                      WHERE s.id = ? AND r.points_awarded > 0
                                      GROUP BY u.id, u.first_name, u.last_name
                                      ORDER BY total_points DESC, competitions_entered DESC",
@@ -142,7 +142,7 @@ $current_page = 'standings';
                     </div>
                     <div class="card-body">
                         <?php
-                        $seasons = $database->query("SELECT * FROM seasons ORDER BY year DESC");
+                        $seasons = $database->query("SELECT * FROM jaktfelt_seasons ORDER BY year DESC");
                         foreach ($seasons as $season) {
                             echo '<a href="/standings?season=' . $season['id'] . '" class="d-block mb-2">';
                             echo htmlspecialchars($season['name']);
@@ -163,8 +163,8 @@ $current_page = 'standings';
                         <?php
                         $pointSystem = $database->queryOne(
                             "SELECT ps.name, ps.description 
-                             FROM point_systems ps
-                             JOIN season_point_systems sps ON ps.id = sps.point_system_id
+                             FROM jaktfelt_point_systems ps
+                             JOIN jaktfelt_season_point_systems sps ON ps.id = sps.point_system_id
                              WHERE sps.season_id = ? AND ps.is_active = 1",
                             [$seasonId]
                         );

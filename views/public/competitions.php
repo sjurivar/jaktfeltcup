@@ -15,7 +15,7 @@ $current_page = 'competitions';
                 <?php
                 try {
                     // Get current season
-                    $currentSeason = $database->queryOne("SELECT * FROM seasons WHERE is_active = 1 ORDER BY year DESC LIMIT 1");
+                    $currentSeason = $database->queryOne("SELECT * FROM jaktfelt_seasons WHERE is_active = 1 ORDER BY year DESC LIMIT 1");
                     $seasonId = $currentSeason ? $currentSeason['id'] : 1;
                     
                     // Get competitions
@@ -23,10 +23,10 @@ $current_page = 'competitions';
                         "SELECT c.*, s.name as season_name,
                                 COUNT(reg.id) as registered_count,
                                 u.first_name, u.last_name
-                         FROM competitions c
-                         JOIN seasons s ON c.season_id = s.id
-                         LEFT JOIN registrations reg ON c.id = reg.competition_id AND reg.status = 'confirmed'
-                         LEFT JOIN users u ON c.organizer_id = u.id
+                         FROM jaktfelt_competitions c
+                         JOIN jaktfelt_seasons s ON c.season_id = s.id
+                         LEFT JOIN jaktfelt_registrations reg ON c.id = reg.competition_id AND reg.status = 'confirmed'
+                         LEFT JOIN jaktfelt_users u ON c.organizer_id = u.id
                          WHERE s.id = ? AND c.is_published = 1
                          GROUP BY c.id
                          ORDER BY c.competition_date ASC",
@@ -109,7 +109,7 @@ $current_page = 'competitions';
                     </div>
                     <div class="card-body">
                         <?php
-                        $seasons = $database->query("SELECT * FROM seasons ORDER BY year DESC");
+                        $seasons = $database->query("SELECT * FROM jaktfelt_seasons ORDER BY year DESC");
                         foreach ($seasons as $season) {
                             echo '<a href="/competitions?season=' . $season['id'] . '" class="d-block mb-2">';
                             echo htmlspecialchars($season['name']);
@@ -128,7 +128,7 @@ $current_page = 'competitions';
                     </div>
                     <div class="card-body">
                         <?php
-                        $categories = $database->query("SELECT * FROM categories WHERE is_active = 1 ORDER BY name");
+                        $categories = $database->query("SELECT * FROM jaktfelt_categories WHERE is_active = 1 ORDER BY name");
                         foreach ($categories as $category) {
                             echo '<div class="mb-2">';
                             echo '<strong>' . htmlspecialchars($category['name']) . '</strong>';

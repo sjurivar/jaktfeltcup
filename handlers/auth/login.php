@@ -19,7 +19,7 @@ if (empty($email) || empty($password)) {
 
 // Check user credentials
 $user = $database->queryOne(
-    "SELECT * FROM users WHERE email = ? AND is_active = 1",
+    "SELECT * FROM jaktfelt_users WHERE email = ? AND is_active = 1",
     [$email]
 );
 

@@ -21,7 +21,7 @@ $userId = $_SESSION['user_id'];
 
 // Get user information
 $user = $database->queryOne(
-    "SELECT id, email, first_name, email_verified FROM users WHERE id = ?",
+    "SELECT id, email, first_name, email_verified FROM jaktfelt_users WHERE id = ?",
     [$userId]
 );
 

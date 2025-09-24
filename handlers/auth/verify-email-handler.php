@@ -29,7 +29,7 @@ $verification = $emailService->verifyEmailCode($verification_code);
 if ($verification) {
     // Get user information
     $user = $database->queryOne(
-        "SELECT id, username, first_name, last_name, email_verified FROM users WHERE id = ?",
+        "SELECT id, username, first_name, last_name, email_verified FROM jaktfelt_users WHERE id = ?",
         [$verification['user_id']]
     );
     

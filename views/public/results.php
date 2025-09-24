@@ -53,9 +53,9 @@ $current_page = 'results';
                                 $competitions = $database->query(
                                     "SELECT c.*, s.name as season_name,
                                             COUNT(r.id) as result_count
-                                     FROM competitions c
-                                     JOIN seasons s ON c.season_id = s.id
-                                     LEFT JOIN results r ON c.id = r.competition_id
+                                     FROM jaktfelt_competitions c
+                                     JOIN jaktfelt_seasons s ON c.season_id = s.id
+                                     LEFT JOIN jaktfelt_results r ON c.id = r.competition_id
                                      WHERE c.is_published = 1
                                      GROUP BY c.id
                                      ORDER BY c.competition_date DESC"
@@ -96,7 +96,7 @@ $current_page = 'results';
                     </div>
                     <div class="card-body">
                         <?php
-                        $seasons = $database->query("SELECT * FROM seasons ORDER BY year DESC");
+                        $seasons = $database->query("SELECT * FROM jaktfelt_seasons ORDER BY year DESC");
                         foreach ($seasons as $season) {
                             echo '<a href="/results?season=' . $season['id'] . '" class="d-block mb-2">';
                             echo htmlspecialchars($season['name']);

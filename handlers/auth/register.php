@@ -46,7 +46,7 @@ if ($password !== $password_confirm) {
 
 // Check if user already exists
 $existingUser = $database->queryOne(
-    "SELECT id FROM users WHERE email = ? OR username = ?",
+    "SELECT id FROM jaktfelt_users WHERE email = ? OR username = ?",
     [$email, $username]
 );
 
@@ -68,7 +68,7 @@ $password_hash = password_hash($password, PASSWORD_DEFAULT);
 // Insert user
 try {
     $database->execute(
-        "INSERT INTO users (username, email, password_hash, first_name, last_name, phone, date_of_birth, address, role, email_verified) 
+        "INSERT INTO jaktfelt_users (username, email, password_hash, first_name, last_name, phone, date_of_birth, address, role, email_verified) 
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'participant', FALSE)",
         [
             $username,

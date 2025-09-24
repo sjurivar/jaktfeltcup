@@ -2,7 +2,7 @@
 -- Created for managing shooting competition administration
 
 -- Users table with role-based access
-CREATE TABLE users (
+CREATE TABLE jaktfelt_users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE users (
 );
 
 -- Seasons table for multi-year support
-CREATE TABLE seasons (
+CREATE TABLE jaktfelt_seasons (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     year YEAR NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE seasons (
 );
 
 -- Competitions table
-CREATE TABLE competitions (
+CREATE TABLE jaktfelt_competitions (
     id INT PRIMARY KEY AUTO_INCREMENT,
     season_id INT NOT NULL,
     name VARCHAR(100) NOT NULL,
@@ -52,8 +52,8 @@ CREATE TABLE competitions (
     organizer_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (season_id) REFERENCES seasons(id) ON DELETE CASCADE,
-    FOREIGN KEY (organizer_id) REFERENCES users(id) ON DELETE RESTRICT,
+    FOREIGN KEY (season_id) REFERENCES jaktfelt_seasons(id) ON DELETE CASCADE,
+    FOREIGN KEY (organizer_id) REFERENCES jaktfelt_users(id) ON DELETE RESTRICT,
     INDEX idx_season (season_id),
     INDEX idx_date (competition_date),
     INDEX idx_registration (registration_start, registration_end),
@@ -61,7 +61,7 @@ CREATE TABLE competitions (
 );
 
 -- Categories for competitions (age groups, weapon types, etc.)
-CREATE TABLE categories (
+CREATE TABLE jaktfelt_categories (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     description TEXT,
@@ -74,19 +74,19 @@ CREATE TABLE categories (
 );
 
 -- Competition categories (many-to-many)
-CREATE TABLE competition_categories (
+CREATE TABLE jaktfelt_competition_categories (
     id INT PRIMARY KEY AUTO_INCREMENT,
     competition_id INT NOT NULL,
     category_id INT NOT NULL,
     max_participants INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (competition_id) REFERENCES competitions(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
+    FOREIGN KEY (competition_id) REFERENCES jaktfelt_competitions(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES jaktfelt_categories(id) ON DELETE CASCADE,
     UNIQUE KEY unique_competition_category (competition_id, category_id)
 );
 
 -- Registrations table
-CREATE TABLE registrations (
+CREATE TABLE jaktfelt_registrations (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     competition_id INT NOT NULL,
@@ -96,16 +96,16 @@ CREATE TABLE registrations (
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (competition_id) REFERENCES competitions(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE,
+    FOREIGN KEY (competition_id) REFERENCES jaktfelt_competitions(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES jaktfelt_categories(id) ON DELETE CASCADE,
     UNIQUE KEY unique_user_competition (user_id, competition_id),
     INDEX idx_status (status),
     INDEX idx_competition (competition_id)
 );
 
 -- Results table
-CREATE TABLE results (
+CREATE TABLE jaktfelt_results (
     id INT PRIMARY KEY AUTO_INCREMENT,
     competition_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -119,9 +119,9 @@ CREATE TABLE results (
     entered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (competition_id) REFERENCES competitions(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
-    FOREIGN KEY (entered_by) REFERENCES users(id) ON DELETE RESTRICT,
+    FOREIGN KEY (entered_by) REFERENCES jaktfelt_users(id) ON DELETE RESTRICT,
     UNIQUE KEY unique_user_competition_category (user_id, competition_id, category_id),
     INDEX idx_competition (competition_id),
     INDEX idx_user (user_id),
@@ -129,7 +129,7 @@ CREATE TABLE results (
 );
 
 -- Point system configuration (flexible scoring)
-CREATE TABLE point_systems (
+CREATE TABLE jaktfelt_point_systems (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     description TEXT,
@@ -139,30 +139,30 @@ CREATE TABLE point_systems (
 );
 
 -- Point system rules
-CREATE TABLE point_rules (
+CREATE TABLE jaktfelt_point_rules (
     id INT PRIMARY KEY AUTO_INCREMENT,
     point_system_id INT NOT NULL,
     position INT NOT NULL,
     points INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (point_system_id) REFERENCES point_systems(id) ON DELETE CASCADE,
+    FOREIGN KEY (point_system_id) REFERENCES jaktfelt_point_systems(id) ON DELETE CASCADE,
     UNIQUE KEY unique_system_position (point_system_id, position),
     INDEX idx_position (position)
 );
 
 -- Season point system assignment
-CREATE TABLE season_point_systems (
+CREATE TABLE jaktfelt_season_point_systems (
     id INT PRIMARY KEY AUTO_INCREMENT,
     season_id INT NOT NULL,
     point_system_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (season_id) REFERENCES seasons(id) ON DELETE CASCADE,
-    FOREIGN KEY (point_system_id) REFERENCES point_systems(id) ON DELETE CASCADE,
+    FOREIGN KEY (season_id) REFERENCES jaktfelt_seasons(id) ON DELETE CASCADE,
+    FOREIGN KEY (point_system_id) REFERENCES jaktfelt_point_systems(id) ON DELETE CASCADE,
     UNIQUE KEY unique_season_system (season_id, point_system_id)
 );
 
 -- Email verification codes
-CREATE TABLE email_verifications (
+CREATE TABLE jaktfelt_email_verifications (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     email VARCHAR(100) NOT NULL,
@@ -171,7 +171,7 @@ CREATE TABLE email_verifications (
     is_used BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     used_at TIMESTAMP NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE,
     INDEX idx_user (user_id),
     INDEX idx_code (verification_code),
     INDEX idx_expires (expires_at),
@@ -179,7 +179,7 @@ CREATE TABLE email_verifications (
 );
 
 -- Notifications table
-CREATE TABLE notifications (
+CREATE TABLE jaktfelt_notifications (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     type ENUM('email', 'sms', 'system') NOT NULL,
@@ -188,14 +188,14 @@ CREATE TABLE notifications (
     status ENUM('pending', 'sent', 'failed') DEFAULT 'pending',
     sent_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE,
     INDEX idx_user (user_id),
     INDEX idx_status (status),
     INDEX idx_type (type)
 );
 
 -- Offline sync table for mobile/offline functionality
-CREATE TABLE offline_sync (
+CREATE TABLE jaktfelt_offline_sync (
     id INT PRIMARY KEY AUTO_INCREMENT,
     table_name VARCHAR(50) NOT NULL,
     record_id INT NOT NULL,
@@ -209,7 +209,7 @@ CREATE TABLE offline_sync (
 );
 
 -- Audit log for tracking changes
-CREATE TABLE audit_log (
+CREATE TABLE jaktfelt_audit_log (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     table_name VARCHAR(50) NOT NULL,
@@ -220,25 +220,25 @@ CREATE TABLE audit_log (
     ip_address VARCHAR(45),
     user_agent TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE SET NULL,
     INDEX idx_user (user_id),
     INDEX idx_table_record (table_name, record_id),
     INDEX idx_created (created_at)
 );
 
 -- Insert default data
-INSERT INTO seasons (name, year, is_active, start_date, end_date) VALUES 
+INSERT INTO jaktfelt_seasons (name, year, is_active, start_date, end_date) VALUES 
 ('Jaktfeltcup 2024', 2024, TRUE, '2024-01-01', '2024-12-31');
 
-INSERT INTO categories (name, description, min_age, max_age, weapon_type) VALUES 
+INSERT INTO jaktfelt_categories (name, description, min_age, max_age, weapon_type) VALUES 
 ('Senior', 'Senior klasse', 18, 99, 'Rifle'),
 ('Junior', 'Junior klasse', 12, 17, 'Rifle'),
 ('Veteran', 'Veteran klasse', 50, 99, 'Rifle');
 
-INSERT INTO point_systems (name, description, is_active) VALUES 
+INSERT INTO jaktfelt_point_systems (name, description, is_active) VALUES 
 ('Standard', 'Standard poengsystem: 1.plass=100p, 2.plass=90p, osv.', TRUE);
 
-INSERT INTO point_rules (point_system_id, position, points) VALUES 
+INSERT INTO jaktfelt_point_rules (point_system_id, position, points) VALUES 
 (1, 1, 100),
 (1, 2, 90),
 (1, 3, 80),
@@ -250,4 +250,4 @@ INSERT INTO point_rules (point_system_id, position, points) VALUES
 (1, 9, 20),
 (1, 10, 10);
 
-INSERT INTO season_point_systems (season_id, point_system_id) VALUES (1, 1);
+INSERT INTO jaktfelt_season_point_systems (season_id, point_system_id) VALUES (1, 1);
