@@ -34,8 +34,10 @@ jobs:
           cp -r scripts deploy/
           cp index.php deploy/
           cp .htaccess deploy/
-          cp README.md deploy/
-          cp DEPLOYMENT.md deploy/
+          
+          # Ensure .htaccess files are copied (they might be hidden)
+          find admin -name ".htaccess" -exec cp {} deploy/{} \; 2>/dev/null || true
+          find scripts -name ".htaccess" -exec cp {} deploy/{} \; 2>/dev/null || true
           
           # Note: Production uses its own config.php file
           # No need to copy production config
@@ -60,6 +62,13 @@ jobs:
               ExpiresDefault "access plus 1 month"
           </FilesMatch>
           EOF
+          
+          # Debug: List what was copied to deploy directory
+          echo "=== DEBUG: Files in deploy directory ==="
+          find deploy -type f | head -20
+          echo "=== DEBUG: Admin directory contents ==="
+          ls -la deploy/admin/ || echo "Admin directory not found in deploy"
+          ls -la deploy/admin/database/ || echo "Admin/database directory not found in deploy"
           
           # Opprett deployment info
           echo "Deployed: $(date)" > deploy/DEPLOY_INFO.txt
@@ -92,10 +101,6 @@ jobs:
             **/.git*
             **/*.md
             **/DEPLOY_INFO.txt
-            **/database/**
-            **/data/**
-            **/routes/**
-            **/public/**
             **/env.example
             **/deploy.sh
             **/test.php
