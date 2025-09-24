@@ -1,27 +1,11 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stevneresultater - Jaktfeltcup</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>">
-                <i class="fas fa-bullseye me-2"></i>Jaktfeltcup
-            </a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="<?= base_url() ?>">Hjem</a>
-                <a class="nav-link" href="<?= base_url('results') ?>">Resultater</a>
-                <a class="nav-link" href="<?= base_url('standings') ?>">Sammenlagt</a>
-                <a class="nav-link" href="<?= base_url('competitions') ?>">Stevner</a>
-            </div>
-        </div>
-    </nav>
+<?php
+// Set page variables
+$page_title = 'Stevneresultater';
+$page_description = 'Se resultater fra et spesifikt stevne';
+$current_page = 'results';
+?>
+
+<?php include_header(); ?>
 
     <div class="container mt-4">
         <?php
@@ -61,11 +45,11 @@
         } else {
             // Use database
             try {
-                $competition = $database->queryOne(
+                $competition = $dataService->queryOne(
                     "SELECT c.*, s.name as season_name 
-                     FROM competitions c 
-                     JOIN seasons s ON c.season_id = s.id 
-                     WHERE c.id = ? AND c.is_published = 1",
+                     FROM jaktfelt_competitions c 
+                     JOIN jaktfelt_seasons s ON c.season_id = s.id 
+                     WHERE c.id = ? AND (c.status = 'upcoming' OR c.status = 'completed')",
                     [$competitionId]
                 );
                 
@@ -74,11 +58,12 @@
                     exit;
                 }
                 
-                $results = $database->query(
-                    "SELECT r.*, u.first_name, u.last_name, cat.name as category_name
-                     FROM results r
-                     JOIN users u ON r.user_id = u.id
-                     JOIN categories cat ON r.category_id = cat.id
+                $results = $dataService->query(
+                    "SELECT r.*, u.first_name, u.last_name, cat.name as category_name,
+                            CONCAT(u.first_name, ' ', u.last_name) as user_name
+                     FROM jaktfelt_results r
+                     JOIN jaktfelt_users u ON r.user_id = u.id
+                     JOIN jaktfelt_categories cat ON r.category_id = cat.id
                      WHERE r.competition_id = ?
                      ORDER BY cat.name, r.score DESC",
                     [$competitionId]
@@ -98,7 +83,7 @@
                         <h4 class="mb-0"><?= htmlspecialchars($competition['name']) ?></h4>
                         <p class="text-muted mb-0">
                             <i class="fas fa-calendar me-1"></i>
-                            <?= date('d.m.Y', strtotime($competition['competition_date'])) ?>
+                            <?= date('d.m.Y', strtotime($competition['date'])) ?>
                             <i class="fas fa-map-marker-alt ms-3 me-1"></i>
                             <?= htmlspecialchars($competition['location']) ?>
                         </p>
@@ -179,10 +164,12 @@
                         </p>
                         
                         <p><strong>Status:</strong><br>
-                        <?php if ($competition['is_locked']): ?>
-                            <span class="badge bg-success">Låst</span>
+                        <?php if ($competition['status'] === 'completed'): ?>
+                            <span class="badge bg-success">Fullført</span>
+                        <?php elseif ($competition['status'] === 'upcoming'): ?>
+                            <span class="badge bg-warning">Kommende</span>
                         <?php else: ?>
-                            <span class="badge bg-warning">Åpen for redigering</span>
+                            <span class="badge bg-info"><?= htmlspecialchars($competition['status']) ?></span>
                         <?php endif; ?>
                         </p>
                     </div>
@@ -207,6 +194,4 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php include_footer(); ?>

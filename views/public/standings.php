@@ -22,8 +22,13 @@ $current_page = 'standings';
                         
                         if ($app_config['data_source'] === 'json') {
                             // Use JSON data
-                            $currentSeason = $dataService->findOne('seasons', ['is_active' => true]);
-                            $seasonId = $currentSeason ? $currentSeason['id'] : 1;
+                            // Check if season parameter is provided in URL
+                            $seasonId = isset($_GET['season']) ? (int)$_GET['season'] : null;
+                            
+                            if (!$seasonId) {
+                                $currentSeason = $dataService->findOne('seasons', ['is_active' => true]);
+                                $seasonId = $currentSeason ? $currentSeason['id'] : 1;
+                            }
                             
                             $standings = $dataService->getStandings($seasonId);
                             
@@ -67,10 +72,15 @@ $current_page = 'standings';
                         } else {
                             // Use database
                             try {
-                                $currentSeason = $database->queryOne("SELECT * FROM jaktfelt_seasons WHERE is_active = 1 ORDER BY year DESC LIMIT 1");
-                                $seasonId = $currentSeason ? $currentSeason['id'] : 1;
+                                // Check if season parameter is provided in URL
+                                $seasonId = isset($_GET['season']) ? (int)$_GET['season'] : null;
                                 
-                                $standings = $database->query(
+                                if (!$seasonId) {
+                                    $currentSeason = $dataService->queryOne("SELECT * FROM jaktfelt_seasons WHERE is_active = 1 ORDER BY year DESC LIMIT 1");
+                                    $seasonId = $currentSeason ? $currentSeason['id'] : 1;
+                                }
+                                
+                                $standings = $dataService->query(
                                     "SELECT u.id, u.first_name, u.last_name, 
                                             SUM(r.points_awarded) as total_points,
                                             COUNT(r.id) as competitions_entered,
@@ -126,7 +136,7 @@ $current_page = 'standings';
                                 echo '<div class="alert alert-info">';
                                 echo '<h6>Database ikke satt opp ennå</h6>';
                                 echo '<p>For å se sammenlagt, må du først sette opp databasen:</p>';
-                                echo '<a href="' . base_url('setup_database.php') . '" class="btn btn-primary">Sett opp database</a>';
+                                echo '<a href="' . base_url('admin/database') . '" class="btn btn-primary">Database Admin</a>';
                                 echo '</div>';
                             }
                         }
@@ -142,9 +152,15 @@ $current_page = 'standings';
                     </div>
                     <div class="card-body">
                         <?php
-                        $seasons = $database->query("SELECT * FROM jaktfelt_seasons ORDER BY year DESC");
+                        if ($app_config['data_source'] === 'json') {
+                            $seasons = $dataService->getAll('seasons');
+                            usort($seasons, function($a, $b) { return $b['year'] - $a['year']; });
+                        } else {
+                            $seasons = $dataService->query("SELECT * FROM jaktfelt_seasons ORDER BY year DESC");
+                        }
+                        
                         foreach ($seasons as $season) {
-                            echo '<a href="/standings?season=' . $season['id'] . '" class="d-block mb-2">';
+                            echo '<a href="' . base_url('standings?season=' . $season['id']) . '" class="d-block mb-2">';
                             echo htmlspecialchars($season['name']);
                             if ($season['is_active']) {
                                 echo ' <span class="badge bg-success">Aktiv</span>';
@@ -161,13 +177,17 @@ $current_page = 'standings';
                     </div>
                     <div class="card-body">
                         <?php
-                        $pointSystem = $database->queryOne(
-                            "SELECT ps.name, ps.description 
-                             FROM jaktfelt_point_systems ps
-                             JOIN jaktfelt_season_point_systems sps ON ps.id = sps.point_system_id
-                             WHERE sps.season_id = ? AND ps.is_active = 1",
-                            [$seasonId]
-                        );
+                        if ($app_config['data_source'] === 'json') {
+                            $pointSystem = $dataService->findOne('point_systems', ['is_active' => true]);
+                        } else {
+                            $pointSystem = $dataService->queryOne(
+                                "SELECT ps.name, ps.description 
+                                 FROM jaktfelt_point_systems ps
+                                 JOIN jaktfelt_season_point_systems sps ON ps.id = sps.point_system_id
+                                 WHERE sps.season_id = ? AND ps.is_active = 1",
+                                [$seasonId]
+                            );
+                        }
                         
                         if ($pointSystem) {
                             echo '<h6>' . htmlspecialchars($pointSystem['name']) . '</h6>';

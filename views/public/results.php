@@ -24,7 +24,7 @@ $current_page = 'results';
                             // Use JSON data
                             $competitions = $dataService->getCompetitionsWithResults();
                             $competitions = array_filter($competitions, function($c) {
-                                return $c['is_published'] == 1;
+                                return $c['status'] == 'upcoming' || $c['status'] == 'completed';
                             });
                             
                             if (empty($competitions)) {
@@ -32,14 +32,14 @@ $current_page = 'results';
                             } else {
                                 // Sort by competition date
                                 usort($competitions, function($a, $b) {
-                                    return strtotime($b['competition_date']) - strtotime($a['competition_date']);
+                                    return strtotime($b['date']) - strtotime($a['date']);
                                 });
                                 
                                 foreach ($competitions as $competition) {
                                     echo '<div class="mb-3">';
                                     echo '<h6>' . htmlspecialchars($competition['name']) . '</h6>';
                                     echo '<p class="text-muted small">';
-                                    echo 'Dato: ' . date('d.m.Y', strtotime($competition['competition_date'])) . ' | ';
+                                    echo 'Dato: ' . date('d.m.Y', strtotime($competition['date'])) . ' | ';
                                     echo 'Sted: ' . htmlspecialchars($competition['location']) . ' | ';
                                     echo 'Resultater: ' . $competition['result_count'];
                                     echo '</p>';
@@ -50,15 +50,15 @@ $current_page = 'results';
                         } else {
                             // Use database
                             try {
-                                $competitions = $database->query(
+                                $competitions = $dataService->query(
                                     "SELECT c.*, s.name as season_name,
                                             COUNT(r.id) as result_count
                                      FROM jaktfelt_competitions c
                                      JOIN jaktfelt_seasons s ON c.season_id = s.id
                                      LEFT JOIN jaktfelt_results r ON c.id = r.competition_id
-                                     WHERE c.is_published = 1
+                                     WHERE c.status = 'upcoming' OR c.status = 'completed'
                                      GROUP BY c.id
-                                     ORDER BY c.competition_date DESC"
+                                     ORDER BY c.date DESC"
                                 );
                                 
                                 if (empty($competitions)) {
@@ -68,7 +68,7 @@ $current_page = 'results';
                                         echo '<div class="mb-3">';
                                         echo '<h6>' . htmlspecialchars($competition['name']) . '</h6>';
                                         echo '<p class="text-muted small">';
-                                        echo 'Dato: ' . date('d.m.Y', strtotime($competition['competition_date'])) . ' | ';
+                                        echo 'Dato: ' . date('d.m.Y', strtotime($competition['date'])) . ' | ';
                                         echo 'Sted: ' . htmlspecialchars($competition['location']) . ' | ';
                                         echo 'Resultater: ' . $competition['result_count'];
                                         echo '</p>';
@@ -80,7 +80,7 @@ $current_page = 'results';
                                 echo '<div class="alert alert-info">';
                                 echo '<h6>Database ikke satt opp ennå</h6>';
                                 echo '<p>For å se resultater, må du først sette opp databasen:</p>';
-                                echo '<a href="' . base_url('setup_database.php') . '" class="btn btn-primary">Sett opp database</a>';
+                                echo '<a href="' . base_url('admin/database') . '" class="btn btn-primary">Database Admin</a>';
                                 echo '</div>';
                             }
                         }
@@ -96,14 +96,18 @@ $current_page = 'results';
                     </div>
                     <div class="card-body">
                         <?php
-                        $seasons = $database->query("SELECT * FROM jaktfelt_seasons ORDER BY year DESC");
-                        foreach ($seasons as $season) {
-                            echo '<a href="/results?season=' . $season['id'] . '" class="d-block mb-2">';
-                            echo htmlspecialchars($season['name']);
-                            if ($season['is_active']) {
-                                echo ' <span class="badge bg-success">Aktiv</span>';
+                        try {
+                            $seasons = $dataService->query("SELECT * FROM jaktfelt_seasons ORDER BY year DESC");
+                            foreach ($seasons as $season) {
+                                echo '<a href="' . base_url('results?season=' . $season['id']) . '" class="d-block mb-2">';
+                                echo htmlspecialchars($season['name']);
+                                if ($season['is_active']) {
+                                    echo ' <span class="badge bg-success">Aktiv</span>';
+                                }
+                                echo '</a>';
                             }
-                            echo '</a>';
+                        } catch (Exception $e) {
+                            echo '<p class="text-muted">Ingen sesonger tilgjengelig.</p>';
                         }
                         ?>
                     </div>

@@ -95,6 +95,11 @@ $show_navigation = $show_navigation ?? true;
                             <a class="nav-link" href="<?= base_url('register') ?>">Registrer</a>
                         </li>
                     <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="<?= base_url('admin/database') ?>">
+                            <i class="fas fa-cog me-1"></i>Admin
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

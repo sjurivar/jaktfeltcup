@@ -18,9 +18,11 @@ CREATE TABLE jaktfelt_users (
     phone_verified BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     INDEX idx_email (email),
     INDEX idx_role (role),
-    INDEX idx_active (is_active)
+    INDEX idx_active (is_active),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Seasons table for multi-year support
@@ -32,8 +34,10 @@ CREATE TABLE jaktfelt_seasons (
     start_date DATE,
     end_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     UNIQUE KEY unique_year (year),
-    INDEX idx_active (is_active)
+    INDEX idx_active (is_active),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Competitions table
@@ -52,12 +56,14 @@ CREATE TABLE jaktfelt_competitions (
     organizer_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (season_id) REFERENCES jaktfelt_seasons(id) ON DELETE CASCADE,
     FOREIGN KEY (organizer_id) REFERENCES jaktfelt_users(id) ON DELETE RESTRICT,
     INDEX idx_season (season_id),
     INDEX idx_date (competition_date),
     INDEX idx_registration (registration_start, registration_end),
-    INDEX idx_published (is_published)
+    INDEX idx_published (is_published),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Categories for competitions (age groups, weapon types, etc.)
@@ -70,7 +76,9 @@ CREATE TABLE jaktfelt_categories (
     weapon_type VARCHAR(50),
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_active (is_active)
+    is_test_data BOOLEAN DEFAULT FALSE,
+    INDEX idx_active (is_active),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Competition categories (many-to-many)
@@ -80,9 +88,11 @@ CREATE TABLE jaktfelt_competition_categories (
     category_id INT NOT NULL,
     max_participants INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (competition_id) REFERENCES jaktfelt_competitions(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES jaktfelt_categories(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_competition_category (competition_id, category_id)
+    UNIQUE KEY unique_competition_category (competition_id, category_id),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Registrations table
@@ -96,12 +106,14 @@ CREATE TABLE jaktfelt_registrations (
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE,
     FOREIGN KEY (competition_id) REFERENCES jaktfelt_competitions(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES jaktfelt_categories(id) ON DELETE CASCADE,
     UNIQUE KEY unique_user_competition (user_id, competition_id),
     INDEX idx_status (status),
-    INDEX idx_competition (competition_id)
+    INDEX idx_competition (competition_id),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Results table
@@ -118,14 +130,16 @@ CREATE TABLE jaktfelt_results (
     entered_by INT NOT NULL,
     entered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (competition_id) REFERENCES competitions(id) ON DELETE CASCADE,
+    is_test_data BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (competition_id) REFERENCES jaktfelt_competitions(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES jaktfelt_categories(id) ON DELETE CASCADE,
     FOREIGN KEY (entered_by) REFERENCES jaktfelt_users(id) ON DELETE RESTRICT,
     UNIQUE KEY unique_user_competition_category (user_id, competition_id, category_id),
     INDEX idx_competition (competition_id),
     INDEX idx_user (user_id),
-    INDEX idx_score (score)
+    INDEX idx_score (score),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Point system configuration (flexible scoring)
@@ -135,7 +149,9 @@ CREATE TABLE jaktfelt_point_systems (
     description TEXT,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_active (is_active)
+    is_test_data BOOLEAN DEFAULT FALSE,
+    INDEX idx_active (is_active),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Point system rules
@@ -145,9 +161,11 @@ CREATE TABLE jaktfelt_point_rules (
     position INT NOT NULL,
     points INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (point_system_id) REFERENCES jaktfelt_point_systems(id) ON DELETE CASCADE,
     UNIQUE KEY unique_system_position (point_system_id, position),
-    INDEX idx_position (position)
+    INDEX idx_position (position),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Season point system assignment
@@ -156,9 +174,11 @@ CREATE TABLE jaktfelt_season_point_systems (
     season_id INT NOT NULL,
     point_system_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (season_id) REFERENCES jaktfelt_seasons(id) ON DELETE CASCADE,
     FOREIGN KEY (point_system_id) REFERENCES jaktfelt_point_systems(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_season_system (season_id, point_system_id)
+    UNIQUE KEY unique_season_system (season_id, point_system_id),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Email verification codes
@@ -171,11 +191,13 @@ CREATE TABLE jaktfelt_email_verifications (
     is_used BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     used_at TIMESTAMP NULL,
+    is_test_data BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE,
     INDEX idx_user (user_id),
     INDEX idx_code (verification_code),
     INDEX idx_expires (expires_at),
-    INDEX idx_used (is_used)
+    INDEX idx_used (is_used),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Notifications table
@@ -188,10 +210,12 @@ CREATE TABLE jaktfelt_notifications (
     status ENUM('pending', 'sent', 'failed') DEFAULT 'pending',
     sent_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE,
     INDEX idx_user (user_id),
     INDEX idx_status (status),
-    INDEX idx_type (type)
+    INDEX idx_type (type),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Offline sync table for mobile/offline functionality
@@ -204,8 +228,10 @@ CREATE TABLE jaktfelt_offline_sync (
     sync_status ENUM('pending', 'synced', 'failed') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     synced_at TIMESTAMP NULL,
+    is_test_data BOOLEAN DEFAULT FALSE,
     INDEX idx_table_record (table_name, record_id),
-    INDEX idx_sync_status (sync_status)
+    INDEX idx_sync_status (sync_status),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Audit log for tracking changes
@@ -220,10 +246,12 @@ CREATE TABLE jaktfelt_audit_log (
     ip_address VARCHAR(45),
     user_agent TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_test_data BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE SET NULL,
     INDEX idx_user (user_id),
     INDEX idx_table_record (table_name, record_id),
-    INDEX idx_created (created_at)
+    INDEX idx_created (created_at),
+    INDEX idx_test_data (is_test_data)
 );
 
 -- Insert default data
