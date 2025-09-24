@@ -75,6 +75,9 @@ $show_navigation = $show_navigation ?? true;
                     <li class="nav-item">
                         <a class="nav-link <?= $current_page === 'competitions' ? 'active' : '' ?>" href="<?= base_url('competitions') ?>">Stevner</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $current_page === 'about' ? 'active' : '' ?>" href="<?= base_url('about') ?>">Om</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     <?php if (isset($_SESSION['user_id'])): ?>

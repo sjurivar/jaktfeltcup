@@ -63,6 +63,10 @@ switch ($path) {
     case '/jaktfeltcup/competitions':
         include __DIR__ . '/views/public/competitions.php';
         break;
+    case '/about':
+    case '/jaktfeltcup/about':
+        include __DIR__ . '/views/public/about.php';
+        break;
     case '/login':
     case '/jaktfeltcup/login':
         if ($request_method === 'POST') {
