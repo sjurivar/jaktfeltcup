@@ -1,11 +1,10 @@
 <?php
 /**
- * Migration Script: Add is_test_data column to all tables
- * Run this if you have an existing database without the is_test_data column
+ * Migration: Add is_test_data column to all tables
+ * This script adds the is_test_data column to existing tables
  */
 
-echo "<h2>Jaktfeltcup Database Migration</h2>";
-echo "<p>Adding is_test_data column to all tables...</p>";
+echo "<h2>Jaktfeltcup - Add is_test_data Column Migration</h2>";
 
 // Database configuration
 $host = 'localhost';
@@ -18,15 +17,16 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    echo "<p>✅ Connected to database</p>";
+    echo "<p>✅ Connected to database '$dbname'.</p>";
     
-    // Read and execute migration
-    $migration = file_get_contents(__DIR__ . '/database/migration_add_test_data_column.sql');
+    // Read migration SQL file
+    $migrationFile = __DIR__ . '/../../database/migration_add_test_data_column.sql';
+    $migration = file_get_contents($migrationFile);
+    
     if ($migration) {
-        // Split by semicolon and execute each statement
         $statements = explode(';', $migration);
-        
         $executedCount = 0;
+        
         foreach ($statements as $statement) {
             $statement = trim($statement);
             if (!empty($statement) && !preg_match('/^--/', $statement)) {
@@ -35,7 +35,6 @@ try {
                     $executedCount++;
                     echo "<p>✅ Executed: " . substr($statement, 0, 50) . "...</p>";
                 } catch (PDOException $e) {
-                    // Skip if column already exists
                     if (strpos($e->getMessage(), 'Duplicate column name') !== false) {
                         echo "<p>⚠️ Column already exists: " . substr($statement, 0, 50) . "...</p>";
                     } else if (strpos($e->getMessage(), 'Duplicate key name') !== false) {
@@ -49,14 +48,14 @@ try {
         }
         
         echo "<p><strong>Migration complete!</strong> ($executedCount statements executed)</p>";
-        echo "<p>You can now run <a href='setup_sample_data.php'>setup_sample_data.php</a> to import sample data.</p>";
+        echo "<p>You can now run <a href='../setup/setup_sample_data.php'>setup_sample_data.php</a> to import sample data.</p>";
         
     } else {
-        echo "<p>❌ Could not read migration file</p>";
+        echo "<p>❌ Could not read migration file: $migrationFile</p>";
     }
     
 } catch (PDOException $e) {
     echo "<p>❌ Error: " . $e->getMessage() . "</p>";
-    echo "<p>Make sure the database is set up first by running <a href='setup_database.php'>setup_database.php</a></p>";
+    echo "<p>Make sure XAMPP MySQL is running and database '$dbname' exists and credentials are correct.</p>";
 }
 ?>

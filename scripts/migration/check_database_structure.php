@@ -72,7 +72,7 @@ try {
     
     if ($allGood) {
         echo "<p style='color: green; font-weight: bold;'>✅ All tables have the is_test_data column!</p>";
-        echo "<p>You can now run <a href='setup_sample_data.php'>setup_sample_data.php</a> to import sample data.</p>";
+        echo "<p>You can now run <a href='../setup/setup_sample_data.php'>setup_sample_data.php</a> to import sample data.</p>";
     } else {
         echo "<p style='color: red; font-weight: bold;'>❌ Some tables are missing the is_test_data column.</p>";
         echo "<p>Please run <a href='migrate_add_test_data_column.php'>migrate_add_test_data_column.php</a> to add the missing columns.</p>";
@@ -80,6 +80,6 @@ try {
     
 } catch (PDOException $e) {
     echo "<p>❌ Error: " . $e->getMessage() . "</p>";
-    echo "<p>Make sure the database is set up first by running <a href='setup_database.php'>setup_database.php</a></p>";
+    echo "<p>Make sure the database is set up first by running <a href='../setup/setup_database.php'>setup_database.php</a></p>";
 }
 ?>

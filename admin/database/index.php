@@ -115,6 +115,48 @@ try {
         </div>
     </div>
 
+    <!-- Scripts Directory -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-folder me-2"></i>Scripts Directory</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <h6><i class="fas fa-tools me-2"></i>Setup Scripts</h6>
+                            <a href="../../scripts/setup/setup_database.php" class="btn btn-primary btn-sm me-2">
+                                <i class="fas fa-database me-1"></i>Setup Database
+                            </a>
+                            <a href="../../scripts/setup/setup_sample_data.php" class="btn btn-primary btn-sm">
+                                <i class="fas fa-upload me-1"></i>Setup Sample Data
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <h6><i class="fas fa-sync me-2"></i>Migration Scripts</h6>
+                            <a href="../../scripts/migration/migrate_add_test_data_column.php" class="btn btn-warning btn-sm me-2">
+                                <i class="fas fa-plus me-1"></i>Add Test Data Column
+                            </a>
+                            <a href="../../scripts/migration/check_database_structure.php" class="btn btn-info btn-sm">
+                                <i class="fas fa-search me-1"></i>Check Structure
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <h6><i class="fas fa-bug me-2"></i>Debug Scripts</h6>
+                            <a href="../../scripts/debug/check_database_tables.php" class="btn btn-secondary btn-sm me-2">
+                                <i class="fas fa-table me-1"></i>Check Tables
+                            </a>
+                            <a href="../../scripts/debug/check_imported_data.php" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-chart-bar me-1"></i>Check Data
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Database Operations -->
     <div class="row mb-4">
         <div class="col-md-6">
