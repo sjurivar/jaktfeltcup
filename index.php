@@ -120,7 +120,35 @@ switch ($path) {
         header('Location: /');
         exit;
         break;
+    case '/admin/database':
+    case '/jaktfeltcup/admin/database':
+    case '/admin/database/':
+    case '/jaktfeltcup/admin/database/':
+        include __DIR__ . '/admin/database/index.php';
+        break;
     default:
+        // Check if it's an admin route
+        if (preg_match('#^/jaktfeltcup/admin/database/(.+)$#', $path, $matches) || 
+            preg_match('#^/admin/database/(.+)$#', $path, $matches)) {
+            $adminFile = $matches[1];
+            $adminPath = __DIR__ . '/admin/database/' . $adminFile;
+            if (file_exists($adminPath)) {
+                include $adminPath;
+                break;
+            }
+        }
+        
+        // Check if it's a scripts route
+        if (preg_match('#^/jaktfeltcup/scripts/(.+)$#', $path, $matches) || 
+            preg_match('#^/scripts/(.+)$#', $path, $matches)) {
+            $scriptFile = $matches[1];
+            $scriptPath = __DIR__ . '/scripts/' . $scriptFile;
+            if (file_exists($scriptPath)) {
+                include $scriptPath;
+                break;
+            }
+        }
+        
         http_response_code(404);
         include __DIR__ . '/views/errors/404.php';
         break;

@@ -1,0 +1,5 @@
+# Debug scripts directory
+Options +Indexes
+<Files "*.php">
+    Require all granted
+</Files>
