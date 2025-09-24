@@ -85,27 +85,20 @@ jobs:
           username: ${{ vars.FTP_USER }}
           password: ${{ vars.FTP_PASSWORD }}
           server-dir: ${{ steps.vars.outputs.dir }}
+          local-dir: deploy/
           protocol: ftp
           timeout: 600
           exclude: |
             **/.git*
-            **/.github/**
-            **/node_modules/**
-            **/vendor/**
             **/*.md
-            **/deploy.sh
-            **/deploy.yml
-            **/composer.*
-            **/test.php
-            **/setup_database.php
-            **/results.php
-            **/standings.php
-            **/competitions.php
-            **/login.php
-            **/register.php
-            **/index.php
-            **/public/**
+            **/DEPLOY_INFO.txt
+            **/database/**
+            **/data/**
             **/routes/**
+            **/public/**
+            **/env.example
+            **/deploy.sh
+            **/test.php
 
       - name: Notify deployment success
         if: success()
