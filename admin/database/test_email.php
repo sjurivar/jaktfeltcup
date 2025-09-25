@@ -83,9 +83,19 @@ $current_page = 'test_email';
                             echo "<p><strong>Log Errors:</strong> " . (ini_get('log_errors') ? 'Aktivert' : 'Deaktivert') . "</p>";
                             echo "</div>";
                             
+                            echo "<div class='alert alert-warning'>";
+                            echo "<h6>🔍 Debug: Før Test 1</h6>";
+                            echo "<p>Starter Test 1: E-post verifisering...</p>";
+                            echo "</div>";
+                            
                             // Test 1: Verification email
                             echo "<h6>Test 1: E-post verifisering</h6>";
+                            echo "<div class='alert alert-info'>Kaller sendVerificationCode...</div>";
+                            
                             $verificationSent = $emailService->sendVerificationCode(999, $testEmail, $testName);
+                            
+                            echo "<div class='alert alert-info'>sendVerificationCode returnerte: " . ($verificationSent ? 'true' : 'false') . "</div>";
+                            
                             if ($verificationSent) {
                                 echo "<div class='alert alert-success'>✅ Verifisering e-post sendt!</div>";
                                 echo "<p><small>E-posten ble sendt til $testEmail</small></p>";
@@ -96,8 +106,16 @@ $current_page = 'test_email';
                             
                             // Test 2: Password reset email
                             echo "<h6>Test 2: Passord tilbakestilling</h6>";
+                            echo "<div class='alert alert-info'>Genererer reset token...</div>";
+                            
                             $resetToken = bin2hex(random_bytes(32));
+                            echo "<div class='alert alert-info'>Token generert: " . substr($resetToken, 0, 16) . "...</div>";
+                            
+                            echo "<div class='alert alert-info'>Kaller sendPasswordResetEmail...</div>";
                             $resetSent = $emailService->sendPasswordResetEmail(999, $testEmail, $testName, $resetToken);
+                            
+                            echo "<div class='alert alert-info'>sendPasswordResetEmail returnerte: " . ($resetSent ? 'true' : 'false') . "</div>";
+                            
                             if ($resetSent) {
                                 echo "<div class='alert alert-success'>✅ Passord tilbakestilling e-post sendt!</div>";
                                 echo "<p><small>E-posten ble sendt til $testEmail</small></p>";
@@ -109,6 +127,8 @@ $current_page = 'test_email';
                             
                             // Test 3: Custom test email
                             echo "<h6>Test 3: Tilpasset test e-post</h6>";
+                            echo "<div class='alert alert-info'>Forbereder tilpasset e-post...</div>";
+                            
                             $customSubject = 'Test E-post fra Jaktfeltcup';
                             $customMessage = "
                             <h2>Hei $testName!</h2>
@@ -125,8 +145,12 @@ $current_page = 'test_email';
                             <p><small>Denne e-posten ble sendt fra Jaktfeltcup admin panel.</small></p>
                             ";
                             
+                            echo "<div class='alert alert-info'>E-post innhold forberedt. Kaller sendEmail...</div>";
+                            
                             // Send custom test email
                             $customSent = $emailService->sendEmail($testEmail, $customSubject, $customMessage);
+                            
+                            echo "<div class='alert alert-info'>sendEmail returnerte: " . ($customSent ? 'true' : 'false') . "</div>";
                             if ($customSent) {
                                 echo "<div class='alert alert-success'>✅ Tilpasset test e-post sendt!</div>";
                                 echo "<p><small>E-posten ble sendt til $testEmail</small></p>";
