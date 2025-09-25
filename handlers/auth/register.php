@@ -8,6 +8,7 @@ session_start();
 
 // Include required files
 require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../src/Helpers/ViewHelper.php';
 require_once __DIR__ . '/../../src/Services/EmailService.php';
 
 // Get form data
@@ -58,7 +59,7 @@ if ($existingUser) {
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
     $_SESSION['form_data'] = $_POST;
-    header('Location: /register');
+    header('Location: ' . base_url('register'));
     exit;
 }
 
@@ -93,15 +94,15 @@ try {
     
     if ($emailSent) {
         $_SESSION['success'] = 'Registrering vellykket! Sjekk din e-post for bekreftelseskode.';
-        header('Location: /verify-email');
+        header('Location: ' . base_url('verify-email'));
     } else {
         $_SESSION['warning'] = 'Registrering vellykket, men e-post kunne ikke sendes. Kontakt administrator.';
-        header('Location: /login');
+        header('Location: ' . base_url('login'));
     }
     
 } catch (Exception $e) {
     $_SESSION['error'] = 'En feil oppstod under registrering. Prøv igjen.';
     $_SESSION['form_data'] = $_POST;
-    header('Location: /register');
+    header('Location: ' . base_url('register'));
 }
 exit;

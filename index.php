@@ -30,6 +30,9 @@ require_once __DIR__ . '/src/Core/App.php';
 // Initialize database connection
 $database = new Database($config);
 
+// Get base URL for routing
+$base_url = $app_config['base_url'];
+
 // Simple routing
 $request_uri = $_SERVER['REQUEST_URI'];
 $request_method = $_SERVER['REQUEST_METHOD'];
@@ -39,7 +42,7 @@ $path = parse_url($request_uri, PHP_URL_PATH);
 
 // Route handling
 // Handle specific competition results
-if (preg_match('#^/jaktfeltcup/results/(\d+)$#', $path, $matches) || preg_match('#^/results/(\d+)$#', $path, $matches)) {
+if (preg_match('#^' . $base_url . '/results/(\d+)$#', $path, $matches) || preg_match('#^/results/(\d+)$#', $path, $matches)) {
     $competitionId = $matches[1];
     include __DIR__ . '/views/public/competition-results.php';
     exit;
@@ -47,28 +50,28 @@ if (preg_match('#^/jaktfeltcup/results/(\d+)$#', $path, $matches) || preg_match(
 
 switch ($path) {
     case '/':
-    case '/jaktfeltcup/':
-    case '/jaktfeltcup/public/':
+    case $base_url . '/':
+    case $base_url . '/public/':
         include __DIR__ . '/views/public/home.php';
         break;
     case '/results':
-    case '/jaktfeltcup/results':
+    case $base_url . '/results':
         include __DIR__ . '/views/public/results.php';
         break;
     case '/standings':
-    case '/jaktfeltcup/standings':
+    case $base_url . '/standings':
         include __DIR__ . '/views/public/standings.php';
         break;
     case '/competitions':
-    case '/jaktfeltcup/competitions':
+    case $base_url . '/competitions':
         include __DIR__ . '/views/public/competitions.php';
         break;
     case '/about':
-    case '/jaktfeltcup/about':
+    case $base_url . '/about':
         include __DIR__ . '/views/public/about.php';
         break;
     case '/login':
-    case '/jaktfeltcup/login':
+    case $base_url . '/login':
         if ($request_method === 'POST') {
             // Handle login
             include __DIR__ . '/handlers/auth/login.php';
@@ -77,7 +80,7 @@ switch ($path) {
         }
         break;
     case '/register':
-    case '/jaktfeltcup/register':
+    case $base_url . '/register':
         if ($request_method === 'POST') {
             // Handle registration
             include __DIR__ . '/handlers/auth/register.php';
@@ -86,53 +89,53 @@ switch ($path) {
         }
         break;
     case '/participant/dashboard':
-    case '/jaktfeltcup/participant/dashboard':
+    case $base_url . '/participant/dashboard':
         // Check authentication
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . base_url('login'));
             exit;
         }
         include __DIR__ . '/views/participant/dashboard.php';
         break;
     case '/participant/profile':
-    case '/jaktfeltcup/participant/profile':
+    case $base_url . '/participant/profile':
         // Check authentication
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: ' . base_url('login'));
             exit;
         }
         include __DIR__ . '/views/participant/profile.php';
         break;
     case '/verify-email':
-    case '/jaktfeltcup/verify-email':
+    case $base_url . '/verify-email':
         include __DIR__ . '/views/auth/verify-email.php';
         break;
     case '/verify-email-handler':
-    case '/jaktfeltcup/verify-email-handler':
+    case $base_url . '/verify-email-handler':
         include __DIR__ . '/handlers/auth/verify-email-handler.php';
         break;
     case '/resend-verification':
-    case '/jaktfeltcup/resend-verification':
+    case $base_url . '/resend-verification':
         include __DIR__ . '/handlers/auth/resend-verification.php';
         break;
     case '/logout':
-    case '/jaktfeltcup/logout':
+    case $base_url . '/logout':
         if (session_status() === PHP_SESSION_NONE) session_start();
         session_destroy();
-        header('Location: /');
+        header('Location: ' . base_url());
         exit;
         break;
     case '/admin/database':
-    case '/jaktfeltcup/admin/database':
+    case $base_url . '/admin/database':
     case '/admin/database/':
-    case '/jaktfeltcup/admin/database/':
+    case $base_url . '/admin/database/':
         include __DIR__ . '/admin/database/index.php';
         break;
     default:
         // Check if it's an admin route
-        if (preg_match('#^/jaktfeltcup/admin/database/(.+)$#', $path, $matches) || 
+        if (preg_match('#^' . $base_url . '/admin/database/(.+)$#', $path, $matches) || 
             preg_match('#^/admin/database/(.+)$#', $path, $matches)) {
             $adminFile = $matches[1];
             $adminPath = __DIR__ . '/admin/database/' . $adminFile;
@@ -143,7 +146,7 @@ switch ($path) {
         }
         
         // Check if it's a scripts route
-        if (preg_match('#^/jaktfeltcup/scripts/(.+)$#', $path, $matches) || 
+        if (preg_match('#^' . $base_url . '/scripts/(.+)$#', $path, $matches) || 
             preg_match('#^/scripts/(.+)$#', $path, $matches)) {
             $scriptFile = $matches[1];
             $scriptPath = __DIR__ . '/scripts/' . $scriptFile;
