@@ -109,6 +109,11 @@ try {
                                 <i class="fas fa-columns me-2"></i>Check Columns
                             </a>
                         </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="test_email.php" class="btn btn-warning w-100">
+                                <i class="fas fa-envelope me-2"></i>Test E-post
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
