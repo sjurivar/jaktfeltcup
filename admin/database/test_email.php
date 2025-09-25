@@ -31,14 +31,48 @@ $current_page = 'test_email';
                 </div>
                 <div class="card-body">
                     <?php
+                    // Simple test to see if page loads
+                    echo "<div class='alert alert-light'>";
+                    echo "<h6>🔍 Page Load Test:</h6>";
+                    echo "<p><strong>Current Time:</strong> " . date('Y-m-d H:i:s') . "</p>";
+                    echo "<p><strong>PHP Version:</strong> " . PHP_VERSION . "</p>";
+                    echo "<p><strong>Server:</strong> " . $_SERVER['HTTP_HOST'] . "</p>";
+                    echo "</div>";
+                    
+                    // Handle simple GET test
+                    if (isset($_GET['simple_test'])) {
+                        echo "<div class='alert alert-success'>";
+                        echo "<h6>✅ GET Test fungerer!</h6>";
+                        echo "<p>Scriptet kjører og kan håndtere GET requests.</p>";
+                        echo "<p><strong>GET Parameter:</strong> " . htmlspecialchars($_GET['simple_test']) . "</p>";
+                        echo "</div>";
+                    }
+                    
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['test_email'])) {
                         $testEmail = 'sjur.ivar@hjellum.net';
                         $testName = 'Sjur Ivar';
                         
+                        echo "<div class='alert alert-info'>";
+                        echo "<h6>🔍 Debug Information:</h6>";
+                        echo "<p><strong>POST Data:</strong> " . print_r($_POST, true) . "</p>";
+                        echo "<p><strong>Request Method:</strong> " . $_SERVER['REQUEST_METHOD'] . "</p>";
+                        echo "<p><strong>Script Name:</strong> " . $_SERVER['SCRIPT_NAME'] . "</p>";
+                        echo "</div>";
+                        
                         try {
+                            echo "<div class='alert alert-success'>";
+                            echo "<h6>✅ Script kjører!</h6>";
+                            echo "<p>POST request mottatt og behandles...</p>";
+                            echo "</div>";
+                            
                             // Initialize database and email service
                             $database = new \Jaktfeltcup\Core\Database($db_config);
                             $emailService = new \Jaktfeltcup\Services\EmailService($app_config, $database);
+                            
+                            echo "<div class='alert alert-success'>";
+                            echo "<h6>✅ Services initialisert!</h6>";
+                            echo "<p>Database og EmailService er klar.</p>";
+                            echo "</div>";
                             
                             echo "<div class='alert alert-info'>";
                             echo "<h6>🔄 Sender test e-post...</h6>";
@@ -110,9 +144,18 @@ $current_page = 'test_email';
                         } catch (Exception $e) {
                             echo "<div class='alert alert-danger'>";
                             echo "<h6>❌ Feil under e-post test:</h6>";
-                            echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
+                            echo "<p><strong>Error:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+                            echo "<p><strong>File:</strong> " . htmlspecialchars($e->getFile()) . "</p>";
+                            echo "<p><strong>Line:</strong> " . $e->getLine() . "</p>";
+                            echo "<p><strong>Trace:</strong></p>";
+                            echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
                             echo "</div>";
                         }
+                    } else {
+                        echo "<div class='alert alert-info'>";
+                        echo "<h6>ℹ️ Ingen POST request</h6>";
+                        echo "<p>Trykk på 'Send Test E-post' knappen for å teste e-post funksjonaliteten.</p>";
+                        echo "</div>";
                     }
                     ?>
                     
@@ -133,6 +176,12 @@ $current_page = 'test_email';
                             Send Test E-post
                         </button>
                     </form>
+                    
+                    <hr>
+                    
+                    <a href="?simple_test=1" class="btn btn-outline-secondary">
+                        <i class="fas fa-check me-2"></i>Enkel Test (GET)
+                    </a>
                 </div>
             </div>
         </div>
