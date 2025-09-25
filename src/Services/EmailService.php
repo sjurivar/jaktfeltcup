@@ -92,6 +92,27 @@ class EmailService {
     }
     
     /**
+     * Send password reset email
+     */
+    public function sendPasswordResetEmail($userId, $email, $firstName, $resetToken) {
+        try {
+            $resetUrl = $this->config['url'] . '/reset-password?token=' . $resetToken;
+            
+            $subject = 'Tilbakestill passord - Jaktfeltcup';
+            $message = $this->getPasswordResetEmailTemplate($firstName, $resetUrl);
+            
+            // For now, just log the email (in production, you would send actual email)
+            error_log("Password reset email for $email: $resetUrl");
+            
+            return true; // Simulate successful email send
+            
+        } catch (Exception $e) {
+            error_log("Failed to send password reset email: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
      * Get verification email template
      */
     private function getVerificationEmailTemplate($firstName, $code) {
@@ -130,6 +151,57 @@ class EmailService {
                     <p><strong>Viktig:</strong> Denne koden utløper om 24 timer.</p>
                     
                     <p>Hvis du ikke registrerte deg for Jaktfeltcup, kan du trygt ignorere denne e-posten.</p>
+                </div>
+                <div class='footer'>
+                    <p>Jaktfeltcup - Administrasjon av skytekonkurranser</p>
+                    <p>Denne e-posten ble sendt automatisk, vennligst ikke svar på den.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        ";
+    }
+    
+    /**
+     * Get password reset email template
+     */
+    private function getPasswordResetEmailTemplate($firstName, $resetUrl) {
+        return "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Tilbakestill passord - Jaktfeltcup</title>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background-color: #007bff; color: white; padding: 20px; text-align: center; }
+                .content { background-color: #f8f9fa; padding: 30px; }
+                .button { display: inline-block; background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+                .footer { background-color: #e9ecef; padding: 20px; text-align: center; font-size: 12px; color: #6c757d; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>🔑 Tilbakestill passord</h1>
+                </div>
+                <div class='content'>
+                    <h2>Hei $firstName!</h2>
+                    
+                    <p>Du har bedt om å tilbakestille passordet ditt for Jaktfeltcup.</p>
+                    
+                    <p>Klikk på knappen under for å tilbakestille passordet ditt:</p>
+                    
+                    <a href='$resetUrl' class='button'>Tilbakestill passord</a>
+                    
+                    <p>Eller kopier og lim inn denne lenken i nettleseren din:</p>
+                    <p style='word-break: break-all; background-color: #e9ecef; padding: 10px; border-radius: 3px;'>$resetUrl</p>
+                    
+                    <p><strong>Viktig:</strong> Denne lenken utløper om 1 time.</p>
+                    
+                    <p>Hvis du ikke ba om å tilbakestille passordet ditt, kan du trygt ignorere denne e-posten.</p>
                 </div>
                 <div class='footer'>
                     <p>Jaktfeltcup - Administrasjon av skytekonkurranser</p>

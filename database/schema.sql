@@ -200,6 +200,21 @@ CREATE TABLE jaktfelt_email_verifications (
     INDEX idx_test_data (is_test_data)
 );
 
+-- Password resets table
+CREATE TABLE jaktfelt_password_resets (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    used_at TIMESTAMP NULL,
+    is_test_data BOOLEAN DEFAULT FALSE,
+    INDEX idx_password_resets_test_data (is_test_data),
+    INDEX idx_password_resets_token (token),
+    INDEX idx_password_resets_expires (expires_at),
+    FOREIGN KEY (user_id) REFERENCES jaktfelt_users(id) ON DELETE CASCADE
+);
+
 -- Notifications table
 CREATE TABLE jaktfelt_notifications (
     id INT PRIMARY KEY AUTO_INCREMENT,

@@ -120,6 +120,15 @@ switch ($path) {
     case $base_url . '/resend-verification':
         include __DIR__ . '/handlers/auth/resend-verification.php';
         break;
+    case '/forgot-password':
+    case $base_url . '/forgot-password':
+        if ($request_method === 'POST') {
+            // Handle forgot password
+            include __DIR__ . '/handlers/auth/forgot-password.php';
+        } else {
+            include __DIR__ . '/views/auth/forgot-password.php';
+        }
+        break;
     case '/logout':
     case $base_url . '/logout':
         if (session_status() === PHP_SESSION_NONE) session_start();
