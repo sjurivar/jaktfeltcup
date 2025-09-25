@@ -44,6 +44,9 @@ $current_page = 'test_email';
                             echo "<h6>🔄 Sender test e-post...</h6>";
                             echo "<p><strong>Til:</strong> $testEmail</p>";
                             echo "<p><strong>Navn:</strong> $testName</p>";
+                            echo "<p><strong>PHP Mail:</strong> " . (function_exists('mail') ? 'Tilgjengelig' : 'Ikke tilgjengelig') . "</p>";
+                            echo "<p><strong>Error Log:</strong> " . ini_get('error_log') . "</p>";
+                            echo "<p><strong>Log Errors:</strong> " . (ini_get('log_errors') ? 'Aktivert' : 'Deaktivert') . "</p>";
                             echo "</div>";
                             
                             // Test 1: Verification email
@@ -51,8 +54,10 @@ $current_page = 'test_email';
                             $verificationSent = $emailService->sendVerificationCode(999, $testEmail, $testName);
                             if ($verificationSent) {
                                 echo "<div class='alert alert-success'>✅ Verifisering e-post sendt!</div>";
+                                echo "<p><small>E-posten ble sendt til $testEmail</small></p>";
                             } else {
                                 echo "<div class='alert alert-danger'>❌ Kunne ikke sende verifisering e-post</div>";
+                                echo "<p><small>Sjekk error_log for detaljer</small></p>";
                             }
                             
                             // Test 2: Password reset email
@@ -61,9 +66,11 @@ $current_page = 'test_email';
                             $resetSent = $emailService->sendPasswordResetEmail(999, $testEmail, $testName, $resetToken);
                             if ($resetSent) {
                                 echo "<div class='alert alert-success'>✅ Passord tilbakestilling e-post sendt!</div>";
+                                echo "<p><small>E-posten ble sendt til $testEmail</small></p>";
                                 echo "<p><small>Reset token: " . substr($resetToken, 0, 16) . "...</small></p>";
                             } else {
                                 echo "<div class='alert alert-danger'>❌ Kunne ikke sende passord tilbakestilling e-post</div>";
+                                echo "<p><small>Sjekk error_log for detaljer</small></p>";
                             }
                             
                             // Test 3: Custom test email
@@ -84,9 +91,15 @@ $current_page = 'test_email';
                             <p><small>Denne e-posten ble sendt fra Jaktfeltcup admin panel.</small></p>
                             ";
                             
-                            // For now, just log the custom email
-                            error_log("Custom test email to $testEmail: $customMessage");
-                            echo "<div class='alert alert-success'>✅ Tilpasset test e-post sendt!</div>";
+                            // Send custom test email
+                            $customSent = $emailService->sendEmail($testEmail, $customSubject, $customMessage);
+                            if ($customSent) {
+                                echo "<div class='alert alert-success'>✅ Tilpasset test e-post sendt!</div>";
+                                echo "<p><small>E-posten ble sendt til $testEmail</small></p>";
+                            } else {
+                                echo "<div class='alert alert-danger'>❌ Kunne ikke sende tilpasset test e-post</div>";
+                                echo "<p><small>Sjekk error_log for detaljer</small></p>";
+                            }
                             
                             echo "<div class='alert alert-info mt-3'>";
                             echo "<h6>📋 Test Resultat:</h6>";

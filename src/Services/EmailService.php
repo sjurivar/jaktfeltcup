@@ -101,10 +101,20 @@ class EmailService {
             $subject = 'Tilbakestill passord - Jaktfeltcup';
             $message = $this->getPasswordResetEmailTemplate($firstName, $resetUrl);
             
-            // For now, just log the email (in production, you would send actual email)
-            error_log("Password reset email for $email: $resetUrl");
+            // Log the email attempt
+            error_log("📧 Attempting to send password reset email to: $email");
+            error_log("📧 Reset URL: $resetUrl");
             
-            return true; // Simulate successful email send
+            // Try to send actual email
+            $sent = $this->sendEmail($email, $subject, $message);
+            
+            if ($sent) {
+                error_log("✅ Password reset email sent successfully to: $email");
+            } else {
+                error_log("❌ Failed to send password reset email to: $email");
+            }
+            
+            return $sent;
             
         } catch (Exception $e) {
             error_log("Failed to send password reset email: " . $e->getMessage());
@@ -214,9 +224,13 @@ class EmailService {
     }
     
     /**
-     * Send email using PHP mail function
+     * Send email using PHP mail function (public method for testing)
      */
-    private function sendEmail($to, $subject, $message) {
+    public function sendEmail($to, $subject, $message) {
+        // Log email attempt
+        error_log("📧 Attempting to send email to: $to");
+        error_log("📧 Subject: $subject");
+        
         $headers = [
             'MIME-Version: 1.0',
             'Content-type: text/html; charset=UTF-8',
@@ -227,7 +241,23 @@ class EmailService {
         
         $headersString = implode("\r\n", $headers);
         
-        return mail($to, $subject, $message, $headersString);
+        // Check if mail function is available
+        if (!function_exists('mail')) {
+            error_log("❌ PHP mail() function is not available");
+            return false;
+        }
+        
+        // Try to send email
+        $result = mail($to, $subject, $message, $headersString);
+        
+        if ($result) {
+            error_log("✅ Email sent successfully to: $to");
+        } else {
+            error_log("❌ Failed to send email to: $to");
+            error_log("❌ Last error: " . error_get_last()['message'] ?? 'Unknown error');
+        }
+        
+        return $result;
     }
     
     /**
