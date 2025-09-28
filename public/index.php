@@ -6,5 +6,5 @@
  */
 
 // Redirect to main application
-header('Location: /jaktfeltcup/');
+header('Location: ' . base_url('/'));
 exit;

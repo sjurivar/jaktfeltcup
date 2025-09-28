@@ -49,12 +49,12 @@ class ImageHelper {
                         $filePath = __DIR__ . '/../../assets/images/sponsors/' . $sponsor['logo_filename'];
                         if (file_exists($filePath)) {
                             // Use direct path that works
-                            $sponsor['logo_url'] = '/jaktfeltcup/assets/images/sponsors/' . $sponsor['logo_filename'];
+                            $sponsor['logo_url'] = base_url('assets/images/sponsors/' . $sponsor['logo_filename']);
                         } else {
                             // File doesn't exist, try to find it in new location
                             $newFilePath = __DIR__ . '/../../assets/images/sponsors/' . $sponsor['logo_filename'];
                             if (file_exists($newFilePath)) {
-                                $sponsor['logo_url'] = '/jaktfeltcup/assets/images/sponsors/' . $sponsor['logo_filename'];
+                                $sponsor['logo_url'] = base_url('assets/images/sponsors/' . $sponsor['logo_filename']);
                             } else {
                                 // Try to find it in old location
                                 $sponsorDir = __DIR__ . '/../../src/Bilder/sponsorer/';
@@ -62,7 +62,7 @@ class ImageHelper {
                                     $files = scandir($sponsorDir);
                                     foreach ($files as $file) {
                                         if (stripos($file, $sponsor['name']) !== false) {
-                                            $sponsor['logo_url'] = '/jaktfeltcup/src/Bilder/sponsorer/' . $file;
+                                            $sponsor['logo_url'] = base_url('src/Bilder/sponsorer/' . $file);
                                             break;
                                         }
                                     }
@@ -87,7 +87,7 @@ class ImageHelper {
                 if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) {
                     $images[] = [
                         'name' => pathinfo($file, PATHINFO_FILENAME),
-                        'logo_url' => '/jaktfeltcup/assets/images/sponsors/' . $file,
+                        'logo_url' => base_url('assets/images/sponsors/' . $file),
                         'sponsor_level' => 'bronze'
                     ];
                 }
@@ -101,7 +101,7 @@ class ImageHelper {
                     if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['png', 'jpg', 'jpeg', 'gif', 'svg'])) {
                         $images[] = [
                             'name' => pathinfo($file, PATHINFO_FILENAME),
-                            'logo_url' => '/jaktfeltcup/src/Bilder/sponsorer/' . $file,
+                            'logo_url' => base_url('src/Bilder/sponsorer/' . $file),
                             'sponsor_level' => 'bronze'
                         ];
                     }

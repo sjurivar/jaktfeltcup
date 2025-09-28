@@ -67,7 +67,7 @@ try {
 
                 if (move_uploaded_file($_FILES['logo']['tmp_name'], $upload_path)) {
                     // Use relative path that works with the application
-                    $logo_url = '/jaktfeltcup/assets/images/sponsors/' . $logo_filename;
+                    $logo_url = base_url('assets/images/sponsors/' . $logo_filename);
                 } else {
                     throw new Exception('Kunne ikke laste opp filen.');
                 }

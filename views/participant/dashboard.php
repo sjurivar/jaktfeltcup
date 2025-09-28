@@ -41,7 +41,7 @@
                     <div class="card-body">
                         <?php if (empty($registrations)): ?>
                             <p class="text-muted">Du har ingen påmeldinger ennå.</p>
-                            <a href="/jaktfeltcup/competitions" class="btn btn-primary">Se tilgjengelige stevner</a>
+                            <a href="<?= base_url('competitions') ?>" class="btn btn-primary">Se tilgjengelige stevner</a>
                         <?php else: ?>
                             <div class="table-responsive">
                                 <table class="table table-sm">
@@ -134,16 +134,16 @@
                     </div>
                     <div class="card-body">
                         <div class="d-grid gap-2">
-                            <a href="/jaktfeltcup/competitions" class="btn btn-primary">
+                            <a href="<?= base_url('competitions') ?>" class="btn btn-primary">
                                 <i class="fas fa-calendar-plus me-2"></i>Meld deg på stevne
                             </a>
-                            <a href="/jaktfeltcup/participant/registrations" class="btn btn-outline-primary">
+                            <a href="<?= base_url('participant/registrations') ?>" class="btn btn-outline-primary">
                                 <i class="fas fa-list me-2"></i>Mine påmeldinger
                             </a>
-                            <a href="/jaktfeltcup/participant/results" class="btn btn-outline-primary">
+                            <a href="<?= base_url('participant/results') ?>" class="btn btn-outline-primary">
                                 <i class="fas fa-chart-line me-2"></i>Mine resultater
                             </a>
-                            <a href="/jaktfeltcup/participant/profile" class="btn btn-outline-secondary">
+                            <a href="<?= base_url('participant/profile') ?>" class="btn btn-outline-secondary">
                                 <i class="fas fa-user-edit me-2"></i>Rediger profil
                             </a>
                         </div>
