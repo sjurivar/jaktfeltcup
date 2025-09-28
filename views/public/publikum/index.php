@@ -8,18 +8,30 @@ $current_page = 'publikum';
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
 require_once __DIR__ . '/../../../src/Core/Database.php';
+require_once __DIR__ . '/../../../src/Helpers/InlineEditHelper.php';
 
 // Initialize database connection
 global $db_config;
-$database = new Jaktfeltcup\Core\Database($db_config);
+$database = new \Jaktfeltcup\Core\Database($db_config);
+
+// Get editable content for publikum page
+$hero_content = render_editable_content('publikum', 'hero_title', 'Velkommen til Jaktfeltcup', 'Følg med på Norges største skytekonkurranse. Se resultater, stevne-kalender og nyheter.');
+$results_content = render_editable_content('publikum', 'results_title', 'Resultater', 'Se resultater fra alle stevner og følg med på cupen.');
+$calendar_content = render_editable_content('publikum', 'calendar_title', 'Stevne-kalender', 'Oversikt over alle kommende stevner i Jaktfeltcup.');
+$news_content = render_editable_content('publikum', 'news_title', 'Siste Nytt', 'Hold deg oppdatert med de siste nyhetene fra Jaktfeltcup.');
 
 // Get upcoming competitions
-$upcomingCompetitions = $database->queryAll(
-    "SELECT * FROM jaktfelt_competitions 
-     WHERE competition_date > NOW() 
-     ORDER BY competition_date ASC 
-     LIMIT 3"
-);
+try {
+    $upcomingCompetitions = $database->queryAll(
+        "SELECT * FROM jaktfelt_competitions 
+         WHERE competition_date > NOW() 
+         ORDER BY competition_date ASC 
+         LIMIT 3"
+    );
+} catch (Exception $e) {
+    $upcomingCompetitions = [];
+    error_log("Publikum page - Could not fetch competitions: " . $e->getMessage());
+}
 
 // Get latest news (placeholder for now)
 $latestNews = [
@@ -51,11 +63,12 @@ $latestNews = [
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-4">Velkommen til Jaktfeltcup</h1>
-                <p class="lead mb-4">
-                    Følg med på Norges største skytekonkurranse. Se resultater, stevne-kalender, 
-                    nyheter og bli del av det spennende fellesskapet.
-                </p>
+                <?php if (can_edit_inline() && !empty($hero_content['editor_html'])): ?>
+                    <?= $hero_content['editor_html'] ?>
+                <?php else: ?>
+                    <h1 class="display-4 fw-bold mb-4"><?= htmlspecialchars($hero_content['title']) ?></h1>
+                    <p class="lead mb-4"><?= htmlspecialchars($hero_content['content']) ?></p>
+                <?php endif; ?>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?= base_url('publikum/kalender') ?>" class="btn btn-light btn-lg">
                         <i class="fas fa-calendar-alt me-2"></i>Stevne-kalender

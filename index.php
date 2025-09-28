@@ -25,10 +25,10 @@ spl_autoload_register(function ($class) {
 });
 
 // Load configuration
-require_once __DIR__ . '/src/Core/App.php';
+git require_once __DIR__ . '/src/Core/App.php';
 
 // Initialize database connection
-$database = new Database($config);
+$database = new \Jaktfeltcup\Core\Database($config);
 
 // Get base URL for routing
 $base_url = $app_config['base_url'];
@@ -39,6 +39,7 @@ $request_method = $_SERVER['REQUEST_METHOD'];
 
 // Remove query string
 $path = parse_url($request_uri, PHP_URL_PATH);
+
 
 // Route handling
 // Handle specific competition results
@@ -97,6 +98,10 @@ switch ($path) {
     case '/sponsor/kontakt':
     case $base_url . '/sponsor/kontakt':
         include __DIR__ . '/views/public/sponsor/kontakt.php';
+        break;
+    case '/sponsor/presentasjon':
+    case $base_url . '/sponsor/presentasjon':
+        include __DIR__ . '/views/public/sponsor/presentasjon.php';
         break;
     
     // Deltaker-seksjon
@@ -198,6 +203,33 @@ switch ($path) {
     case $base_url . '/admin/database/':
         include __DIR__ . '/admin/database/index.php';
         break;
+    case $base_url . '/admin/content':
+    case '/admin/content/':
+    case $base_url . '/admin/content/':
+        include __DIR__ . '/admin/content/index.php';
+        break;
+    case $base_url . '/admin/content/text':
+    case '/admin/content/text/':
+    case $base_url . '/admin/content/text/':
+        include __DIR__ . '/admin/content/text.php';
+        break;
+    case '/admin':
+    case $base_url . '/admin':
+    case '/admin/':
+    case $base_url . '/admin/':
+        include __DIR__ . '/admin/index.php';
+        break;
+    case $base_url . '/admin/roles':
+    case '/admin/roles/':
+    case $base_url . '/admin/roles/':
+        include __DIR__ . '/admin/roles/index.php';
+        break;
+    case '/setup-admin':
+    case $base_url . '/setup-admin':
+    case '/setup-admin/':
+    case $base_url . '/setup-admin/':
+        include __DIR__ . '/scripts/setup/setup_admin_web.php';
+        break;
     default:
         // Check if it's an admin route
         if (preg_match('#^' . $base_url . '/admin/database/(.+)$#', $path, $matches) || 
@@ -206,6 +238,28 @@ switch ($path) {
             $adminPath = __DIR__ . '/admin/database/' . $adminFile;
             if (file_exists($adminPath)) {
                 include $adminPath;
+                break;
+            }
+        }
+        
+        // Check if it's a content admin route
+        if (preg_match('#^' . $base_url . '/admin/content/(.+)$#', $path, $matches) || 
+            preg_match('#^/admin/content/(.+)$#', $path, $matches)) {
+            $contentFile = $matches[1];
+            $contentPath = __DIR__ . '/admin/content/' . $contentFile;
+            if (file_exists($contentPath)) {
+                include $contentPath;
+                break;
+            }
+        }
+        
+        // Check if it's a roles admin route
+        if (preg_match('#^' . $base_url . '/admin/roles/(.+)$#', $path, $matches) || 
+            preg_match('#^/admin/roles/(.+)$#', $path, $matches)) {
+            $rolesFile = $matches[1];
+            $rolesPath = __DIR__ . '/admin/roles/' . $rolesFile;
+            if (file_exists($rolesPath)) {
+                include $rolesPath;
                 break;
             }
         }

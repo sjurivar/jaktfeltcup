@@ -7,6 +7,16 @@ $current_page = 'sponsor';
 // Include required files
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
+require_once __DIR__ . '/../../../src/Helpers/InlineEditHelper.php';
+
+// Get sponsor images
+$sponsorImages = \Jaktfeltcup\Helpers\ImageHelper::getSponsorImages();
+
+// Get editable content for sponsor page
+$hero_content = render_editable_content('sponsor', 'hero_title', 'Bli Sponsor for Jaktfeltcup', 'Få eksponering i Norges største skytekonkurranse. Som sponsor får du tilgang til et engasjert publikum og kan bygge ditt merke.');
+$benefits_content = render_editable_content('sponsor', 'benefits_title', 'Hvorfor bli sponsor?', 'Som sponsor for Jaktfeltcup får du tilgang til et engasjert publikum og kan bygge ditt merke.');
+$packages_content = render_editable_content('sponsor', 'packages_title', 'Sponsorpakker', 'Velg den pakken som passer best for ditt selskap.');
+$cta_content = render_editable_content('sponsor', 'cta_title', 'Klar til å bli sponsor?', 'Ta kontakt med oss i dag og bli del av Jaktfeltcup-familien.');
 ?>
 
 <?php include_header(); ?>
@@ -16,14 +26,18 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-4">Bli Sponsor for Jaktfeltcup</h1>
-                <p class="lead mb-4">
-                    Få eksponering i Norges største skytekonkurranse. 
-                    Som sponsor får du tilgang til et engasjert publikum og kan bygge ditt merke.
-                </p>
+                <?php if (can_edit_inline() && !empty($hero_content['editor_html'])): ?>
+                    <?= $hero_content['editor_html'] ?>
+                <?php else: ?>
+                    <h1 class="display-4 fw-bold mb-4"><?= htmlspecialchars($hero_content['title']) ?></h1>
+                    <p class="lead mb-4"><?= htmlspecialchars($hero_content['content']) ?></p>
+                <?php endif; ?>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?= base_url('sponsor/pakker') ?>" class="btn btn-light btn-lg">
                         <i class="fas fa-star me-2"></i>Se sponsor-pakker
+                    </a>
+                    <a href="<?= base_url('sponsor/presentasjon') ?>" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-handshake me-2"></i>Se våre sponsorer
                     </a>
                     <a href="<?= base_url('sponsor/kontakt') ?>" class="btn btn-outline-light btn-lg">
                         <i class="fas fa-envelope me-2"></i>Kontakt oss
@@ -42,11 +56,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h2 class="mb-4">Hvorfor sponse Jaktfeltcup?</h2>
-                <p class="lead text-muted mb-5">
-                    Jaktfeltcup er Norges største skytekonkurranse med over 500 aktive deltakere 
-                    og 20+ stevner per år. Som sponsor får du tilgang til et engasjert og lojalt publikum.
-                </p>
+                <?php if (can_edit_inline() && !empty($benefits_content['editor_html'])): ?>
+                    <?= $benefits_content['editor_html'] ?>
+                <?php else: ?>
+                    <h2 class="mb-4"><?= htmlspecialchars($benefits_content['title']) ?></h2>
+                    <p class="lead text-muted mb-5"><?= htmlspecialchars($benefits_content['content']) ?></p>
+                <?php endif; ?>
             </div>
         </div>
         
@@ -196,32 +211,27 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
                     <div class="card-body">
                         <h5 class="card-title">Våre nåværende sponsorer</h5>
                         <p class="card-text">Vi er stolte av å samarbeide med:</p>
-                        <div class="row text-center">
-                            <div class="col-6 mb-3">
-                                <div class="bg-light p-3 rounded">
-                                    <i class="fas fa-building fa-2x text-primary"></i>
-                                    <p class="mb-0 mt-2">Bedrift A</p>
-                                </div>
+                        <?php if (!empty($sponsorImages)): ?>
+                            <div class="row text-center">
+                                <?php foreach ($sponsorImages as $sponsor): ?>
+                                    <div class="col-6 mb-3">
+                                        <div class="bg-light p-3 rounded">
+                                            <img src="<?= htmlspecialchars($sponsor['logo_url']) ?>" 
+                                                 alt="<?= htmlspecialchars($sponsor['name']) ?>" 
+                                                 class="img-fluid" 
+                                                 style="max-height: 60px; object-fit: contain;">
+                                            <p class="mb-0 mt-2"><?= htmlspecialchars($sponsor['name']) ?></p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                            <div class="col-6 mb-3">
-                                <div class="bg-light p-3 rounded">
-                                    <i class="fas fa-building fa-2x text-primary"></i>
-                                    <p class="mb-0 mt-2">Bedrift B</p>
-                                </div>
+                        <?php else: ?>
+                            <div class="text-center text-muted">
+                                <i class="fas fa-handshake fa-3x mb-3"></i>
+                                <p>Ingen sponsorer registrert ennå.</p>
+                                <p>Bli den første!</p>
                             </div>
-                            <div class="col-6 mb-3">
-                                <div class="bg-light p-3 rounded">
-                                    <i class="fas fa-building fa-2x text-primary"></i>
-                                    <p class="mb-0 mt-2">Bedrift C</p>
-                                </div>
-                            </div>
-                            <div class="col-6 mb-3">
-                                <div class="bg-light p-3 rounded">
-                                    <i class="fas fa-building fa-2x text-primary"></i>
-                                    <p class="mb-0 mt-2">Bedrift D</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -234,10 +244,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
     <div class="container">
         <div class="row text-center">
             <div class="col-lg-8 mx-auto">
-                <h2 class="mb-4">Klar til å bli sponsor?</h2>
-                <p class="lead mb-4">
-                    Ta kontakt med oss for å diskutere muligheter for samarbeid.
-                </p>
+                <?php if (can_edit_inline() && !empty($cta_content['editor_html'])): ?>
+                    <?= $cta_content['editor_html'] ?>
+                <?php else: ?>
+                    <h2 class="mb-4"><?= htmlspecialchars($cta_content['title']) ?></h2>
+                    <p class="lead mb-4"><?= htmlspecialchars($cta_content['content']) ?></p>
+                <?php endif; ?>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
                     <a href="<?= base_url('sponsor/pakker') ?>" class="btn btn-light btn-lg">
                         <i class="fas fa-star me-2"></i>Se sponsor-pakker

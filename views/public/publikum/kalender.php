@@ -11,23 +11,33 @@ require_once __DIR__ . '/../../../src/Core/Database.php';
 
 // Initialize database connection
 global $db_config;
-$database = new Jaktfeltcup\Core\Database($db_config);
+$database = new \Jaktfeltcup\Core\Database($db_config);
 
 // Get all upcoming competitions
-$upcomingCompetitions = $database->queryAll(
-    "SELECT * FROM jaktfelt_competitions 
-     WHERE competition_date > NOW() 
-     ORDER BY competition_date ASC"
-);
+try {
+    $upcomingCompetitions = $database->queryAll(
+        "SELECT * FROM jaktfelt_competitions 
+         WHERE competition_date > NOW() 
+         ORDER BY competition_date ASC"
+    );
+} catch (Exception $e) {
+    $upcomingCompetitions = [];
+    error_log("Kalender page - Could not fetch upcoming competitions: " . $e->getMessage());
+}
 
 // Get past competitions (last 3 months)
-$pastCompetitions = $database->queryAll(
-    "SELECT * FROM jaktfelt_competitions 
-     WHERE competition_date < NOW() 
-     AND competition_date > DATE_SUB(NOW(), INTERVAL 3 MONTH)
-     ORDER BY competition_date DESC 
-     LIMIT 5"
-);
+try {
+    $pastCompetitions = $database->queryAll(
+        "SELECT * FROM jaktfelt_competitions 
+         WHERE competition_date < NOW() 
+         AND competition_date > DATE_SUB(NOW(), INTERVAL 3 MONTH)
+         ORDER BY competition_date DESC 
+         LIMIT 5"
+    );
+} catch (Exception $e) {
+    $pastCompetitions = [];
+    error_log("Kalender page - Could not fetch past competitions: " . $e->getMessage());
+}
 ?>
 
 <?php include_header(); ?>

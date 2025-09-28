@@ -7,6 +7,29 @@ $current_page = 'arrangor';
 // Include required files
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
+require_once __DIR__ . '/../../../src/Helpers/InlineEditHelper.php';
+
+// Initialize database connection
+global $db_config;
+$database = new \Jaktfeltcup\Core\Database($db_config);
+
+// Get editable content
+$hero_content = render_editable_content('arrangor', 'hero_title', 'Bli Arrangør for Jaktfeltcup', 'Bli del av Norges største skytekonkurranse som arrangør.');
+$benefits_content = render_editable_content('arrangor', 'benefits_title', 'Hvorfor bli arrangør?', 'Som arrangør for Jaktfeltcup får du mulighet til å bidra til utvikling av skyteidretten og skape verdifulle opplevelser for deltakere.');
+
+// Card content
+$fellesskap_content = render_editable_content('arrangor', 'fellesskap_title', 'Fellesskap', 'Bli del av et sterkt fellesskap av engasjerte arrangører som deler samme lidenskap for skyteidrett.');
+$prestisje_content = render_editable_content('arrangor', 'prestisje_title', 'Prestisje', 'Arranger stevner under Norges største skytekonkurranse og få anerkjennelse for ditt bidrag.');
+$utvikling_content = render_editable_content('arrangor', 'utvikling_title', 'Utvikling', 'Bidra til utvikling av skyteidretten og skape muligheter for nye skyttere.');
+
+// What you get section
+$what_you_get_content = render_editable_content('arrangor', 'what_you_get_title', 'Hva får du som arrangør?', 'Vi tilbyr komplett støtte, markedsføring, teknisk støtte, networking og anerkjennelse.');
+
+// How to become organizer
+$how_to_become_content = render_editable_content('arrangor', 'how_to_become_title', 'Hvordan bli arrangør?', 'Prosessen for å bli arrangør er enkel og vi hjelper deg gjennom hele veien.');
+
+// Call to action
+$cta_content = render_editable_content('arrangor', 'cta_title', 'Klar til å bli arrangør?', 'Ta kontakt med oss i dag og bli del av Jaktfeltcup-familien.');
 ?>
 
 <?php include_header(); ?>
@@ -16,11 +39,13 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-4">Bli Arrangør for Jaktfeltcup</h1>
-                <p class="lead mb-4">
-                    Bli del av Norges største skytekonkurranse som arrangør. 
-                    Vi trenger engasjerte arrangører som kan bidra til å utvikle skyteidretten.
-                </p>
+                
+                <?php if (can_edit_inline() && !empty($hero_content['editor_html'])): ?>
+                    <?= $hero_content['editor_html'] ?>
+                <?php else: ?>
+                    <h1 class="display-4 fw-bold mb-4"><?= htmlspecialchars($hero_content['title']) ?></h1>
+                    <p class="lead mb-4"><?= htmlspecialchars($hero_content['content']) ?></p>
+                <?php endif; ?>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?= base_url('arrangor/bli-arrangor') ?>" class="btn btn-light btn-lg">
                         <i class="fas fa-calendar-plus me-2"></i>Bli arrangør nå
@@ -42,11 +67,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h2 class="mb-4">Hvorfor bli arrangør?</h2>
-                <p class="lead text-muted mb-5">
-                    Som arrangør for Jaktfeltcup får du mulighet til å bidra til utvikling av skyteidretten 
-                    og skape verdifulle opplevelser for deltakere.
-                </p>
+                <?php if (can_edit_inline() && !empty($benefits_content['editor_html'])): ?>
+                    <?= $benefits_content['editor_html'] ?>
+                <?php else: ?>
+                    <h2 class="mb-4"><?= htmlspecialchars($benefits_content['title']) ?></h2>
+                    <p class="lead text-muted mb-5"><?= htmlspecialchars($benefits_content['content']) ?></p>
+                <?php endif; ?>
             </div>
         </div>
         
@@ -55,11 +81,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
                 <div class="card h-100 text-center">
                     <div class="card-body">
                         <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">Fellesskap</h5>
-                        <p class="card-text">
-                            Bli del av et sterkt fellesskap av engasjerte arrangører 
-                            som deler samme lidenskap for skyteidrett.
-                        </p>
+                        <?php if (can_edit_inline() && !empty($fellesskap_content['editor_html'])): ?>
+                            <?= $fellesskap_content['editor_html'] ?>
+                        <?php else: ?>
+                            <h5 class="card-title"><?= htmlspecialchars($fellesskap_content['title']) ?></h5>
+                            <p class="card-text"><?= htmlspecialchars($fellesskap_content['content']) ?></p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -67,11 +94,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
                 <div class="card h-100 text-center">
                     <div class="card-body">
                         <i class="fas fa-trophy fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">Prestisje</h5>
-                        <p class="card-text">
-                            Arranger stevner under Norges største skytekonkurranse 
-                            og få anerkjennelse for ditt bidrag.
-                        </p>
+                        <?php if (can_edit_inline() && !empty($prestisje_content['editor_html'])): ?>
+                            <?= $prestisje_content['editor_html'] ?>
+                        <?php else: ?>
+                            <h5 class="card-title"><?= htmlspecialchars($prestisje_content['title']) ?></h5>
+                            <p class="card-text"><?= htmlspecialchars($prestisje_content['content']) ?></p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -79,11 +107,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
                 <div class="card h-100 text-center">
                     <div class="card-body">
                         <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">Utvikling</h5>
-                        <p class="card-text">
-                            Bidra til utvikling av skyteidretten og skape 
-                            muligheter for nye skyttere.
-                        </p>
+                        <?php if (can_edit_inline() && !empty($utvikling_content['editor_html'])): ?>
+                            <?= $utvikling_content['editor_html'] ?>
+                        <?php else: ?>
+                            <h5 class="card-title"><?= htmlspecialchars($utvikling_content['title']) ?></h5>
+                            <p class="card-text"><?= htmlspecialchars($utvikling_content['content']) ?></p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -96,7 +125,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <h2 class="mb-4">Hva får du som arrangør?</h2>
+                <?php if (can_edit_inline() && !empty($what_you_get_content['editor_html'])): ?>
+                    <?= $what_you_get_content['editor_html'] ?>
+                <?php else: ?>
+                    <h2 class="mb-4"><?= htmlspecialchars($what_you_get_content['title']) ?></h2>
+                    <p class="lead"><?= htmlspecialchars($what_you_get_content['content']) ?></p>
+                <?php endif; ?>
                 <ul class="list-unstyled">
                     <li class="mb-3">
                         <i class="fas fa-check-circle text-success me-2"></i>
@@ -144,10 +178,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h2 class="mb-4">Hvordan bli arrangør?</h2>
-                <p class="lead text-muted mb-5">
-                    Prosessen for å bli arrangør er enkel og vi hjelper deg gjennom hele veien.
-                </p>
+                <?php if (can_edit_inline() && !empty($how_to_become_content['editor_html'])): ?>
+                    <?= $how_to_become_content['editor_html'] ?>
+                <?php else: ?>
+                    <h2 class="mb-4"><?= htmlspecialchars($how_to_become_content['title']) ?></h2>
+                    <p class="lead text-muted mb-5"><?= htmlspecialchars($how_to_become_content['content']) ?></p>
+                <?php endif; ?>
             </div>
         </div>
         
@@ -197,10 +233,12 @@ require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
     <div class="container">
         <div class="row text-center">
             <div class="col-lg-8 mx-auto">
-                <h2 class="mb-4">Klar til å bli arrangør?</h2>
-                <p class="lead mb-4">
-                    Ta kontakt med oss i dag og bli del av Jaktfeltcup-familien.
-                </p>
+                <?php if (can_edit_inline() && !empty($cta_content['editor_html'])): ?>
+                    <?= $cta_content['editor_html'] ?>
+                <?php else: ?>
+                    <h2 class="mb-4"><?= htmlspecialchars($cta_content['title']) ?></h2>
+                    <p class="lead mb-4"><?= htmlspecialchars($cta_content['content']) ?></p>
+                <?php endif; ?>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
                     <a href="<?= base_url('arrangor/bli-arrangor') ?>" class="btn btn-light btn-lg">
                         <i class="fas fa-calendar-plus me-2"></i>Bli arrangør nå

@@ -3,6 +3,9 @@
  * View Helper functions for Jaktfeltcup
  */
 
+// Load ImageHelper
+require_once __DIR__ . '/ImageHelper.php';
+
 // Helper function to get base URL
 function base_url($path = '') {
     global $app_config;
@@ -34,6 +37,6 @@ function getDataService() {
     if ($app_config['data_source'] === 'json') {
         return new \Jaktfeltcup\Data\JsonDataService();
     } else {
-        return new Database($GLOBALS['config']);
+        return new \Jaktfeltcup\Core\Database($GLOBALS['config']);
     }
 }

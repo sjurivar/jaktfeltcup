@@ -8,18 +8,29 @@ $current_page = 'deltaker';
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
 require_once __DIR__ . '/../../../src/Core/Database.php';
+require_once __DIR__ . '/../../../src/Helpers/InlineEditHelper.php';
 
 // Initialize database connection
 global $db_config;
-$database = new Jaktfeltcup\Core\Database($db_config);
+$database = new \Jaktfeltcup\Core\Database($db_config);
+
+// Get editable content for deltaker page
+$hero_content = render_editable_content('deltaker', 'hero_title', 'Bli Deltaker i Jaktfeltcup', 'Meld deg på som deltaker og bli del av Norges største skytekonkurranse.');
+$benefits_content = render_editable_content('deltaker', 'benefits_title', 'Hvorfor delta?', 'Som deltaker får du mulighet til å konkurrere mot de beste skytterne i Norge.');
+$cta_content = render_editable_content('deltaker', 'cta_title', 'Klar til å melde deg på?', 'Registrer deg som deltaker og bli del av Jaktfeltcup-familien.');
 
 // Get upcoming competitions
-$upcomingCompetitions = $database->queryAll(
-    "SELECT * FROM jaktfelt_competitions 
-     WHERE competition_date > NOW() 
-     ORDER BY competition_date ASC 
-     LIMIT 3"
-);
+try {
+    $upcomingCompetitions = $database->queryAll(
+        "SELECT * FROM jaktfelt_competitions 
+         WHERE competition_date > NOW() 
+         ORDER BY competition_date ASC 
+         LIMIT 3"
+    );
+} catch (Exception $e) {
+    $upcomingCompetitions = [];
+    error_log("Deltaker page - Could not fetch competitions: " . $e->getMessage());
+}
 ?>
 
 <?php include_header(); ?>
@@ -29,11 +40,12 @@ $upcomingCompetitions = $database->queryAll(
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-4">Bli Deltaker i Jaktfeltcup</h1>
-                <p class="lead mb-4">
-                    Meld deg på som deltaker i Norges største skytekonkurranse. 
-                    Enten du er nybegynner eller erfaren skytter - det er plass for alle!
-                </p>
+                <?php if (can_edit_inline() && !empty($hero_content['editor_html'])): ?>
+                    <?= $hero_content['editor_html'] ?>
+                <?php else: ?>
+                    <h1 class="display-4 fw-bold mb-4"><?= htmlspecialchars($hero_content['title']) ?></h1>
+                    <p class="lead mb-4"><?= htmlspecialchars($hero_content['content']) ?></p>
+                <?php endif; ?>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?= base_url('deltaker/meld-deg-pa') ?>" class="btn btn-light btn-lg">
                         <i class="fas fa-user-plus me-2"></i>Meld deg på
@@ -55,11 +67,12 @@ $upcomingCompetitions = $database->queryAll(
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h2 class="mb-4">Hvorfor delta i Jaktfeltcup?</h2>
-                <p class="lead text-muted mb-5">
-                    Jaktfeltcup tilbyr en unik mulighet til å utvikle dine ferdigheter, 
-                    møte andre skyttere og konkurrere på alle nivåer.
-                </p>
+                <?php if (can_edit_inline() && !empty($benefits_content['editor_html'])): ?>
+                    <?= $benefits_content['editor_html'] ?>
+                <?php else: ?>
+                    <h2 class="mb-4"><?= htmlspecialchars($benefits_content['title']) ?></h2>
+                    <p class="lead text-muted mb-5"><?= htmlspecialchars($benefits_content['content']) ?></p>
+                <?php endif; ?>
             </div>
         </div>
         
@@ -262,10 +275,12 @@ $upcomingCompetitions = $database->queryAll(
     <div class="container">
         <div class="row text-center">
             <div class="col-lg-8 mx-auto">
-                <h2 class="mb-4">Klar til å bli deltaker?</h2>
-                <p class="lead mb-4">
-                    Meld deg på i dag og bli del av Norges største skytekonkurranse!
-                </p>
+                <?php if (can_edit_inline() && !empty($cta_content['editor_html'])): ?>
+                    <?= $cta_content['editor_html'] ?>
+                <?php else: ?>
+                    <h2 class="mb-4"><?= htmlspecialchars($cta_content['title']) ?></h2>
+                    <p class="lead mb-4"><?= htmlspecialchars($cta_content['content']) ?></p>
+                <?php endif; ?>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
                     <a href="<?= base_url('deltaker/meld-deg-pa') ?>" class="btn btn-light btn-lg">
                         <i class="fas fa-user-plus me-2"></i>Meld deg på

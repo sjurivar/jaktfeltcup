@@ -11,14 +11,19 @@ require_once __DIR__ . '/../../../src/Core/Database.php';
 
 // Initialize database connection
 global $db_config;
-$database = new Jaktfeltcup\Core\Database($db_config);
+$database = new \Jaktfeltcup\Core\Database($db_config);
 
 // Get upcoming competitions
-$upcomingCompetitions = $database->queryAll(
-    "SELECT * FROM jaktfelt_competitions 
-     WHERE competition_date > NOW() 
-     ORDER BY competition_date ASC"
-);
+try {
+    $upcomingCompetitions = $database->queryAll(
+        "SELECT * FROM jaktfelt_competitions 
+         WHERE competition_date > NOW() 
+         ORDER BY competition_date ASC"
+    );
+} catch (Exception $e) {
+    $upcomingCompetitions = [];
+    error_log("Meld deg på page - Could not fetch competitions: " . $e->getMessage());
+}
 ?>
 
 <?php include_header(); ?>

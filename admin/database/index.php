@@ -4,9 +4,43 @@
  * Centralized management for database operations
  */
 
+session_start();
+
 // Load configuration
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../src/Helpers/ViewHelper.php';
+require_once __DIR__ . '/../../src/Core/Database.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ' . base_url('login'));
+    exit;
+}
+
+// Initialize database connection
+global $db_config;
+$database = new \Jaktfeltcup\Core\Database($db_config);
+
+// Check if user has database management access
+$user_roles = [];
+try {
+    $user_roles = $database->queryAll(
+        "SELECT r.role_name FROM jaktfelt_user_roles ur 
+         JOIN jaktfelt_roles r ON ur.role_id = r.id 
+         WHERE ur.user_id = ?", 
+        [$_SESSION['user_id']]
+    );
+    $user_roles = array_column($user_roles, 'role_name');
+} catch (Exception $e) {
+    // If roles table doesn't exist, assume no roles
+    error_log("Could not fetch user roles: " . $e->getMessage());
+}
+
+if (!in_array('databasemanager', $user_roles) && !in_array('admin', $user_roles)) {
+    $_SESSION['error'] = 'Du har ikke tilgang til database-administrasjon.';
+    header('Location: ' . base_url('admin'));
+    exit;
+}
 
 // Set page variables
 $page_title = 'Database Admin';
@@ -114,6 +148,21 @@ try {
                                 <i class="fas fa-envelope me-2"></i>Test E-post
                             </a>
                         </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="<?= base_url('admin/content') ?>" class="btn btn-success w-100">
+                                <i class="fas fa-edit me-2"></i>Innholdsredigering
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="<?= base_url('admin/roles') ?>" class="btn btn-warning w-100">
+                                <i class="fas fa-users-cog me-2"></i>Bruker & Roller
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="<?= base_url('setup-admin') ?>" class="btn btn-danger w-100">
+                                <i class="fas fa-user-shield me-2"></i>Setup First Admin
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -134,8 +183,20 @@ try {
                             <a href="../../scripts/setup/setup_database.php" class="btn btn-primary btn-sm me-2">
                                 <i class="fas fa-database me-1"></i>Setup Database
                             </a>
-                            <a href="../../scripts/setup/setup_sample_data.php" class="btn btn-primary btn-sm">
+                            <a href="../../scripts/setup/setup_sample_data.php" class="btn btn-primary btn-sm me-2">
                                 <i class="fas fa-upload me-1"></i>Setup Sample Data
+                            </a>
+                            <a href="../../scripts/setup/setup_roles.php" class="btn btn-warning btn-sm me-2">
+                                <i class="fas fa-users-cog me-1"></i>Setup Roles
+                            </a>
+                            <a href="../../scripts/setup/create_test_users.php" class="btn btn-info btn-sm me-2">
+                                <i class="fas fa-users me-1"></i>Create Test Users
+                            </a>
+                            <a href="../../scripts/setup/setup_text_content.php" class="btn btn-success btn-sm me-2">
+                                <i class="fas fa-file-alt me-1"></i>Setup Text Content
+                            </a>
+                            <a href="../../scripts/setup/fix_text_content_table.php" class="btn btn-warning btn-sm">
+                                <i class="fas fa-wrench me-1"></i>Fix Text Table
                             </a>
                         </div>
                         <div class="col-md-4 mb-3">

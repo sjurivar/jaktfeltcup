@@ -11,4 +11,4 @@ require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/../Helpers/ViewHelper.php';
 
 // Initialize database connection
-$database = new Database($db_config);
+$database = new \Jaktfeltcup\Core\Database($db_config);
