@@ -49,11 +49,11 @@ if (preg_match('#^' . $base_url . '/results/(\d+)$#', $path, $matches) || preg_m
 }
 
 switch ($path) {
-    case '/':
-    case $base_url . '/':
-    case $base_url . '/public/':
-        include __DIR__ . '/views/public/home.php';
-        break;
+        case '/':
+        case $base_url . '/':
+        case $base_url . '/public/':
+            include __DIR__ . '/views/public/landing.php';
+            break;
     case '/results':
     case $base_url . '/results':
         include __DIR__ . '/views/public/results.php';
@@ -69,6 +69,62 @@ switch ($path) {
     case '/about':
     case $base_url . '/about':
         include __DIR__ . '/views/public/about.php';
+        break;
+    
+    // Arrangør-seksjon
+    case '/arrangor':
+    case $base_url . '/arrangor':
+        include __DIR__ . '/views/public/arrangor/index.php';
+        break;
+    case '/arrangor/bli-arrangor':
+    case $base_url . '/arrangor/bli-arrangor':
+        include __DIR__ . '/views/public/arrangor/bli-arrangor.php';
+        break;
+    case '/arrangor/kontakt':
+    case $base_url . '/arrangor/kontakt':
+        include __DIR__ . '/views/public/arrangor/kontakt.php';
+        break;
+    
+    // Sponsor-seksjon
+    case '/sponsor':
+    case $base_url . '/sponsor':
+        include __DIR__ . '/views/public/sponsor/index.php';
+        break;
+    case '/sponsor/pakker':
+    case $base_url . '/sponsor/pakker':
+        include __DIR__ . '/views/public/sponsor/pakker.php';
+        break;
+    case '/sponsor/kontakt':
+    case $base_url . '/sponsor/kontakt':
+        include __DIR__ . '/views/public/sponsor/kontakt.php';
+        break;
+    
+    // Deltaker-seksjon
+    case '/deltaker':
+    case $base_url . '/deltaker':
+        include __DIR__ . '/views/public/deltaker/index.php';
+        break;
+    case '/deltaker/meld-deg-pa':
+    case $base_url . '/deltaker/meld-deg-pa':
+        include __DIR__ . '/views/public/deltaker/meld-deg-pa.php';
+        break;
+    case '/deltaker/regler':
+    case $base_url . '/deltaker/regler':
+        include __DIR__ . '/views/public/deltaker/regler.php';
+        break;
+    
+    // Publikum-seksjon
+    case '/publikum':
+    case $base_url . '/publikum':
+        include __DIR__ . '/views/public/publikum/index.php';
+        break;
+    case '/publikum/kalender':
+    case $base_url . '/publikum/kalender':
+        include __DIR__ . '/views/public/publikum/kalender.php';
+        break;
+    case '/publikum/nyheter':
+    case $base_url . '/publikum/nyheter':
+        include __DIR__ . '/views/public/publikum/nyheter.php';
         break;
     case '/login':
     case $base_url . '/login':

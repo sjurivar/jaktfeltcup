@@ -64,16 +64,53 @@ $show_navigation = $show_navigation ?? true;
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?= $current_page === 'home' ? 'active' : '' ?>" href="<?= base_url() ?>">Hjem</a>
+                        <a class="nav-link <?= $current_page === 'landing' ? 'active' : '' ?>" href="<?= base_url() ?>">Hjem</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Arrangør
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<?= base_url('arrangor') ?>">Hvorfor arrangere?</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('arrangor/bli-arrangor') ?>">Bli arrangør</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('arrangor/kontakt') ?>">Kontakt</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sponsor
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<?= base_url('sponsor') ?>">Hvorfor sponse?</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('sponsor/pakker') ?>">Sponsor-pakker</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('sponsor/kontakt') ?>">Kontakt</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Deltaker
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<?= base_url('deltaker') ?>">Hvorfor delta?</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('deltaker/meld-deg-pa') ?>">Meld deg på</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('deltaker/regler') ?>">Regler</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Publikum
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<?= base_url('publikum') ?>">Hva er Jaktfeltcup?</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('publikum/kalender') ?>">Stevne-kalender</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('publikum/nyheter') ?>">Nyheter</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= $current_page === 'results' ? 'active' : '' ?>" href="<?= base_url('results') ?>">Resultater</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= $current_page === 'standings' ? 'active' : '' ?>" href="<?= base_url('standings') ?>">Sammenlagt</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $current_page === 'competitions' ? 'active' : '' ?>" href="<?= base_url('competitions') ?>">Stevner</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= $current_page === 'about' ? 'active' : '' ?>" href="<?= base_url('about') ?>">Om</a>
