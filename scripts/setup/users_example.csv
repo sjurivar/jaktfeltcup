@@ -1,0 +1,9 @@
+username,first_name,last_name,email,password,role
+admin,Admin,User,admin@jaktfeltcup.no,password123,admin
+db.manager,Database,Manager,db.manager@jaktfeltcup.no,password123,databasemanager
+content.manager,Content,Manager,content.manager@jaktfeltcup.no,password123,contentmanager
+role.manager,Role,Manager,role.manager@jaktfeltcup.no,password123,rolemanager
+user1,Regular,User,user1@jaktfeltcup.no,password123,user
+user2,Test,User,user2@jaktfeltcup.no,mypassword,user
+arrangor1,Arrangør,Test,arrangor1@jaktfeltcup.no,arrangor123,user
+sponsor1,Sponsor,Test,sponsor1@jaktfeltcup.no,sponsor123,user

@@ -25,7 +25,7 @@ spl_autoload_register(function ($class) {
 });
 
 // Load configuration
-git require_once __DIR__ . '/src/Core/App.php';
+require_once __DIR__ . '/src/Core/App.php';
 
 // Initialize database connection
 $database = new \Jaktfeltcup\Core\Database($config);

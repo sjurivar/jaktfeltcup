@@ -1,0 +1,60 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "first_name": "Admin",
+      "last_name": "User",
+      "email": "admin@jaktfeltcup.no",
+      "password": "password123",
+      "role": "admin"
+    },
+    {
+      "username": "db.manager",
+      "first_name": "Database",
+      "last_name": "Manager",
+      "email": "db.manager@jaktfeltcup.no",
+      "password": "password123",
+      "role": "databasemanager"
+    },
+    {
+      "username": "content.manager",
+      "first_name": "Content",
+      "last_name": "Manager",
+      "email": "content.manager@jaktfeltcup.no",
+      "password": "password123",
+      "role": "contentmanager"
+    },
+    {
+      "username": "role.manager",
+      "first_name": "Role",
+      "last_name": "Manager",
+      "email": "role.manager@jaktfeltcup.no",
+      "password": "password123",
+      "role": "rolemanager"
+    },
+    {
+      "username": "user1",
+      "first_name": "Regular",
+      "last_name": "User",
+      "email": "user1@jaktfeltcup.no",
+      "password": "password123",
+      "role": "user"
+    },
+    {
+      "username": "arrangor1",
+      "first_name": "Arrangør",
+      "last_name": "Test",
+      "email": "arrangor1@jaktfeltcup.no",
+      "password": "arrangor123",
+      "role": "user"
+    },
+    {
+      "username": "sponsor1",
+      "first_name": "Sponsor",
+      "last_name": "Test",
+      "email": "sponsor1@jaktfeltcup.no",
+      "password": "sponsor123",
+      "role": "user"
+    }
+  ]
+}

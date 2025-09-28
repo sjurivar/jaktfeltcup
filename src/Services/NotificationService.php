@@ -30,7 +30,7 @@ class NotificationService
     public function sendNotification(int $userId, string $type, string $subject, string $message): bool
     {
         $user = $this->database->queryOne(
-            "SELECT * FROM users WHERE id = ? AND is_active = 1",
+            "SELECT * FROM jaktfelt_users WHERE id = ? AND is_active = 1",
             [$userId]
         );
 

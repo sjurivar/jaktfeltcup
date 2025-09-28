@@ -103,7 +103,7 @@ class PublicController
             "SELECT u.id, u.first_name, u.last_name, 
                     SUM(r.points_awarded) as total_points,
                     COUNT(r.id) as competitions_entered
-             FROM users u
+             FROM jaktfelt_users u
              LEFT JOIN results r ON u.id = r.user_id
              LEFT JOIN competitions c ON r.competition_id = c.id
              LEFT JOIN seasons s ON c.season_id = s.id

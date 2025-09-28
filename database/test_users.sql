@@ -2,7 +2,7 @@
 -- Creates 3 test users, each with a different role for testing
 
 -- Insert test users with password: password123
--- Note: These hashes are for password 'password123'
+-- Using PHP password_hash() compatible hashes (bcrypt)
 INSERT INTO jaktfelt_users (username, first_name, last_name, email, password_hash, email_verified, created_at, is_test_data) VALUES
 ('db.manager', 'Database', 'Manager', 'db.manager@jaktfeltcup.no', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', 1, NOW(), 1),
 ('content.manager', 'Content', 'Manager', 'content.manager@jaktfeltcup.no', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', 1, NOW(), 1),

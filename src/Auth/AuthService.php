@@ -36,7 +36,7 @@ class AuthService
 
         // Insert user
         $this->database->execute(
-            "INSERT INTO users (username, email, password_hash, first_name, last_name, phone, date_of_birth, address, role) 
+            "INSERT INTO jaktfelt_users (username, email, password_hash, first_name, last_name, phone, date_of_birth, address, role) 
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
                 $userData['username'],
@@ -60,7 +60,7 @@ class AuthService
     public function login(string $email, string $password): array
     {
         $user = $this->database->queryOne(
-            "SELECT * FROM users WHERE email = ? AND is_active = 1",
+            "SELECT * FROM jaktfelt_users WHERE email = ? AND is_active = 1",
             [$email]
         );
 
@@ -161,7 +161,7 @@ class AuthService
     {
         return $this->database->queryOne(
             "SELECT id, username, email, first_name, last_name, phone, date_of_birth, address, role, is_active, email_verified, phone_verified, created_at 
-             FROM users WHERE id = ? AND is_active = 1",
+             FROM jaktfelt_users WHERE id = ? AND is_active = 1",
             [$userId]
         );
     }
@@ -222,7 +222,7 @@ class AuthService
     private function userExists(string $email, string $username): bool
     {
         $user = $this->database->queryOne(
-            "SELECT id FROM users WHERE email = ? OR username = ?",
+            "SELECT id FROM jaktfelt_users WHERE email = ? OR username = ?",
             [$email, $username]
         );
 
