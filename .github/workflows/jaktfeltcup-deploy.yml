@@ -7,8 +7,8 @@ on:
       - staging
 
 env:
-  PROD_DIR: /customers/d/9/c/csj1wp95j/webroots/r1406435/jaktfeltcup/
-  STAGING_DIR: /customers/d/9/c/csj1wp95j/webroots/r1406435/staging/jaktfeltcup/
+  PROD_DIR: /customers/d/9/c/csj1wp95j/webroots/r1415789/
+  STAGING_DIR: /customers/d/9/c/csj1wp95j/webroots/r1415789/staging/jaktfeltcup/
 
 jobs:
   ftp-deploy:
