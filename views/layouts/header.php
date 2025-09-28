@@ -170,7 +170,7 @@ $show_navigation = $show_navigation ?? true;
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>">
+            <a class="navbar-brand" href="<?= base_url('/') ?>">
                 <i class="fas fa-bullseye me-2"></i>Jaktfeltcup
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -179,7 +179,7 @@ $show_navigation = $show_navigation ?? true;
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?= $current_page === 'landing' ? 'active' : '' ?>" href="<?= base_url() ?>">Hjem</a>
+                        <a class="nav-link <?= $current_page === 'landing' ? 'active' : '' ?>" href="<?= base_url('/') ?>">Hjem</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= $current_page === 'arrangor' ? 'active' : '' ?>" href="<?= base_url('arrangor') ?>">Arrangør</a>

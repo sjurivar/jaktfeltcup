@@ -32,6 +32,7 @@ jobs:
           cp -r database deploy/
           cp -r admin deploy/
           cp -r scripts deploy/
+          cp -r assets deploy/
           cp index.php deploy/
           cp .htaccess deploy/
           
