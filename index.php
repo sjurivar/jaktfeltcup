@@ -72,6 +72,16 @@ switch ($path) {
         include __DIR__ . '/views/public/about.php';
         break;
     
+    // Documentation
+    case '/dokumentasjon':
+    case '/brukermanual':
+    case '/help':
+    case $base_url . '/dokumentasjon':
+    case $base_url . '/brukermanual':
+    case $base_url . '/help':
+        include __DIR__ . '/views/public/dokumentasjon.php';
+        break;
+    
     // Arrangør-seksjon
     case '/arrangor':
     case $base_url . '/arrangor':
