@@ -8,6 +8,7 @@ $current_page = 'arrangor';
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
 require_once __DIR__ . '/../../../src/Helpers/InlineEditHelper.php';
+require_once __DIR__ . '/../../components/hero_section.php';
 
 // Initialize database connection
 global $db_config;
@@ -34,33 +35,23 @@ $cta_content = render_editable_content('arrangor', 'cta_title', 'Klar til å bli
 
 <?php include_header(); ?>
 
-<!-- Hero Section -->
-<section class="hero-section bg-primary text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                
-                <?php if (can_edit_inline() && !empty($hero_content['editor_html'])): ?>
-                    <?= $hero_content['editor_html'] ?>
-                <?php else: ?>
-                    <h1 class="display-4 fw-bold mb-4"><?= htmlspecialchars($hero_content['title']) ?></h1>
-                    <p class="lead mb-4"><?= htmlspecialchars($hero_content['content']) ?></p>
-                <?php endif; ?>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="<?= base_url('arrangor/bli-arrangor') ?>" class="btn btn-light btn-lg">
-                        <i class="fas fa-calendar-plus me-2"></i>Bli arrangør nå
-                    </a>
-                    <a href="<?= base_url('arrangor/kontakt') ?>" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-envelope me-2"></i>Kontakt oss
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center">
-                <i class="fas fa-calendar-alt fa-8x opacity-50"></i>
-            </div>
-        </div>
-    </div>
-</section>
+<?php 
+$hero_buttons = [
+    [
+        'text' => 'Bli arrangør nå',
+        'url' => base_url('arrangor/bli-arrangor'),
+        'class' => 'btn-light',
+        'icon' => 'fas fa-calendar-plus'
+    ],
+    [
+        'text' => 'Kontakt oss',
+        'url' => base_url('arrangor/kontakt'),
+        'class' => 'btn-outline-light',
+        'icon' => 'fas fa-envelope'
+    ]
+];
+include_hero_section('arrangor', 'hero_title', 'Bli Arrangør for Jaktfeltcup', 'Bli del av Norges største skytekonkurranse som arrangør.', $hero_buttons);
+?>
 
 <!-- Why Become Organizer -->
 <section class="py-5">

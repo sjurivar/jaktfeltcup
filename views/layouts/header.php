@@ -40,10 +40,6 @@ $show_navigation = $show_navigation ?? true;
             background-color: rgba(255, 255, 255, 0.8) !important;
         }
         
-        .hero-section {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%) !important;
-        }
-        
         body::before {
             content: '';
             position: fixed;
@@ -60,18 +56,63 @@ $show_navigation = $show_navigation ?? true;
             pointer-events: none;
         }
         
+        /* Standardized Hero Section - Three-part background */
         .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: 
+                linear-gradient(90deg, rgb(120, 80, 50) 0%, rgb(120, 80, 50) 10%),
+                linear-gradient(90deg, rgb(120, 80, 50) 10%, rgb(180, 140, 100) 66%),
+                linear-gradient(90deg, rgb(180, 140, 100) 66%, rgb(255, 255, 255) 100%);
+            background-size: 10% 100%, 56% 100%, 34% 100%;
+            background-position: 0% 0%, 10% 0%, 66% 0%;
+            background-repeat: no-repeat;
             color: white;
-            padding: 100px 0;
+            padding: 0;
             position: relative;
+            height: 300px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Text styling for hero section */
+        .hero-section h1,
+        .hero-section p {
+            color: black;
+        }
+        
+        /* Button styling for hero section */
+        .hero-section .btn {
+            background-color: rgba(120, 80, 50, 0.9);
+            border: 2px solid rgb(120, 80, 50);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .hero-section .btn:hover {
+            background-color: rgb(120, 80, 50);
+            border-color: rgb(100, 60, 30);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-section .btn-outline-light {
+            background-color: transparent;
+            border: 2px solid rgb(120, 80, 50);
+            color: rgb(120, 80, 50);
+        }
+        
+        .hero-section .btn-outline-light:hover {
+            background-color: rgb(120, 80, 50);
+            border-color: rgb(100, 60, 30);
+            color: white;
         }
         
         .hero-section::before {
             content: '';
             position: absolute;
             top: 50%;
-            right: 50px;
+            right: 0;
             transform: translateY(-50%);
             width: 300px;
             height: 300px;
@@ -79,7 +120,7 @@ $show_navigation = $show_navigation ?? true;
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 0.7;
+            opacity: 1;
             z-index: 1;
             pointer-events: none;
         }
@@ -90,11 +131,15 @@ $show_navigation = $show_navigation ?? true;
         }
         
         @media (max-width: 768px) {
+            .hero-section {
+                height: 200px;
+            }
+            
             .hero-section::before {
                 width: 200px;
                 height: 200px;
-                right: 20px;
-                opacity: 0.6;
+                right: 0;
+                opacity: 1;
             }
         }
         .feature-card {

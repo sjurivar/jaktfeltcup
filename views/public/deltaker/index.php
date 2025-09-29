@@ -9,6 +9,7 @@ require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
 require_once __DIR__ . '/../../../src/Core/Database.php';
 require_once __DIR__ . '/../../../src/Helpers/InlineEditHelper.php';
+require_once __DIR__ . '/../../components/hero_section.php';
 
 // Initialize database connection
 global $db_config;
@@ -35,32 +36,23 @@ try {
 
 <?php include_header(); ?>
 
-<!-- Hero Section -->
-<section class="hero-section bg-primary text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <?php if (can_edit_inline() && !empty($hero_content['editor_html'])): ?>
-                    <?= $hero_content['editor_html'] ?>
-                <?php else: ?>
-                    <h1 class="display-4 fw-bold mb-4"><?= htmlspecialchars($hero_content['title']) ?></h1>
-                    <p class="lead mb-4"><?= htmlspecialchars($hero_content['content']) ?></p>
-                <?php endif; ?>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="<?= base_url('deltaker/meld-deg-pa') ?>" class="btn btn-light btn-lg">
-                        <i class="fas fa-user-plus me-2"></i>Meld deg på
-                    </a>
-                    <a href="<?= base_url('deltaker/regler') ?>" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-book me-2"></i>Se regler
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center">
-                <i class="fas fa-user-plus fa-8x opacity-50"></i>
-            </div>
-        </div>
-    </div>
-</section>
+<?php 
+$hero_buttons = [
+    [
+        'text' => 'Meld deg på',
+        'url' => base_url('deltaker/meld-deg-pa'),
+        'class' => 'btn-light',
+        'icon' => 'fas fa-user-plus'
+    ],
+    [
+        'text' => 'Se regler',
+        'url' => base_url('deltaker/regler'),
+        'class' => 'btn-outline-light',
+        'icon' => 'fas fa-book'
+    ]
+];
+include_hero_section('deltaker', 'hero_title', 'Bli Deltaker i Jaktfeltcup', 'Meld deg på som deltaker og bli del av Norges største skytekonkurranse.', $hero_buttons);
+?>
 
 <!-- Why Participate -->
 <section class="py-5">

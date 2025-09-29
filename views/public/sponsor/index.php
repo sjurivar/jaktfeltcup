@@ -8,6 +8,7 @@ $current_page = 'sponsor';
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
 require_once __DIR__ . '/../../../src/Helpers/InlineEditHelper.php';
+require_once __DIR__ . '/../../components/hero_section.php';
 
 // Get sponsor images
 $sponsorImages = \Jaktfeltcup\Helpers\ImageHelper::getSponsorImages();
@@ -21,35 +22,29 @@ $cta_content = render_editable_content('sponsor', 'cta_title', 'Klar til å bli 
 
 <?php include_header(); ?>
 
-<!-- Hero Section -->
-<section class="hero-section bg-primary text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <?php if (can_edit_inline() && !empty($hero_content['editor_html'])): ?>
-                    <?= $hero_content['editor_html'] ?>
-                <?php else: ?>
-                    <h1 class="display-4 fw-bold mb-4"><?= htmlspecialchars($hero_content['title']) ?></h1>
-                    <p class="lead mb-4"><?= htmlspecialchars($hero_content['content']) ?></p>
-                <?php endif; ?>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="<?= base_url('sponsor/pakker') ?>" class="btn btn-light btn-lg">
-                        <i class="fas fa-star me-2"></i>Se sponsor-pakker
-                    </a>
-                    <a href="<?= base_url('sponsor/presentasjon') ?>" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-handshake me-2"></i>Se våre sponsorer
-                    </a>
-                    <a href="<?= base_url('sponsor/kontakt') ?>" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-envelope me-2"></i>Kontakt oss
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center">
-                <i class="fas fa-handshake fa-8x opacity-50"></i>
-            </div>
-        </div>
-    </div>
-</section>
+<?php 
+$hero_buttons = [
+    [
+        'text' => 'Se sponsor-pakker',
+        'url' => base_url('sponsor/pakker'),
+        'class' => 'btn-light',
+        'icon' => 'fas fa-star'
+    ],
+    [
+        'text' => 'Se våre sponsorer',
+        'url' => base_url('sponsor/presentasjon'),
+        'class' => 'btn-outline-light',
+        'icon' => 'fas fa-handshake'
+    ],
+    [
+        'text' => 'Kontakt oss',
+        'url' => base_url('sponsor/kontakt'),
+        'class' => 'btn-outline-light',
+        'icon' => 'fas fa-envelope'
+    ]
+];
+include_hero_section('sponsor', 'hero_title', 'Bli Sponsor for Jaktfeltcup', 'Få eksponering i Norges største skytekonkurranse. Som sponsor får du tilgang til et engasjert publikum og kan bygge ditt merke.', $hero_buttons);
+?>
 
 <!-- Why Sponsor -->
 <section class="py-5">
