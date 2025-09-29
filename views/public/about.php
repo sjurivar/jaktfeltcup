@@ -33,6 +33,7 @@ $current_page = 'about';
                             <li><strong>Database:</strong> MySQL</li>
                             <li><strong>Frontend:</strong> Bootstrap 5, HTML5, CSS3</li>
                             <li><strong>Deployment:</strong> GitHub Actions + FTP</li>
+                            <li><strong>Utvikling:</strong> AI-assistert kodegenerering og kvalitetssikring</li>
                         </ul>
                     </div>
                 </div>
@@ -68,6 +69,22 @@ $current_page = 'about';
                             <strong>Git Branch:</strong><br>
                             <small class="text-muted"><?= exec('git branch --show-current') ?: 'N/A' ?></small>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Utvikling</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="small">
+                            <strong>Webutvikler:</strong><br>
+                            AI-assistert utvikling med moderne verktøy
+                        </p>
+                        <p class="small">
+                            <strong>AI-utvikling:</strong><br>
+                            Dette systemet er utviklet med bruk av kunstig intelligens (AI) for å sikre effektiv og moderne kodekvalitet.
+                        </p>
                     </div>
                 </div>
                 
