@@ -136,10 +136,61 @@ $show_navigation = $show_navigation ?? true;
             }
             
             .hero-section::before {
-                width: 200px;
-                height: 200px;
-                right: 0;
-                opacity: 1;
+                width: 150px;
+                height: 150px;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                opacity: 0.8;
+            }
+            
+            /* Ensure mobile navigation works properly */
+            .navbar-collapse {
+                background-color: rgba(33, 37, 41, 0.95);
+                border-radius: 0.375rem;
+                margin-top: 0.5rem;
+                padding: 1rem;
+            }
+            
+            .navbar-nav .nav-link {
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .navbar-nav .nav-link:last-child {
+                border-bottom: none;
+            }
+            
+            /* Improve mobile button spacing */
+            .hero-section .d-flex {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .hero-section .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-section {
+                height: 180px;
+                padding: 1rem 0;
+            }
+            
+            .hero-section::before {
+                width: 120px;
+                height: 120px;
+                right: 5px;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.75rem;
+            }
+            
+            .hero-section p {
+                font-size: 1rem;
             }
         }
         .feature-card {
@@ -153,6 +204,55 @@ $show_navigation = $show_navigation ?? true;
         }
         .nav-link.active {
             font-weight: 500;
+        }
+        
+        /* Mobile navigation improvements */
+        .navbar-toggler {
+            border: none;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        /* Ensure proper touch targets on mobile */
+        @media (max-width: 768px) {
+            .nav-link {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .navbar-nav .nav-item {
+                margin: 0;
+            }
+            
+            /* Improve mobile card layouts */
+            .card {
+                margin-bottom: 1rem;
+            }
+            
+            /* Better mobile button spacing */
+            .btn-lg {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            /* Improve mobile text readability */
+            .lead {
+                font-size: 1.1rem;
+            }
+            
+            /* Better mobile spacing */
+            .py-5 {
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+            }
         }
         
         /* Content Editor Styles */
