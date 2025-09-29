@@ -200,6 +200,24 @@ try {
                             </a>
                         </div>
                         <div class="col-md-4 mb-3">
+                            <h6><i class="fas fa-user-shield me-2"></i>User Management</h6>
+                            <a href="../../scripts/setup/create_working_users.php" class="btn btn-success btn-sm me-2">
+                                <i class="fas fa-users me-1"></i>Create Working Users
+                            </a>
+                            <a href="../../scripts/setup/create_admin_quick.php" class="btn btn-primary btn-sm me-2">
+                                <i class="fas fa-crown me-1"></i>Create Admin Quick
+                            </a>
+                            <a href="../../scripts/setup/fix_user_passwords.php" class="btn btn-warning btn-sm me-2">
+                                <i class="fas fa-key me-1"></i>Fix User Passwords
+                            </a>
+                            <a href="../../scripts/setup/test_login.php" class="btn btn-info btn-sm me-2">
+                                <i class="fas fa-sign-in-alt me-1"></i>Test Login
+                            </a>
+                            <a href="../../scripts/setup/reset_users.php" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash me-1"></i>Reset Users
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
                             <h6><i class="fas fa-sync me-2"></i>Migration Scripts</h6>
                             <a href="../../scripts/migration/migrate_add_test_data_column.php" class="btn btn-warning btn-sm me-2">
                                 <i class="fas fa-plus me-1"></i>Add Test Data Column
