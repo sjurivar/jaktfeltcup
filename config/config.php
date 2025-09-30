@@ -6,11 +6,11 @@
 
 // Database configuration
 $db_config = [
-    'host' => 'localhost',
+    'host' => 'mysql.csj1wp95j.service.one',
     'port' => 3306,
-    'name' => 'jaktfeltcup',
-    'user' => 'root',
-    'password' => ''
+    'name' => 'csj1wp95j_db1415790',
+    'user' => 'csj1wp95j_db1415790',
+    'password' => 'iDU!KUkDaZAS4Aa'
 ];
 
 // Application configuration
