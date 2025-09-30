@@ -24,8 +24,16 @@ class ImageHelper {
      * Get logo URL
      */
     public static function getLogoUrl() {
+        // Try assets/images/logoer/ first (preferred)
+        $logoUrl = self::getImageUrl('assets/images/logoer/jaktfeltcup_logo.png');
+        if ($logoUrl) {
+            return $logoUrl;
+        }
+        
+        // Fallback to bilder/logoer/ (legacy)
         return self::getImageUrl('bilder/logoer/jaktfeltcup_logo.png');
     }
+    
     
     /**
      * Get sponsor images from database
