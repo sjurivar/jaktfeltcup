@@ -86,8 +86,8 @@ try {
     // Get the new user ID
     $userId = $database->lastInsertId();
     
-    // Initialize email service
-    $emailService = new EmailService($app_config, $database);
+    // Initialize email service with Mailjet
+    $emailService = new EmailService($app_config, $database, $mailjet_config);
     
     // Send verification email
     $emailSent = $emailService->sendVerificationCode($userId, $email, $first_name);

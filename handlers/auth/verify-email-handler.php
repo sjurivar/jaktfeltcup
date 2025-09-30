@@ -20,8 +20,8 @@ if (empty($verification_code)) {
     exit;
 }
 
-// Initialize email service
-$emailService = new EmailService($app_config, $database);
+// Initialize email service with Mailjet
+$emailService = new EmailService($app_config, $database, $mailjet_config);
 
 // Verify the code
 $verification = $emailService->verifyEmailCode($verification_code);

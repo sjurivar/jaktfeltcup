@@ -34,6 +34,14 @@ $mail_config = [
     'from_name' => 'Jaktfeltcup'
 ];
 
+// Mailjet configuration
+$mailjet_config = [
+    'api_key' => '55eb0772d8d669fbbf155358ccc6c631',        // Get from Mailjet dashboard
+    'secret_key' => '93ac142c3f80af106ac26c836b240d6e',  // Get from Mailjet dashboard
+    'from_email' => 'noreply@jaktfeltcup.no',
+    'from_name' => 'Jaktfeltcup'
+];
+
 
 // Initialize configuration
 $config = $db_config;

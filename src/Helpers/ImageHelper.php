@@ -24,7 +24,7 @@ class ImageHelper {
      * Get logo URL
      */
     public static function getLogoUrl() {
-        return self::getImageUrl('src/Bilder/logoer/jaktfeltcup_logo.png');
+        return self::getImageUrl('bilder/logoer/jaktfeltcup_logo.png');
     }
     
     /**

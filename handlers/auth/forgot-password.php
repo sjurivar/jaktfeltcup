@@ -57,8 +57,8 @@ try {
         [$user['id'], $reset_token, $reset_expires]
     );
     
-    // Initialize email service
-    $emailService = new EmailService($app_config, $database);
+    // Initialize email service with Mailjet
+    $emailService = new EmailService($app_config, $database, $mailjet_config);
     
     // Send reset email
     $emailSent = $emailService->sendPasswordResetEmail($user['id'], $email, $user['first_name'], $reset_token);

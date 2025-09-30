@@ -37,8 +37,8 @@ if ($user['email_verified']) {
     exit;
 }
 
-// Initialize email service
-$emailService = new EmailService($app_config, $database);
+// Initialize email service with Mailjet
+$emailService = new EmailService($app_config, $database, $mailjet_config);
 
 // Send new verification code
 $emailSent = $emailService->sendVerificationCode($user['id'], $user['email'], $user['first_name']);

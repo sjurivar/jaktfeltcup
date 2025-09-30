@@ -3,6 +3,8 @@
 # *_test.php
 # debug_*.php
 # *_debug.php
+# test_mailjet*.php
+# test_mailjet_integration.php
 
 # Composer dependencies
 vendor/

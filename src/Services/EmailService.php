@@ -1,12 +1,22 @@
 <?php
 
+namespace Jaktfeltcup\Services;
+
+use Jaktfeltcup\Core\Database;
+
 class EmailService {
     private $config;
     private $db;
+    private $mailjetService;
     
-    public function __construct($config, $db) {
+    public function __construct($config, $db, $mailjet_config = null) {
         $this->config = $config;
         $this->db = $db;
+        
+        // Initialize Mailjet service if config provided
+        if ($mailjet_config) {
+            $this->mailjetService = new EmailServiceMailjet($config, $db, $mailjet_config);
+        }
     }
     
     /**
@@ -224,13 +234,27 @@ class EmailService {
     }
     
     /**
-     * Send email using PHP mail function (public method for testing)
+     * Send email using Mailjet (preferred) or PHP mail function (fallback)
      */
     public function sendEmail($to, $subject, $message) {
         // Log email attempt
         error_log("📧 Attempting to send email to: $to");
         error_log("📧 Subject: $subject");
         
+        // Try Mailjet first if available
+        if ($this->mailjetService) {
+            $result = $this->mailjetService->sendEmail($to, $subject, $message);
+            
+            if ($result['success']) {
+                error_log("✅ Email sent successfully via Mailjet to: $to");
+                return true;
+            } else {
+                error_log("❌ Mailjet failed: " . $result['message']);
+                error_log("🔄 Falling back to PHP mail() function");
+            }
+        }
+        
+        // Fallback to PHP mail function
         $headers = [
             'MIME-Version: 1.0',
             'Content-type: text/html; charset=UTF-8',
@@ -251,10 +275,10 @@ class EmailService {
         $result = mail($to, $subject, $message, $headersString);
         
         if ($result) {
-            error_log("✅ Email sent successfully to: $to");
+            error_log("✅ Email sent successfully via PHP mail() to: $to");
         } else {
             error_log("❌ Failed to send email to: $to");
-            error_log("❌ Last error: " . error_get_last()['message'] ?? 'Unknown error');
+            error_log("❌ Last error: " . (error_get_last()['message'] ?? 'Unknown error'));
         }
         
         return $result;
