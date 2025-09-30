@@ -202,10 +202,7 @@ switch ($path) {
         break;
     case '/logout':
     case $base_url . '/logout':
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        session_destroy();
-        header('Location: ' . base_url());
-        exit;
+        include __DIR__ . '/handlers/auth/logout.php';
         break;
     case '/admin/database':
     case $base_url . '/admin/database':

@@ -21,6 +21,12 @@ $main_nav_content = render_editable_content('landing', 'main_nav_title', 'Hovedn
 $sponsors_content = render_editable_content('landing', 'sponsors_title', 'Våre Sponsorer', 'Takk til våre fantastiske sponsorer som gjør Jaktfeltcup mulig.');
 $news_content = render_editable_content('landing', 'news_title', 'Siste Nytt', 'Hold deg oppdatert med de siste nyhetene fra Jaktfeltcup.');
 
+// Check for logout message
+$logout_message = '';
+if (isset($_GET['logout']) && $_GET['logout'] === 'success') {
+    $logout_message = 'Du har blitt logget ut. Velkommen tilbake!';
+}
+
 // Get upcoming competitions
 try {
     $upcomingCompetitions = $database->queryAll(
@@ -64,6 +70,17 @@ try {
 <?php include_header(); ?>
 
 <?php include_hero_section('landing', 'hero_title', 'Velkommen til Jaktfeltcup!', 'Din portal for resultater, påmelding og informasjon om jaktfeltstevner.'); ?>
+
+<?php if (!empty($logout_message)): ?>
+<!-- Logout Message -->
+<div class="container mt-3">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <?= htmlspecialchars($logout_message) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+<?php endif; ?>
 
 <!-- Main Navigation Section -->
 <section class="py-5" style="background-color: rgba(248, 249, 250, 0.7);">
