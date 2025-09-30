@@ -8,6 +8,28 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Determine current page if not set
+if (!isset($current_page)) {
+    $request_uri = $_SERVER['REQUEST_URI'];
+    if (strpos($request_uri, '/deltaker') !== false) {
+        $current_page = 'deltaker';
+    } elseif (strpos($request_uri, '/arrangor') !== false) {
+        $current_page = 'arrangor';
+    } elseif (strpos($request_uri, '/sponsor') !== false) {
+        $current_page = 'sponsor';
+    } elseif (strpos($request_uri, '/publikum') !== false) {
+        $current_page = 'publikum';
+    } elseif (strpos($request_uri, '/om-oss') !== false) {
+        $current_page = 'om-oss';
+    } elseif (strpos($request_uri, '/dokumentasjon') !== false) {
+        $current_page = 'dokumentasjon';
+    } elseif (strpos($request_uri, '/about') !== false) {
+        $current_page = 'about';
+    } else {
+        $current_page = 'landing';
+    }
+}
+
 // Set default values
 $page_title = $page_title ?? 'Nasjonal 15m Jaktfeltcup';
 $page_description = $page_description ?? 'Administrasjonssystem for skyteøvelse';
@@ -359,6 +381,17 @@ $show_navigation = $show_navigation ?? true;
                     </li>
                 </ul>
                 <ul class="navbar-nav">
+                    <?php 
+                    // Debug: Check session status (commented out for production)
+                    $debug_info = '';
+                    if (isset($_SESSION['user_id'])) {
+                        $debug_info = 'User logged in (ID: ' . $_SESSION['user_id'] . ')';
+                    } else {
+                        $debug_info = 'User NOT logged in';
+                    }
+                    // Uncomment next line for debugging:
+                    // echo '<!-- Debug: ' . $debug_info . ' -->';
+                    ?>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li class="nav-item">
                             <span class="navbar-text me-3">Hei, <?= htmlspecialchars($_SESSION['user_name'] ?? 'Bruker') ?>!</span>
@@ -369,13 +402,15 @@ $show_navigation = $show_navigation ?? true;
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('logout') ?>">Logg ut</a>
                         </li>
-                    <?php elseif ($current_page === 'deltaker' || strpos($_SERVER['REQUEST_URI'], '/deltaker') !== false): ?>
+                    <?php else: ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('login') ?>">Logg inn</a>
                         </li>
+                        <?php if ($current_page === 'deltaker' || strpos($_SERVER['REQUEST_URI'], '/deltaker') !== false): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('register') ?>">Registrer</a>
                         </li>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </ul>
             </div>
