@@ -14,6 +14,9 @@ vendor/
 .env.local
 .env.production
 
+# Configuration files with sensitive data
+config/config.php
+
 # Log files
 *.log
 logs/

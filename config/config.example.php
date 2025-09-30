@@ -1,7 +1,7 @@
 <?php
 /**
- * Example Configuration file for Jaktfeltcup
- * Copy this file to config.php and update with your settings
+ * Example configuration file for Jaktfeltcup
+ * Copy this file to config.php and customize for your environment
  */
 
 // Database configuration
@@ -10,7 +10,7 @@ $db_config = [
     'port' => 3306,
     'name' => 'jaktfeltcup',
     'user' => 'root',
-    'password' => ''
+    'password' => 'your_password_here'
 ];
 
 // Application configuration
@@ -20,16 +20,27 @@ $app_config = [
     'base_url' => '/jaktfeltcup', // Change to '' for production
     'debug' => true,
     'session_lifetime' => 7200,
-    'data_source' => 'json' // 'database' or 'json'
+    'data_source' => 'database' // 'database' or 'json'
 ];
 
 // Email configuration (optional)
 $mail_config = [
-    'host' => 'smtp.gmail.com',
+    'host' => 'your_smtp_host',
     'port' => 587,
-    'username' => '',
-    'password' => '',
+    'username' => 'your_username',
+    'password' => 'your_password',
     'encryption' => 'tls',
-    'from_address' => 'noreply@jaktfeltcup.no',
+    'from_address' => 'noreply@yourdomain.com',
     'from_name' => 'Jaktfeltcup'
 ];
+
+// Mailjet configuration
+$mailjet_config = [
+    'api_key' => 'YOUR_MAILJET_API_KEY',        // Get from Mailjet dashboard
+    'secret_key' => 'YOUR_MAILJET_SECRET_KEY',  // Get from Mailjet dashboard
+    'from_email' => 'noreply@yourdomain.com',
+    'from_name' => 'Jaktfeltcup'
+];
+
+// Initialize configuration
+$config = $db_config;
