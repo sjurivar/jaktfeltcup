@@ -1,31 +1,25 @@
-# Dependencies
-/vendor/
-/node_modules/
+# Test files - should not be deployed to production (uncomment after testing)
+# test_*.php
+# *_test.php
+# debug_*.php
+# *_debug.php
+
+# Composer dependencies
+vendor/
 
 # Environment files
 .env
 .env.local
 .env.production
 
-# Configuration files (keep example files)
-config/config.php
-config/config.local.php
-config/config.production.php
-!config/config.example.php
-!config/README.md
-
-# Logs
+# Log files
 *.log
 logs/
-storage/logs/
 
-# Cache
-cache/
-storage/cache/
-
-# Uploads
-public/uploads/
-storage/uploads/
+# Temporary files
+*.tmp
+*.temp
+temp/
 
 # IDE files
 .vscode/
@@ -37,18 +31,18 @@ storage/uploads/
 .DS_Store
 Thumbs.db
 
-# PHP
-composer.lock
-.phpunit.result.cache
+# Backup files
+*.bak
+*.backup
+*~
 
-# Database
-*.sqlite
-*.db
+# Cache files
+cache/
+*.cache
+
+# Node modules (if using npm)
+node_modules/
 
 # Build files
-dist/
 build/
-
-# Temporary files
-tmp/
-temp/
+dist/
