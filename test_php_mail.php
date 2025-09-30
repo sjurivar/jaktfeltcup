@@ -1,8 +1,9 @@
-<?php
+git<?php
 /**
  * Test PHP mail() function
  */
 
+ 
 // Load configuration
 require_once __DIR__ . '/config/config.php';
 
