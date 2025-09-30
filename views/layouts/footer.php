@@ -13,11 +13,11 @@ $additional_js = $additional_js ?? '';
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h5>Jaktfeltcup</h5>
+                <h5>Nasjonal 15m Jaktfeltcup</h5>
                 <p class="text-muted">Administrasjonssystem for skyteøvelse</p>
             </div>
             <div class="col-md-6 text-md-end">
-                <p class="text-muted mb-0">&copy; 2024 Jaktfeltcup. Alle rettigheter forbeholdt.</p>
+                <p class="text-muted mb-0">&copy; 2024 Nasjonal 15m Jaktfeltcup. Alle rettigheter forbeholdt.</p>
             </div>
         </div>
     </div>

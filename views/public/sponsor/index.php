@@ -1,7 +1,7 @@
 <?php
 // Set page variables
-$page_title = 'Bli Sponsor - Jaktfeltcup';
-$page_description = 'Bli sponsor for Jaktfeltcup og få eksponering i Norges største skytekonkurranse.';
+$page_title = 'Bli Sponsor - Nasjonal 15m Jaktfeltcup';
+$page_description = 'Bli sponsor for Nasjonal 15m Jaktfeltcup og få eksponering i innendørs jaktfelt-konkurransen.';
 $current_page = 'sponsor';
 
 // Include required files
@@ -14,7 +14,7 @@ require_once __DIR__ . '/../../components/hero_section.php';
 $sponsorImages = \Jaktfeltcup\Helpers\ImageHelper::getSponsorImages();
 
 // Get editable content for sponsor page
-$hero_content = render_editable_content('sponsor', 'hero_title', 'Bli Sponsor for Jaktfeltcup', 'Få eksponering i Norges største skytekonkurranse. Som sponsor får du tilgang til et engasjert publikum og kan bygge ditt merke.');
+$hero_content = render_editable_content('sponsor', 'hero_title', 'Bli sponsor for Nasjonal 15m Jaktfeltcup', 'Støtt rekruttering og samarbeid mellom NJFF og DFS. Få eksponering i en nasjonal konkurranse som foregår november-februar.');
 $benefits_content = render_editable_content('sponsor', 'benefits_title', 'Hvorfor bli sponsor?', 'Som sponsor for Jaktfeltcup får du tilgang til et engasjert publikum og kan bygge ditt merke.');
 $packages_content = render_editable_content('sponsor', 'packages_title', 'Sponsorpakker', 'Velg den pakken som passer best for ditt selskap.');
 $cta_content = render_editable_content('sponsor', 'cta_title', 'Klar til å bli sponsor?', 'Ta kontakt med oss i dag og bli del av Jaktfeltcup-familien.');
@@ -43,7 +43,7 @@ $hero_buttons = [
         'icon' => 'fas fa-envelope'
     ]
 ];
-include_hero_section('sponsor', 'hero_title', 'Bli Sponsor for Jaktfeltcup', 'Få eksponering i Norges største skytekonkurranse. Som sponsor får du tilgang til et engasjert publikum og kan bygge ditt merke.', $hero_buttons);
+include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
 ?>
 
 <!-- Why Sponsor -->

@@ -45,6 +45,10 @@ function can_edit_inline() {
  * Render editable content
  */
 function render_editable_content($page_key, $section_key, $default_title = '', $default_content = '') {
+    // TEMPORARY: Database calls disabled for evaluation
+    // TODO: Re-enable after deciding what should be editable
+    
+    /*
     try {
         // Initialize database connection
         global $db_config;
@@ -77,6 +81,14 @@ function render_editable_content($page_key, $section_key, $default_title = '', $
             'editor_html' => null
         ];
     }
+    */
+    
+    // TEMPORARY: Return default content without database calls
+    return [
+        'title' => $default_title,
+        'content' => $default_content,
+        'editor_html' => null
+    ];
 }
 
 /**

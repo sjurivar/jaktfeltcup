@@ -1,7 +1,7 @@
 <?php
 // Set page variables
-$page_title = 'Publikum - Jaktfeltcup';
-$page_description = 'Følg med på Jaktfeltcup - Norges største skytekonkurranse. Se resultater, stevne-kalender og nyheter.';
+$page_title = 'Publikum - Nasjonal 15m Jaktfeltcup';
+$page_description = 'Følg med på Nasjonal 15m Jaktfeltcup - innendørs jaktfelt-konkurransen. Se resultater, stevne-kalender og nyheter.';
 $current_page = 'publikum';
 
 // Include required files
@@ -16,7 +16,7 @@ global $db_config;
 $database = new \Jaktfeltcup\Core\Database($db_config);
 
 // Get editable content for publikum page
-$hero_content = render_editable_content('publikum', 'hero_title', 'Velkommen til Jaktfeltcup', 'Følg med på Norges største skytekonkurranse. Se resultater, stevne-kalender og nyheter.');
+$hero_content = render_editable_content('publikum', 'hero_title', 'Velkommen til Nasjonal 15m Jaktfeltcup', 'Følg med på innendørs jaktfelt-konkurransen som foregår november-februar. Se resultater, stevne-kalender og nyheter.');
 $results_content = render_editable_content('publikum', 'results_title', 'Resultater', 'Se resultater fra alle stevner og følg med på cupen.');
 $calendar_content = render_editable_content('publikum', 'calendar_title', 'Stevne-kalender', 'Oversikt over alle kommende stevner i Jaktfeltcup.');
 $news_content = render_editable_content('publikum', 'news_title', 'Siste Nytt', 'Hold deg oppdatert med de siste nyhetene fra Jaktfeltcup.');
@@ -80,7 +80,7 @@ $hero_buttons = [
         'icon' => 'fas fa-newspaper'
     ]
 ];
-include_hero_section('publikum', 'hero_title', 'Velkommen til Jaktfeltcup', 'Følg med på Norges største skytekonkurranse. Se resultater, stevne-kalender og nyheter.', $hero_buttons);
+include_hero_section('publikum', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
 ?>
 
 <!-- What is Jaktfeltcup -->
@@ -90,8 +90,8 @@ include_hero_section('publikum', 'hero_title', 'Velkommen til Jaktfeltcup', 'Fø
             <div class="col-lg-8 mx-auto text-center">
                 <h2 class="mb-4">Hva er Jaktfeltcup?</h2>
                 <p class="lead text-muted mb-5">
-                    Jaktfeltcup er Norges største skytekonkurranse med over 500 aktive deltakere 
-                    og 20+ stevner per år. Vi tilbyr konkurranse på alle nivåer, fra nybegynner til ekspert.
+                    Nasjonal 15m Jaktfeltcup er en innendørs jaktfelt-konkurranse med aktiv deltakelse 
+                    og stevner gjennom vinterhalvåret. Vi tilbyr konkurranse på alle nivåer, fra nybegynner til ekspert.
                 </p>
             </div>
         </div>

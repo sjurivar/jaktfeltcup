@@ -1,7 +1,7 @@
 <?php
 // Set page variables
-$page_title = 'Jaktfeltcup - Norges største skytekonkurranse';
-$page_description = 'Delta i Norges største skytekonkurranse. Bli arrangør, sponsor eller deltaker i Jaktfeltcup.';
+$page_title = 'Nasjonal 15m Jaktfeltcup - Innendørs jaktfelt for alle';
+$page_description = 'Delta i Nasjonal 15m Jaktfeltcup. Bli arrangør, sponsor eller deltaker i innendørs jaktfelt-konkurransen.';
 $current_page = 'landing';
 
 // Include required files
@@ -16,10 +16,10 @@ global $db_config;
 $database = new \Jaktfeltcup\Core\Database($db_config);
 
 // Get editable content for landing page
-$hero_content = render_editable_content('landing', 'hero_title', 'Velkommen til Jaktfeltcup!', 'Din portal for resultater, påmelding og informasjon om jaktfeltstevner.');
-$main_nav_content = render_editable_content('landing', 'main_nav_title', 'Hovednavigasjon', 'Velg din rolle og utforsk mulighetene i Jaktfeltcup.');
-$sponsors_content = render_editable_content('landing', 'sponsors_title', 'Våre Sponsorer', 'Takk til våre fantastiske sponsorer som gjør Jaktfeltcup mulig.');
-$news_content = render_editable_content('landing', 'news_title', 'Siste Nytt', 'Hold deg oppdatert med de siste nyhetene fra Jaktfeltcup.');
+$hero_content = render_editable_content('landing', 'hero_title', 'Velkommen til Nasjonal 15m Jaktfeltcup!', 'Innendørs jaktfelt for alle – november til februar. Her finner du resultater, påmelding og informasjon.');
+$main_nav_content = render_editable_content('landing', 'main_nav_title', 'Hovednavigasjon', 'Velg din rolle og utforsk mulighetene i Nasjonal 15m Jaktfeltcup.');
+$sponsors_content = render_editable_content('landing', 'sponsors_title', 'Våre Sponsorer', 'Takk til våre fantastiske sponsorer som gjør Nasjonal 15m Jaktfeltcup mulig.');
+$news_content = render_editable_content('landing', 'news_title', 'Siste Nytt', 'Hold deg oppdatert med de siste nyhetene fra Nasjonal 15m Jaktfeltcup.');
 
 // Check for logout message
 $logout_message = '';
@@ -69,7 +69,7 @@ try {
 
 <?php include_header(); ?>
 
-<?php include_hero_section('landing', 'hero_title', 'Velkommen til Jaktfeltcup!', 'Din portal for resultater, påmelding og informasjon om jaktfeltstevner.'); ?>
+<?php include_hero_section('landing', 'hero_title', $hero_content['title'], $hero_content['content']); ?>
 
 <?php if (!empty($logout_message)): ?>
 <!-- Logout Message -->

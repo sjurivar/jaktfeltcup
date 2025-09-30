@@ -1,7 +1,7 @@
 <?php
 // Set page variables
-$page_title = 'Bli Arrangør - Jaktfeltcup';
-$page_description = 'Bli arrangør for Jaktfeltcup og bidra til Norges største skytekonkurranse.';
+$page_title = 'Bli Arrangør - Nasjonal 15m Jaktfeltcup';
+$page_description = 'Bli arrangør for Nasjonal 15m Jaktfeltcup og bidra til innendørs jaktfelt-konkurransen.';
 $current_page = 'arrangor';
 
 // Include required files
@@ -15,12 +15,12 @@ global $db_config;
 $database = new \Jaktfeltcup\Core\Database($db_config);
 
 // Get editable content
-$hero_content = render_editable_content('arrangor', 'hero_title', 'Bli Arrangør for Jaktfeltcup', 'Bli del av Norges største skytekonkurranse som arrangør.');
+$hero_content = render_editable_content('arrangor', 'hero_title', 'Bli arrangør for Nasjonal 15m Jaktfeltcup', 'Arranger innledende runder på din lokale 15m bane og bidra til rekruttering og samarbeid mellom NJFF og DFS.');
 $benefits_content = render_editable_content('arrangor', 'benefits_title', 'Hvorfor bli arrangør?', 'Som arrangør for Jaktfeltcup får du mulighet til å bidra til utvikling av skyteidretten og skape verdifulle opplevelser for deltakere.');
 
 // Card content
 $fellesskap_content = render_editable_content('arrangor', 'fellesskap_title', 'Fellesskap', 'Bli del av et sterkt fellesskap av engasjerte arrangører som deler samme lidenskap for skyteidrett.');
-$prestisje_content = render_editable_content('arrangor', 'prestisje_title', 'Prestisje', 'Arranger stevner under Norges største skytekonkurranse og få anerkjennelse for ditt bidrag.');
+$prestisje_content = render_editable_content('arrangor', 'prestisje_title', 'Prestisje', 'Arranger stevner under innendørs jaktfelt-konkurransen og få anerkjennelse for ditt bidrag.');
 $utvikling_content = render_editable_content('arrangor', 'utvikling_title', 'Utvikling', 'Bidra til utvikling av skyteidretten og skape muligheter for nye skyttere.');
 
 // What you get section
@@ -50,7 +50,7 @@ $hero_buttons = [
         'icon' => 'fas fa-envelope'
     ]
 ];
-include_hero_section('arrangor', 'hero_title', 'Bli Arrangør for Jaktfeltcup', 'Bli del av Norges største skytekonkurranse som arrangør.', $hero_buttons);
+include_hero_section('arrangor', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
 ?>
 
 <!-- Why Become Organizer -->

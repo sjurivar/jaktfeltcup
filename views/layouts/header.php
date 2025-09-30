@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Set default values
-$page_title = $page_title ?? 'Jaktfeltcup';
+$page_title = $page_title ?? 'Nasjonal 15m Jaktfeltcup';
 $page_description = $page_description ?? 'Administrasjonssystem for skyteøvelse';
 $additional_css = $additional_css ?? '';
 $show_navigation = $show_navigation ?? true;
@@ -19,7 +19,7 @@ $show_navigation = $show_navigation ?? true;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($page_title) ?> - Jaktfeltcup</title>
+    <title><?= htmlspecialchars($page_title) ?> - Nasjonal 15m Jaktfeltcup</title>
     <meta name="description" content="<?= htmlspecialchars($page_description) ?>">
     
     <!-- Bootstrap CSS -->
@@ -316,7 +316,7 @@ $show_navigation = $show_navigation ?? true;
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="<?= base_url('/') ?>">
-                <i class="fas fa-bullseye me-2"></i>Jaktfeltcup
+                <i class="fas fa-bullseye me-2"></i>Nasjonal 15m Jaktfeltcup
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -337,6 +337,9 @@ $show_navigation = $show_navigation ?? true;
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= $current_page === 'publikum' ? 'active' : '' ?>" href="<?= base_url('publikum') ?>">Publikum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $current_page === 'om-oss' ? 'active' : '' ?>" href="<?= base_url('om-oss') ?>">Om oss</a>
                     </li>
                     <?php if (in_array($current_page, ['results', 'standings', 'competition-results'])): ?>
                     <li class="nav-item">

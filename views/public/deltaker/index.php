@@ -1,7 +1,7 @@
 <?php
 // Set page variables
-$page_title = 'Bli Deltaker - Jaktfeltcup';
-$page_description = 'Meld deg på som deltaker i Jaktfeltcup og bli del av Norges største skytekonkurranse.';
+$page_title = 'Bli Deltaker - Nasjonal 15m Jaktfeltcup';
+$page_description = 'Meld deg på som deltaker i Nasjonal 15m Jaktfeltcup og bli del av innendørs jaktfelt-konkurransen.';
 $current_page = 'deltaker';
 
 // Include required files
@@ -16,8 +16,8 @@ global $db_config;
 $database = new \Jaktfeltcup\Core\Database($db_config);
 
 // Get editable content for deltaker page
-$hero_content = render_editable_content('deltaker', 'hero_title', 'Bli Deltaker i Jaktfeltcup', 'Meld deg på som deltaker og bli del av Norges største skytekonkurranse.');
-$benefits_content = render_editable_content('deltaker', 'benefits_title', 'Hvorfor delta?', 'Som deltaker får du mulighet til å konkurrere mot de beste skytterne i Norge.');
+$hero_content = render_editable_content('deltaker', 'hero_title', 'Bli deltaker i Nasjonal 15m Jaktfeltcup', 'Delta i 4 innledende runder (november-januar) og kvalifiser deg til finalehelgen i Leikanger i februar.');
+$benefits_content = render_editable_content('deltaker', 'benefits_title', 'Hvorfor delta?', 'Delta i en nasjonal konkurranse med 3 klasser: Sporterklasse, Jegerklasse og Åpen klasse. Alle skyter på 15m bane med standardisert løypeoppsett.');
 $cta_content = render_editable_content('deltaker', 'cta_title', 'Klar til å melde deg på?', 'Registrer deg som deltaker og bli del av Jaktfeltcup-familien.');
 
 // Get upcoming competitions
@@ -51,7 +51,7 @@ $hero_buttons = [
         'icon' => 'fas fa-book'
     ]
 ];
-include_hero_section('deltaker', 'hero_title', 'Bli Deltaker i Jaktfeltcup', 'Meld deg på som deltaker og bli del av Norges største skytekonkurranse.', $hero_buttons);
+include_hero_section('deltaker', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
 ?>
 
 <!-- Why Participate -->

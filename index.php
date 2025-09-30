@@ -71,6 +71,10 @@ switch ($path) {
     case $base_url . '/about':
         include __DIR__ . '/views/public/about.php';
         break;
+    case '/om-oss':
+    case $base_url . '/om-oss':
+        include __DIR__ . '/views/public/om-oss.php';
+        break;
     
     // Documentation
     case '/dokumentasjon':
