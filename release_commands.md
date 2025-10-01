@@ -29,7 +29,7 @@ Kommer i v1.0.0:
 
 ### **2. Push til GitHub**
 ```bash
-git push origin master
+git push origin main
 ```
 
 ### **3. Lag Git tag**

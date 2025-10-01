@@ -15,9 +15,9 @@ $sponsorImages = \Jaktfeltcup\Helpers\ImageHelper::getSponsorImages();
 
 // Get editable content for sponsor page
 $hero_content = render_editable_content('sponsor', 'hero_title', 'Bli sponsor for Nasjonal 15m Jaktfeltcup', 'Støtt rekruttering og samarbeid mellom NJFF og DFS. Få eksponering i en nasjonal konkurranse som foregår november-februar.');
-$benefits_content = render_editable_content('sponsor', 'benefits_title', 'Hvorfor bli sponsor?', 'Som sponsor for Jaktfeltcup får du tilgang til et engasjert publikum og kan bygge ditt merke.');
+$benefits_content = render_editable_content('sponsor', 'benefits_title', 'Hvorfor bli sponsor?', 'Som sponsor for Nasjonal 15m Jaktfeltcup får du tilgang til et engasjert publikum og kan bygge ditt merke.');
 $packages_content = render_editable_content('sponsor', 'packages_title', 'Sponsorpakker', 'Velg den pakken som passer best for ditt selskap.');
-$cta_content = render_editable_content('sponsor', 'cta_title', 'Klar til å bli sponsor?', 'Ta kontakt med oss i dag og bli del av Jaktfeltcup-familien.');
+$cta_content = render_editable_content('sponsor', 'cta_title', 'Klar til å bli sponsor?', 'Ta kontakt med oss i dag og bli del av Nasjonal 15m Jaktfeltcup.');
 ?>
 
 <?php include_header(); ?>
@@ -25,29 +25,25 @@ $cta_content = render_editable_content('sponsor', 'cta_title', 'Klar til å bli 
 <?php 
 $hero_buttons = [
     [
-        'text' => 'Se sponsor-pakker',
-        'url' => base_url('sponsor/pakker'),
-        'class' => 'btn-light',
-        'icon' => 'fas fa-star'
-    ],
-    [
         'text' => 'Se våre sponsorer',
         'url' => base_url('sponsor/presentasjon'),
-        'class' => 'btn-outline-light',
+        'class' => 'btn-light',
         'icon' => 'fas fa-handshake'
     ],
     [
-        'text' => 'Kontakt oss',
-        'url' => base_url('sponsor/kontakt'),
+        'text' => 'Kontakt hovedkomiteen',
+        'url' => base_url('om-oss'),
         'class' => 'btn-outline-light',
-        'icon' => 'fas fa-envelope'
+        'icon' => 'fas fa-users'
     ]
 ];
 include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
 ?>
-
+    
 <!-- Why Sponsor -->
+ <!--
 <section class="py-5">
+
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
@@ -99,83 +95,69 @@ include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_cont
             </div>
         </div>
     </div>
+                
 </section>
-
-<!-- Sponsor Packages -->
+-->
+<!-- Contact Section -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h2 class="mb-4">Sponsor-pakker</h2>
+                <h2 class="mb-4">Bli sponsor</h2>
                 <p class="lead text-muted mb-5">
-                    Vi tilbyr fleksible sponsor-pakker som kan tilpasses dine behov og budsjett.
+                    Vi setter stor pris på å samarbeide med sponsorer som deler våre verdier 
+                    og ønsker å støtte Nasjonal 15m Jaktfeltcup.
                 </p>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header bg-warning text-dark text-center">
-                        <h4 class="mb-0">Bronze</h4>
-                        <p class="mb-0">Fra 10.000 kr</p>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Logo på nettside</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Logo på resultatlister</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>E-post markedsføring</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>SoMe-eksponering</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100 border-primary">
-                    <div class="card-header bg-primary text-white text-center">
-                        <h4 class="mb-0">Silver</h4>
-                        <p class="mb-0">Fra 25.000 kr</p>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Alt i Bronze</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Logo på premier</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Stand på stevner</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Eksklusiv markedsføring</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header bg-warning text-dark text-center">
-                        <h4 class="mb-0">Gold</h4>
-                        <p class="mb-0">Fra 50.000 kr</p>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Alt i Silver</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Hovedsponsor status</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Eksklusiv stevne-navngivning</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Personlig kontaktperson</li>
-                        </ul>
+                
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body p-5">
+                        <i class="fas fa-handshake fa-4x text-primary mb-4"></i>
+                        <h3 class="mb-4">Ta kontakt med hovedkomiteen</h3>
+                        <p class="mb-4">
+                            For informasjon om sponsormuligheter og tilpassede pakker, 
+                            ta gjerne kontakt med oss. Vi lager gjerne en løsning som 
+                            passer for din bedrift.
+                        </p>
+                        
+                        <div class="row mt-5">
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-envelope fa-2x text-primary me-3"></i>
+                                    <div class="text-start">
+                                        <small class="text-muted d-block">E-post</small>
+                                        <strong>post@jaktfeltcup.no</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-phone fa-2x text-primary me-3"></i>
+                                    <div class="text-start">
+                                        <small class="text-muted d-block">Kontakt oss</small>
+                                        <strong>Se Om oss</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="<?= base_url('om-oss') ?>" class="btn btn-primary btn-lg">
+                                <i class="fas fa-users me-2"></i>Se hovedkomiteen
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="text-center mt-4">
-            <a href="<?= base_url('sponsor/pakker') ?>" class="btn btn-primary btn-lg">
-                <i class="fas fa-star me-2"></i>Se alle pakker
-            </a>
         </div>
     </div>
 </section>
 
 <!-- Benefits -->
+
 <section class="py-5">
     <div class="container">
         <div class="row">
+            <!--
             <div class="col-lg-6">
                 <h2 class="mb-4">Fordeler med å sponse</h2>
                 <ul class="list-unstyled">
@@ -201,7 +183,8 @@ include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_cont
                     </li>
                 </ul>
             </div>
-            <div class="col-lg-6">
+            -->
+            <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Våre nåværende sponsorer</h5>
@@ -234,6 +217,7 @@ include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_cont
     </div>
 </section>
 
+
 <!-- Call to Action -->
 <section class="py-5 bg-primary text-white">
     <div class="container">
@@ -246,11 +230,11 @@ include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_cont
                     <p class="lead mb-4"><?= htmlspecialchars($cta_content['content']) ?></p>
                 <?php endif; ?>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <a href="<?= base_url('sponsor/pakker') ?>" class="btn btn-light btn-lg">
-                        <i class="fas fa-star me-2"></i>Se sponsor-pakker
+                    <a href="<?= base_url('om-oss') ?>" class="btn btn-light btn-lg">
+                        <i class="fas fa-users me-2"></i>Kontakt hovedkomiteen
                     </a>
-                    <a href="<?= base_url('sponsor/kontakt') ?>" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-envelope me-2"></i>Kontakt oss
+                    <a href="<?= base_url('sponsor/presentasjon') ?>" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-handshake me-2"></i>Se våre sponsorer
                     </a>
                 </div>
             </div>

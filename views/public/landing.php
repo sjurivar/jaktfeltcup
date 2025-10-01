@@ -85,6 +85,8 @@ try {
 <!-- Main Navigation Section -->
 <section class="py-5" style="background-color: rgba(248, 249, 250, 0.7);">
     <div class="container">
+
+    <!--
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
                 <?php if (can_edit_inline() && !empty($main_nav_content['editor_html'])): ?>
@@ -95,7 +97,7 @@ try {
                 <?php endif; ?>
             </div>
         </div>
-        
+        -->
         <div class="row">
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card h-100 text-center border-0 shadow-sm">
@@ -220,49 +222,7 @@ try {
     </div>
 </section>
 
-<!-- Stats Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                        <h3 class="fw-bold">500+</h3>
-                        <p class="text-muted">Aktive deltakere</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-calendar-alt fa-3x text-primary mb-3"></i>
-                        <h3 class="fw-bold">20+</h3>
-                        <p class="text-muted">Stevner per år</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-map-marker-alt fa-3x text-primary mb-3"></i>
-                        <h3 class="fw-bold">15+</h3>
-                        <p class="text-muted">Arrangører</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-trophy fa-3x text-primary mb-3"></i>
-                        <h3 class="fw-bold">5</h3>
-                        <p class="text-muted">År med erfaring</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <!-- Upcoming Competitions -->
 <section class="py-5">

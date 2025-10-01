@@ -12,11 +12,31 @@ $additional_js = $additional_js ?? '';
 <footer class="bg-dark text-light py-4 mt-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4 mb-3 mb-md-0">
                 <h5>Nasjonal 15m Jaktfeltcup</h5>
                 <p class="text-muted">Administrasjonssystem for skyteøvelse</p>
             </div>
-            <div class="col-md-6 text-md-end">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h6 class="mb-3">Lenker</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="<?= base_url('om-oss') ?>" class="text-light text-decoration-none">
+                            <i class="fas fa-users me-2"></i>Om
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="<?= base_url('dokumentasjon') ?>" class="text-light text-decoration-none">
+                            <i class="fas fa-book me-2"></i>Dokumentasjon
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="<?= base_url('about') ?>" class="text-light text-decoration-none">
+                            <i class="fas fa-info-circle me-2"></i>Teknisk info
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 text-md-end">
                 <p class="text-muted mb-0">&copy; 2024 Nasjonal 15m Jaktfeltcup. Alle rettigheter forbeholdt.</p>
             </div>
         </div>

@@ -361,7 +361,7 @@ $show_navigation = $show_navigation ?? true;
                         <a class="nav-link <?= $current_page === 'publikum' ? 'active' : '' ?>" href="<?= base_url('publikum') ?>">Publikum</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= $current_page === 'om-oss' ? 'active' : '' ?>" href="<?= base_url('om-oss') ?>">Om oss</a>
+                        <a class="nav-link <?= $current_page === 'om-oss' ? 'active' : '' ?>" href="<?= base_url('om-oss') ?>">Om</a>
                     </li>
                     <?php if (in_array($current_page, ['results', 'standings', 'competition-results'])): ?>
                     <li class="nav-item">
@@ -371,14 +371,6 @@ $show_navigation = $show_navigation ?? true;
                         <a class="nav-link <?= $current_page === 'standings' ? 'active' : '' ?>" href="<?= base_url('standings') ?>">Sammenlagt</a>
                     </li>
                     <?php endif; ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $current_page === 'about' ? 'active' : '' ?>" href="<?= base_url('about') ?>">Om</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $current_page === 'dokumentasjon' ? 'active' : '' ?>" href="<?= base_url('dokumentasjon') ?>">
-                            <i class="fas fa-book me-1"></i>Dokumentasjon
-                        </a>
-                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     <?php 
