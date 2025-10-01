@@ -13,6 +13,15 @@ $db_config = [
     'password' => 'your_password_here'
 ];
 
+// Database configuration
+$db_config = [
+    'host' => 'mysql.csj1wp95j.service.one',
+    'port' => 3306,
+    'name' => 'csj1wp95j_db1415790',
+    'user' => 'csj1wp95j_db1415790',
+    'password' => 'iDU!KUkDaZAS4Aa'
+];
+
 // Application configuration
 $app_config = [
     'name' => 'Jaktfeltcup',
