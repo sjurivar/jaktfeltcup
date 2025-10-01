@@ -53,18 +53,23 @@ $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name'];
 
 // Get user roles from new role system
 $user_roles = [];
+$user_role_objects = [];
 try {
-    $user_roles = $database->queryAll(
-        "SELECT r.role_name FROM jaktfelt_user_roles ur 
+    $user_role_objects = $database->queryAll(
+        "SELECT r.id, r.role_name, r.description FROM jaktfelt_user_roles ur 
          JOIN jaktfelt_roles r ON ur.role_id = r.id 
          WHERE ur.user_id = ?", 
         [$user['id']]
     );
-    $user_roles = array_column($user_roles, 'role_name');
+    $user_roles = array_column($user_role_objects, 'role_name');
+    
+    // Store roles in session
+    $_SESSION['roles'] = $user_role_objects;
 } catch (Exception $e) {
     // If roles table doesn't exist, fall back to old role system
     error_log("Could not fetch user roles: " . $e->getMessage());
     $user_roles = [$user['role']];
+    $_SESSION['roles'] = [['role_name' => $user['role']]];
 }
 
 // Redirect based on roles

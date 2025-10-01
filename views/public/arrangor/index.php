@@ -8,7 +8,11 @@ $current_page = 'arrangor';
 require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../src/Helpers/ViewHelper.php';
 require_once __DIR__ . '/../../../src/Helpers/InlineEditHelper.php';
+require_once __DIR__ . '/../../../src/Helpers/OrganizerHelper.php';
 require_once __DIR__ . '/../../components/hero_section.php';
+
+// Get organizers and rounds data
+$roundsData = \Jaktfeltcup\Helpers\OrganizerHelper::getOrganizersWithEvents();
 
 // Initialize database connection
 global $db_config;
@@ -50,10 +54,12 @@ $hero_buttons = [
         'icon' => 'fas fa-envelope'
     ]
 ];
-include_hero_section('arrangor', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
+//include_hero_section('arrangor', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
+include_hero_section('arrangor', 'hero_title', $hero_content['title'], $hero_content['content']);
 ?>
 
 <!-- Why Become Organizer -->
+ <!--
 <section class="py-5">
     <div class="container">
         <div class="row">
@@ -110,8 +116,10 @@ include_hero_section('arrangor', 'hero_title', $hero_content['title'], $hero_con
         </div>
     </div>
 </section>
+-->
 
 <!-- What You Get -->
+ <!--
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row">
@@ -163,81 +171,173 @@ include_hero_section('arrangor', 'hero_title', $hero_content['title'], $hero_con
         </div>
     </div>
 </section>
+-->
 
-<!-- How to Become Organizer -->
+
+<!-- Contact Section -->
 <section class="py-5">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <?php if (can_edit_inline() && !empty($how_to_become_content['editor_html'])): ?>
-                    <?= $how_to_become_content['editor_html'] ?>
-                <?php else: ?>
-                    <h2 class="mb-4"><?= htmlspecialchars($how_to_become_content['title']) ?></h2>
-                    <p class="lead text-muted mb-5"><?= htmlspecialchars($how_to_become_content['content']) ?></p>
-                <?php endif; ?>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-lg-3 mb-4">
-                <div class="text-center">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <span class="fw-bold">1</span>
+                <h2 class="mb-4">Bli arrangør</h2>
+                <p class="lead text-muted mb-5">
+                    Vi setter stor pris på å samarbeide med arrangører som ønsker å 
+                    arrangere innledende runder i Nasjonal 15m Jaktfeltcup.
+                </p>
+                
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body p-5">
+                        <i class="fas fa-handshake fa-4x text-primary mb-4"></i>
+                        <h3 class="mb-4">Ta kontakt med hovedkomiteen</h3>
+                        <p class="mb-4">
+                            For informasjon om å bli arrangør og hva som kreves, 
+                            ta gjerne kontakt med oss. Vi hjelper deg med alt fra 
+                            planlegging til gjennomføring.
+                        </p>
+                        
+                        <div class="row mt-5">
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-envelope fa-2x text-primary me-3"></i>
+                                    <div class="text-start">
+                                        <small class="text-muted d-block">E-post</small>
+                                        <strong>post@jaktfeltcup.no</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-phone fa-2x text-primary me-3"></i>
+                                    <div class="text-start">
+                                        <small class="text-muted d-block">Kontakt oss</small>
+                                        <strong>Se Om oss</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="<?= base_url('om-oss') ?>" class="btn btn-primary btn-lg">
+                                <i class="fas fa-users me-2"></i>Se hovedkomiteen
+                            </a>
+                        </div>
                     </div>
-                    <h5>Kontakt oss</h5>
-                    <p class="text-muted">Send oss en melding om din interesse for å arrangere.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="text-center">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <span class="fw-bold">2</span>
-                    </div>
-                    <h5>Møte</h5>
-                    <p class="text-muted">Vi møtes for å diskutere muligheter og forventninger.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="text-center">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <span class="fw-bold">3</span>
-                    </div>
-                    <h5>Opplæring</h5>
-                    <p class="text-muted">Vi gir deg opplæring i systemer og prosedyrer.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="text-center">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <span class="fw-bold">4</span>
-                    </div>
-                    <h5>Arranger</h5>
-                    <p class="text-muted">Du er klar til å arrangere ditt første stevne!</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Call to Action -->
-<section class="py-5 bg-primary text-white">
+<!-- Rounds and Events Schedule -->
+<section class="py-5 bg-light">
     <div class="container">
-        <div class="row text-center">
-            <div class="col-lg-8 mx-auto">
-                <?php if (can_edit_inline() && !empty($cta_content['editor_html'])): ?>
-                    <?= $cta_content['editor_html'] ?>
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2 class="text-center mb-4">Runder og stevner</h2>
+                <p class="lead text-center text-muted mb-5">
+                    Nasjonal 15m Jaktfeltcup består av 4 runder med flere stevner. 
+                    De 3 beste resultatene teller for hver skytter.
+                </p>
+                
+                <?php if (!empty($roundsData)): ?>
+                    <?php foreach ($roundsData as $round): ?>
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <h4 class="mb-0">
+                                            <i class="fas fa-calendar-alt me-2"></i>
+                                            <?= htmlspecialchars($round['round_name']) ?>
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-6 text-md-end">
+                                        <small>
+                                            <i class="fas fa-clock me-1"></i>
+                                            <?= \Jaktfeltcup\Helpers\OrganizerHelper::formatDateRange($round['start_date'], $round['end_date']) ?>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info mb-4">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Frist for innsending av resultater:</strong> 
+                                    <?= \Jaktfeltcup\Helpers\OrganizerHelper::formatDate($round['result_deadline']) ?>
+                                </div>
+                                
+                                <?php if (!empty($round['events'])): ?>
+                                    <h5 class="mb-3">Stevner i denne runden:</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dato</th>
+                                                    <th>Stevne</th>
+                                                    <th>Sted</th>
+                                                    <th>Arrangør</th>
+                                                    <th>Kontakt</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($round['events'] as $event): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <i class="fas fa-calendar me-1 text-muted"></i>
+                                                            <?= \Jaktfeltcup\Helpers\OrganizerHelper::formatDate($event['competition_date']) ?>
+                                                        </td>
+                                                        <td>
+                                                            <strong><?= htmlspecialchars($event['competition_name']) ?></strong>
+                                                        </td>
+                                                        <td>
+                                                            <i class="fas fa-map-marker-alt me-1 text-muted"></i>
+                                                            <?= htmlspecialchars($event['location']) ?>
+                                                            <?php if ($event['city']): ?>
+                                                                <br><small class="text-muted"><?= htmlspecialchars($event['city']) ?></small>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= htmlspecialchars($event['organizer_name']) ?>
+                                                            <br>
+                                                            <small class="text-muted">
+                                                                <?= \Jaktfeltcup\Helpers\OrganizerHelper::formatOrganizationType($event['organizer_type']) ?>
+                                                            </small>
+                                                        </td>
+                                                        <td>
+                                                            <?php if ($event['email']): ?>
+                                                                <a href="mailto:<?= htmlspecialchars($event['email']) ?>" class="text-decoration-none">
+                                                                    <i class="fas fa-envelope me-1"></i>
+                                                                    <?= htmlspecialchars($event['email']) ?>
+                                                                </a>
+                                                            <?php endif; ?>
+                                                            <?php if ($event['phone']): ?>
+                                                                <br>
+                                                                <small>
+                                                                    <i class="fas fa-phone me-1"></i>
+                                                                    <?= htmlspecialchars($event['phone']) ?>
+                                                                </small>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="text-center text-muted py-4">
+                                        <i class="fas fa-calendar-times fa-3x mb-3"></i>
+                                        <p>Ingen stevner planlagt for denne runden ennå.</p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 <?php else: ?>
-                    <h2 class="mb-4"><?= htmlspecialchars($cta_content['title']) ?></h2>
-                    <p class="lead mb-4"><?= htmlspecialchars($cta_content['content']) ?></p>
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Stevne-kalender for sesongen publiseres snart. 
+                        Følg med for oppdateringer!
+                    </div>
                 <?php endif; ?>
-                <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <a href="<?= base_url('arrangor/bli-arrangor') ?>" class="btn btn-light btn-lg">
-                        <i class="fas fa-calendar-plus me-2"></i>Bli arrangør nå
-                    </a>
-                    <a href="<?= base_url('arrangor/kontakt') ?>" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-envelope me-2"></i>Kontakt oss
-                    </a>
-                </div>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@ try {
     error_log("Could not fetch user roles: " . $e->getMessage());
 }
 
-if (!in_array('contentmanager', $user_roles) && !in_array('admin', $user_roles)) {
+if (!in_array('contentmanager', $user_roles) && !in_array('databasemanager', $user_roles) && !in_array('admin', $user_roles)) {
     $_SESSION['error'] = 'Du har ikke tilgang til innholdsredigering.';
     header('Location: ' . base_url('admin'));
     exit;
@@ -91,6 +91,43 @@ try {
         </div>
     <?php endif; ?>
 
+    <!-- Quick Links -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <a href="<?= base_url('admin/content/text') ?>" class="text-decoration-none">
+                <div class="card bg-info text-white h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-edit fa-3x mb-3"></i>
+                        <h5>Tekstinnhold</h5>
+                        <p class="mb-0">Rediger tekster på sidene</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="<?= base_url('admin/content/organizers') ?>" class="text-decoration-none">
+                <div class="card bg-success text-white h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-users fa-3x mb-3"></i>
+                        <h5>Arrangører</h5>
+                        <p class="mb-0">Administrer arrangører og stevner</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="<?= base_url('admin/content') ?>" class="text-decoration-none">
+                <div class="card bg-primary text-white h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-newspaper fa-3x mb-3"></i>
+                        <h5>Nyheter & Sponsorer</h5>
+                        <p class="mb-0">Administrer nyheter og sponsorer</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <div class="row">
         <!-- News Management -->
         <div class="col-lg-6 mb-4">
@@ -98,9 +135,6 @@ try {
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5><i class="fas fa-newspaper me-2"></i>Nyheter</h5>
                     <div>
-                        <a href="<?= base_url('admin/content/text') ?>" class="btn btn-info btn-sm me-2">
-                            <i class="fas fa-edit me-1"></i>Tekstinnhold
-                        </a>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newsModal">
                             <i class="fas fa-plus me-1"></i>Ny nyhet
                         </button>

@@ -13,7 +13,7 @@ $db_config = [
     'password' => 'your_password_here'
 ];
 
-// Database configuration
+// Database configuration production
 $db_config = [
     'host' => 'mysql.csj1wp95j.service.one',
     'port' => 3306,

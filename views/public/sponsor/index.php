@@ -37,7 +37,8 @@ $hero_buttons = [
         'icon' => 'fas fa-users'
     ]
 ];
-include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
+// include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_content['content'], $hero_buttons);
+include_hero_section('sponsor', 'hero_title', $hero_content['title'], $hero_content['content']);
 ?>
     
 <!-- Why Sponsor -->

@@ -224,6 +224,12 @@ switch ($path) {
     case $base_url . '/admin/content/text/':
         include __DIR__ . '/admin/content/text.php';
         break;
+    case '/admin/content/organizers':
+    case $base_url . '/admin/content/organizers':
+    case '/admin/content/organizers/':
+    case $base_url . '/admin/content/organizers/':
+        include __DIR__ . '/admin/content/organizers.php';
+        break;
     case '/admin':
     case $base_url . '/admin':
     case '/admin/':
